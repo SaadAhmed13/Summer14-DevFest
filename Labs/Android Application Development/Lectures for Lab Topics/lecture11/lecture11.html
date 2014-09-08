@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>Tools - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h1 id="lecture-12----tools">Lecture 12 -- Tools</h1>
+<p>Android has a number of useful tools that are mostly integrated in to ADT but also can be run from the command line. In this lecture we give a quick overview of the tools and then show how the can be used to graphically look into a UI layout.</p>
+<p>The SDK tools are installed with the SDK starter package and are periodically updated. The SDK tools are required if you are developing Android applications. The most important SDK tools include the Android SDK Manager (android sdk), the AVD Manager (android avd) the emulator (emulator), and the Dalvik Debug Monitor Server (ddms).</p>
+<h2 id="what-this-lecture-will-teach-you">What this lecture will teach you</h2>
+<ul>
+<li>Tools: workspace/adt-bundle-mac-x86_64/sdk/tools</li>
+<li>SDK and system tools</li>
+<li>HierarchyViewer tool</li>
+<li>Exploring the tree view</li>
+<li>Checkout HierarchyViewer in landscape mode</li>
+</ul>
+<h2 id="tools-workspaceadt-bundle-mac-x86_64sdktools">Tools: workspace/adt-bundle-mac-x86_64/sdk/tools</h2>
+<p>There are a number of useful tools in the sdk directory in your workspace under tools. Typically found in:</p>
+<p>workspace/adt-bundle-mac-x86_64/sdk/tools</p>
+<p>The tools are classified into two groups: SDK tools and platform tools. SDK tools are platform independent and are required no matter which Android platform you are developing on. Platform tools are customized to support the features of the latest Android platform.</p>
+<pre class="sourceCode java"><code class="sourceCode java">$ pwd
+/Users/atc/teaching/cs65/workspace/adt-bundle-mac-x86_64/sdk/tools
+$ ls
+Jet                             emulator-mips                       monitor
+NOTICE.<span class="fu">txt</span>              emulator-x86                        monkeyrunner
+adb_has_moved.<span class="fu">txt</span>   emulator64-arm                  proguard
+android                                 emulator64-mips                 source.<span class="fu">properties</span>
+ant                             emulator64-x86                  sqlite3
+apkbuilder              etc1tool                    support
+apps                            hierarchyviewer                 systrace
+ddms                        hprof-conv              templates
+dmtracedump                     jobb                            traceview
+draw9patch              lib                             uiautomatorviewer
+emulator                    lint                            zipalign
+emulator-arm                        mksdcard
+$       </code></pre>
+<h2 id="sdk-and-system-tools">SDK and system tools</h2>
+<p>The SDK tools are installed with the SDK starter package and are periodically updated. The SDK tools are required if you are developing Android applications. The most important SDK tools include the Android SDK Manager (android sdk), the AVD Manager (android avd) the emulator (emulator), and the Dalvik Debug Monitor Server (ddms). A short summary of some frequently-used SDK tools is provided below.</p>
+<p>Many of these tools are directly accessible from ADT or from the command line. See <a href="http://developer.android.com/tools/help/index.html">SDK tools</a> for a discussion of all the tools:</p>
+<ul>
+<li><em>Hierarchy Viewer (hierarchyviewer)</em>vLets you debug and optimize an Android application's user interface.</li>
+<li><em>android</em> Lets you manage AVDs, projects, and the installed components of the SDK.</li>
+<li><em>Dalvik Debug Monitor Server (ddms)</em> Lets you debug Android applications.</li>
+<li><em>dmtracedump</em> Generates graphical call-stack diagrams from trace log files. The tool uses the Graphviz Dot utility to create the graphical output, so you need to install Graphviz before running dmtracedump.</li>
+<li><em>Draw 9-patch</em> Allows you to easily create a NinePatch graphic using a WYSIWYG editor. It also previews stretched versions of the image, and highlights the area in which content is allowed.</li>
+<li><em>Android Emulator (emulator)</em> A QEMU-based device-emulation tool that you can use to design, debug, and test your applications in an actual Android run-time environment.</li>
+<li><em>hprof-conv</em> Converts the HPROF file that is generated by the Android SDK tools to a standard format so you can view the file in a profiling tool of your choice.</li>
+<li><em>layoutopt</em> Lets you quickly analyze your application's layouts in order to optimize them for efficiency.</li>
+<li><em>mksdcard</em> Helps you create a disk image that you can use with the emulator, to simulate the presence of an external storage card (such as an SD card).</li>
+<li><em>Monkey</em> Runs on your emulator or device and generates pseudo-random streams of user events such as clicks, touches, or gestures, as well as a number of system-level events. You can use the Monkey to stress-test applications that you are developing, in a random yet repeatable manner.</li>
+<li><em>monkeyrunner</em> Provides an API for writing programs that control an Android device or emulator from outside of Android code.</li>
+<li><em>ProGuard</em> Shrinks, optimizes, and obfuscates your code by removing unused code and renaming classes, fields, and methods with semantically obscure names.</li>
+<li><em>Systrace</em> Lets you analyze the execution of your application in the context of system processes, to help diagnose display and performance issues.</li>
+<li><em>sqlite3</em> Lets you access the SQLite data files created and used by Android applications.</li>
+<li><em>traceview</em> Provides a graphical viewer for execution logs saved by your application.</li>
+<li><em>zipalign</em> Optimizes .apk files by ensuring that all uncompressed data starts with a particular alignment relative to the start of the file. This should always be used to align .apk files after they have been signed.</li>
+</ul>
+<p>Most students learning Android for the first time will not use these tools directly -- probably will implicitly through the IDE. But as you gain experience or come across a tricky debug problem then you may start to use one or more of them. You directly use only one of the platform tools—the Android Debug Bridge (adb). Android Debug Bridge is a versatile tool that lets you manage the state of an emulator instance or Android-powered device. You can also use it to install an Android application (.apk) file on a device.</p>
+<p>We are going to take hierarchyviewer for a spin to study and visualize the layouts for the fragment app for portrait and landscape.</p>
+<h2 id="hierarchyviewer-tool">HierarchyViewer tool</h2>
+<p>HierarchyViewer is an Android SDK tool that can be used to inspect and debug the user interface of running applications. Assume we want to see our UI layout running, study its view tree, perhaps work on its performance -- layout, parent/children views -- various rendering and drawing times. Then there is a nifty tool that allows us to profile the UI performance called <em>hierarchyviewer</em>. You'll see it in the directory above.</p>
+<p>This tool is good for debugging and exploring the relationships in a layout of the parent and child views which are for the most part hierarchical - for example in the case of our layout 8 text views inside a listview.</p>
+<p>In the demo below we use hierarchyviewer with the emulator (not the phone). You can use this with the phone but have to install <a href="https://github.com/romainguy/ViewServer">ViewServer</a>. For now we'll use the emulator for the discuss below.</p>
+<p>To get going start the Fragment app in the emulator and open a terminal go to the directory the tools are located in e.g., workspace/adt-bundle-mac-x86_64/sdk/tools, and type <code>./hierarchyviewer</code> in a terminal at the command line -- make sure you are in the correct directory.</p>
+<p>The listview and the actionbar container inside linearlayout (which is the root layout, and can you can get a reference to that id using android.R.id.content -- content is root -- in your code is you wish, we will use this later), as shown below. Note that <code>android.R.id.content</code> used in the fragmemt code gives you the root element of a view, without having to know its actual name/type/ID. You can see the <em>content</em> in the HierarchyViewer.</p>
+<div class="figure">
+<img src="images\hv4.png">
+</div>
+<p>In the portion of the layout tree above you see the complete UI with the embedded child views. How cool is that.</p>
+<p>Once you start up the emulator and the program runs you see the app in portrait mode, as shown below. Recall the fragment app resizes itself if the user flips to landscape.</p>
+<p><a href="images\shv7.png"></a></p>
+<p>The UI for landscape is defined in res/layouts/fragment_layout.xml, as shown below.</p>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;FrameLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span> &gt;
+ 
+    &lt;fragment
+        android:id=<span class="st">&quot;@+id/titles&quot;</span>
+        android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+        <span class="kw">class</span>=<span class="st">&quot;edu.dartmouth.cs.FragmentLayout$TitlesFragment&quot;</span> /&gt;
+ 
+&lt;/FrameLayout&gt;      </code></pre>
+<h2 id="exploring-the-tree-view">Exploring the tree view</h2>
+<p>When the HierarchyViewer starts you will see the following screen.</p>
+<div class="figure">
+<img src="images\hv1.png">
+</div>
+<p>This shows all the activities running. Click on the fragments to switch to the tree view. You know see -- what looks like a complicated -- a tree of all your views -- parent and child. The key thing to note is that the complete layout includes the icon in the action bar and the associated text of the application name: fragments. The lower part of the tree is associated with the list of titles we want to render, as shown below</p>
+<div class="figure">
+<img src="images\shv2.png">
+</div>
+<p>You can do some very cool things with this app and it’s quite the teaching tool in seeing how views are laid out and the parent/child relationships. I can't cover all the details here so the best thing is to load the hierarchyviewer and just explore it you. Here is a cool feature. On the bottom right you can highlight a part of the UI and its sub tree is automatically highlighted. You can also look at the properties -- layout, drawing, events, padding, and text -- associated with a view.</p>
+<p>For more information of how hierarchyviewer works watch this <a href="http://www.youtube.com/watch?v=PAgE7saQUUY">short video tutorial</a> - the dude sounds like the name of the phone.</p>
+<p>I have highlighted (that is to say clicked on) Henry IV (1) on the view in the bottom left pane. You see a red box around text in the listview (well really ListFragment). The lighter red box (harder to see in these notes) around the text is the parent view -- the framelayout view. You can also see under properties the name of the text field: Henry IV (1).</p>
+<div class="figure">
+<img src="images\hv3.png">
+</div>
+<h2 id="checkout-hierarchyviewer-in-landscape-mode">Checkout HierarchyViewer in landscape mode</h2>
+<p>Because the fragmemt app loads a different res/layout-land/fragment_layout.html when the user flips the screen from portrait to landscape we can use the hierarchyviewer tool to look at the landscape view. If you want to rotate the screen using the emulator type * Fn + Ctrl + F12* on your Mac. Now you will see the fragment app flip. Now go back to the hierarchyviewer GUI, return to the pane called -- window selection view -- (bottom left, first icon) to reload the fragment activity and then switch back to the tree view. You should see the landscape tree view below.</p>
+<p>Note, it has the two fragments as a horizontal layout as defined by the XML below</p>
+<div class="figure">
+<img src="images\shv5.png">
+</div>
+<p>The landscape UI and its tree structure above correspond to res/layout-land/fragment_layout.html below.</p>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    android:orientation=<span class="st">&quot;horizontal&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span> android:layout_height=<span class="st">&quot;match_parent&quot;</span>&gt;
+ 
+    &lt;fragment <span class="kw">class</span>=<span class="st">&quot;edu.dartmouth.cs.FragmentLayout$TitlesFragment&quot;</span>
+            android:id=<span class="st">&quot;@+id/titles&quot;</span> android:layout_weight=<span class="st">&quot;1&quot;</span>
+            android:layout_width=<span class="st">&quot;0px&quot;</span> android:layout_height=<span class="st">&quot;match_parent&quot;</span> /&gt;
+ 
+    &lt;FrameLayout android:id=<span class="st">&quot;@+id/details&quot;</span> android:layout_weight=<span class="st">&quot;1&quot;</span>
+            android:layout_width=<span class="st">&quot;0px&quot;</span> android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+            android:background=<span class="st">&quot;?android:attr/detailsElementBackground&quot;</span> /&gt;
+    
+&lt;/LinearLayout&gt;     </code></pre>
+<p>The hierarchyviewer shows the horizontal layout of the two fragments -- they are represented in the tree as two FragmentLayouts with equal weight in the horizontal presentation in landscape -- see the XML <code>android:layout_weight=&quot;1&quot;</code>. The textview which renders the text &quot;So shaken ..&quot; is highlighted, as show also in the emulator screen dump below.</p>
+<div class="figure">
+<img src="images\hv6.png">
+</div>
+<p>If the user clicks on one of the items in the list then the <code>DetailsActivity</code> is started. If use the emulator and we go back to the hierarchyviewer tool again we will see the following in the window selection view of the tool: two activities executing (there are others but we are interested in the fragment app); that is, <code>DetailsActivity</code> and <code>FragmentLayout</code> -- each activity has its associated fragment and you can see these fragments using the tool.</p>
+<div class="figure">
+<img src="images\hv10.png">
+</div>
+<p>Let's click on <code>DetailsActivity</code> in the window selection and switch to the tree view. The screen dump only shows a potion on the activities view hierarchy -- but enough to be of interest.</p>
+<div class="figure">
+<img src="images\shv11.png">
+</div>
+<p>The <code>root view</code> given by R.id.contents (where the fragment is loaded) is clearly the root LinearLayout representing a ViewGroup with ActionBarContainer at the top of the screen (which includes the icon and name:fragments), then the FrameLayout where our details fragment has been added (including a ScrollView and TextView -- you can see the actual text added too), and finally another ActionBarContainer at the bottom (which has the back button, home button, and recent apps). So the fragment is added to the <code>root</code> ViewGroup and fills the screen).</p>
+<p>You can learn quite a lot from loading the Fragment app using the emulator and playing with the hierarchyviewer tool and playing with app and seeing the various ViewGroup in terms of tree view; that is, the hierarchy of views all knitted together. Have fun! Really.</p>
+</body>
+</html>

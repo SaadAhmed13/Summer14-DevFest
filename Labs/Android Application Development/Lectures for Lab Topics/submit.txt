@@ -1,0 +1,70 @@
+﻿## Detailed submission information
+
+For each lab - for example there should be a **Lab1_submission** directory in the repo (repository) we should see three files: If I were to look into  Lab1_submission I would see:
+
+	Lab1_submission/
+	├── MyRuns1.apk
+	├── README.txt
+	└── myruns.zip
+
+If you decide to use SVN for committing your source tree (strongly recommended) then there would be two sub directories per lab:
+
+	Lab1_submission/
+	Lab1/ 
+
+where **Lab1/** would be the root of your complete project source tree. This would look exactly the the same as your project in ADT/Eclipse.
+
+There is a [SVN plugin for Eclipse plugin](http://www.eclipse.org/subversive/) that might simplify the process. 
+
+## How to prepare the three files to commit
+
+Assume we are discussing  Lab1_submission. The following three files need to be submitted.
+
+## Commit MyRuns1.apk
+
+A complete zip of your project needs to be committed. Go to your workspace folder. e.g., in my case (and from the terminal)
+
+	$cd /Users/atc/Dropbox/teaching/cs65/workspace
+
+You can list the project from there
+
+	$ ls MyRuns1
+	AndroidManifest.xml gen res
+	assets proguard.cfg src
+	bin
+
+Now zip it:
+
+	$zip -r myruns1.zip MyRuns1/
+
+Then, you will see the zip file in your directory
+
+	$ ls *.zip
+	myruns1.zip
+
+commit this file.
+
+## Commit MyRuns1.apk
+
+You need to go into the bin directory of your project first
+
+	$ cd /Users/atc/Dropbox/teaching/cs65/workspace/MyRuns1/bin
+
+List the files
+
+     $ ls
+     AndroidManifest.xml classes.dex resources.ap_
+     MyRuns1.apk dexedLibs
+     classes res
+
+You see the apk MyRuns1.apk
+
+Now commit MyRuns1.apk
+
+## Commit README.txt
+
+The file should provide any additional information in plain text (no word files please) about your submission such as an extra credit
+
+## How to commit files and source trees
+
+Read [Subversion Version Control (SVN)](http://www.cs.dartmouth.edu/~campbell/cs50/svn.html) 

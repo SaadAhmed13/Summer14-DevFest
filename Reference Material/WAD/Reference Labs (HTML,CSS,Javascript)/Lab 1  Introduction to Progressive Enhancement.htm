@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 1: Introduction to Progressive Enhancement</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 1: Introduction to Progressive Enhancement</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>This lesson will Introduce some basic concepts in XHTML, CSS and 
+JavaScript with an emphasis on the concept of progressive enhancement.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create the Directory Structure for Your Files</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301275406393.png" alt="" height="81" width="253">
+
+</div> <p>Create a 513 folder with 3 sub directories: js, images, and css.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Keep 'em Separated: Progressive Enhancement</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301275597358.png" alt="" height="276" width="425">
+
+</div> <p>When you write code to create a web page, you are doing three basic things:<br>
+1.  Write XHTML that describes the content of the web page.<br>
+2.  Write CSS that specifies the presentation of that content.<br>
+3.  Write Javascript that controls the behavior of that content.</p>
+
+
+<p>The way to accommodate the broadest possible range of visitors to 
+your site is to think of the web in terms of these three layers:<br>
+1.  Start by producing the content in HTML format. This is the base 
+layer, which any visitor using any kind of browser should be able to 
+view.<br>
+2.  Next, focus on making the site look better, by adding a layer of 
+presentation information using CSS. The site will look good to users who
+ can display CSS styles.<br>
+3.  Finally, use JavaScript to introduce an added layer of interactivity
+ and dynamic behavior, which will make the site easier to use in 
+browsers equipped with JavaScript.</p>
+<p>&nbsp;</p>
+<p>Information referenced from pages 3-5 of Simply Javascript, by Kevin Yank and Cameron Adams.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">XHTML Layer: Open a New XHTML file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301277396885.png" alt="" height="222" width="546">
+
+</div> <p>Switch to code view and structure your content with XHTML.<br>
+1.  Give the page a title: "Lab 1: Introduction to Progressive Enhancement".<br>
+2.  Give the page an H1 heading: Progressive Enhancement.<br>
+3.  Create a paragraph and an unordered list.<br>
+4.  Finally, wrap your content in a div with the id=content.</p>
+
+
+<p><strong>XHTML Rules:</strong><br>
+1.  Declare a DOCTYPE. The DOCTYPE goes before the opening HTML tag at 
+the top of the page and tells the browser whether the page contains, 
+HTML or XHTML. There are three main DOCTYPES: 1) Strict - All markup is 
+XHTML 2) Transitional - markup is a mixture of HTML and XHTML (this is 
+what we will be using) 3. Frameset - used for window frames (which I 
+discourage).<br>
+2.  Declare an XML namespace - this is added to your HTML tag. This 
+gives a url which lists and defines all the valid XHTML tags.<br>
+3.  Declare your content type which states your character coding used in
+ the document. &lt;meta http-equiv="Content-Type" content="text/html; 
+charset=UTF-8" /&gt; </p>
+
+
+<p><i>Dreamweaver will do these three steps for you when you create a new file.</i></p>
+
+
+<p>4.  Close every tag, even one sided tags by adding a /&gt; at the end
+ of the tag. For example: &lt;img src="flower.jpg" alt="My Flower" /&gt;<br>
+5.  All tags must be nested correctly. If a tag opens before a preceding
+ one closes, it must be closed before that preceding one closes. For 
+example, <br>
+           &lt;p&gt; John is &lt;strong&gt;humble&lt;/strong&gt; guy&lt;/p&gt;.<br>
+6.  Inline tags can't contain block level tags. <br>
+7.  Write tags entirely in lowercase.<br>
+8. Attributes must have values and must be quoted.<br>
+9.  Use the encoded equivalents for a left angle bracket and ampersand 
+within content. When xhtml encounters, a left angle-bracket it assumes 
+you are starting a tag. Instead use &amp;lt;</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">CSS Review (Read Only)</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301278103543.png" alt="" height="120" width="454">
+
+</div> <p>A style rule is made up of the selector and the declaration. 
+The declarations are defined within curly brackets. The declaration is 
+made up of a property value pair separated by a colon with multiple 
+declarations separated by semi-colons.</p>
+
+
+<p>There are three main types of style sheets:<br>
+1. <strong>Inline styles</strong> - Also known as local styles are added
+ to the tag using XHTML style attributes. In most cases, these should be
+ avoided. Example: <br>
+                       &lt;p style="font-size: 25pts; font-weight:bold; color:red;"&gt;Red paragraph&lt;/p&gt;<br>
+2. <strong>Embedded Styles </strong>- You can place a group of style rules within the head of your XHTML document between &lt;style&gt; tags.<br>
+3. <strong>External Style</strong> - Also known as linked styles, are 
+the preferred method of adding CSS to your website and is consistent 
+with progressive enhancement. The style rules are defined in an external
+ text file that ends with .css and contains no html tags. The style 
+sheet is linked to the XHTML file with a link tag. Example:<br>
+                       &lt;link href="css/style.css" media="screen" rel="stylesheet" type="text/css"&gt;</p>
+
+
+<p>There are three main types of selectors used to help define the styles within a web page.<br>
+1.   A <strong>tag selector </strong>is used to define the styles for a 
+certain html tag. In the style sheet, the tag selector is just the name 
+of the tag without the &lt; &gt;.  The H1 in the above example.<br>
+2.   A <strong>class selector</strong> can be used multiple times within
+ a web page. It is used to define a style for only certain tags. It is 
+define with a period before it's name. Example:<br>
+          .special text {color:red;}<br>
+3.  An <strong>ID selector -</strong> Only a single instance of a 
+particular ID can be in a page, but a class can appear many times. IDs 
+are used to identify a unique piece of your XHTML code, like the header 
+or footer. IDs are defined with a hash symbol. Example:<br>
+          #footer {height:50px; color:blue;}</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">CSS: Add Some Style</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301277721980.png" alt="" height="184" width="296">
+
+</div> <p>We are going to create an external CSS file, to add some style
+ to our simple page. Under the file menu in Dreamweaver, select New .  .
+  .click on CSS and then the Create button.<br>
+Save the file as lab1.css in your CSS folder. When we are done with this
+ lab each file will be saved in it's own directory. The lab1.html file 
+in the root 513 directory, the lab1.css in the CSS directory, and the 
+lab1.js in the js directory (has not been created yet).</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">CSS Rules</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301281324053.png" alt="" height="301" width="392">
+
+</div> <p>The lab1.css file</p>
+
+
+<p>Add the CSS rules above to your file.</p>
+
+
+<p>Our style sheet has two tag selectors body and h1, a custom class selector .highlight and a unique ID selector #content.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Link your Style Sheet and Apply your Class Selectors</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301281546169_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301281546169.png" alt="Link your Style Sheet and Apply your Class Selectors" height="228" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301281546169_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>After you create your stylesheet you need to link it to your 
+html file.  &lt;link href="css/lab1.css" rel="stylesheet" 
+type="text/css" /&gt;</p>
+
+
+<p>I also applied my .highlight class selector around the keywords XHTML, CSS, and JavaScript using the inline &lt;span&gt; tags.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Introduction to JavaScript</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301283728984.png" alt="" height="254" width="560">
+
+</div> <p>In this example, we are going to use JavaScript to print data 
+to the page. This might seem kind of silly since we could just use HTML 
+to accomplish the same task. However, as you create more complex scripts
+ there will be times when you will need to output the data from your 
+scripts onto your page. This is accomplished with a<br>
+window.document.write() script.</p>
+
+
+<p>The root object in JavaScript is the browser window which is represented by the command <strong>window</strong>. Inside your browser window you have an HTML document. The word <strong>document</strong>
+ is another JavaScript object. The correct syntax is to place a dot 
+(period) between objects and methods in JavaScript. For practical 
+purposes you can think of Objects as the nouns of JavaScript. When you 
+want to write some to an html page, you use the <strong>write()</strong>
+ method. You can think of methods as the verbs of Javascript. If you 
+want to write a text string to the page, you would place it within 
+quotes inside the parentheses of the write method. If you put it all 
+together you can create a JavaScript statement. Think of statements as a
+ single sentence in JavaScript. A Javascript statement ends with a 
+semicolon. This is the statement terminator. You can think of this as 
+the period at the end of the JavaScript sentence.  Example:</p>
+
+
+<p><strong>window.document.write("Hello, my name is John.");</strong></p>
+
+
+<p>This would print the text, "Hello my name is John. to the web page.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Adding JavaScript to Our Page</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284133827_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301284133827.png" alt="Adding JavaScript to Our Page" height="57" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284133827_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Create a new JavaScript file in Dreamweaver. Save the file as lab1.js in the JS folder.</p>
+
+
+<p>Comments can be added to an external JavaScript file by typing double
+ slashes on a line. The comment below explains the purpose of this 
+script.</p>
+
+
+<p>// Print contact information to the footer of our website.</p>
+
+
+<p>This file will contain two javascript statements that will print some data to the footer of our page. <br>
+The first line will write the text string "John C McGarvey Design 
+copyright 2011 | " to the html document within the browser window. The 
+second statement creates an email link. Notice the use of single quotes 
+around the href attribute within the a tag. The use of double quotes 
+here would have caused a syntax error.</p>
+
+
+<p>window.document.write("&lt;p&gt;John C. McGarvey Design &amp;copy; 2011 | ");<br>
+window.document.write(" Contact: &lt;a href='mailto:john@mcgarvey.com'&gt;john@mcgarvey.com&lt;/a&gt;&lt;/p&gt;");</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Link the JavaScript Code to the XHTML file</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284451957_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301284451957.png" alt="Link the JavaScript Code to the XHTML file" height="185" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284451957_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>I decided to create a unique div with the id footer to contain
+ the external JavaScript.  While you are at it also add a div with the 
+id header around the h1 tag.<br>
+Since we placed our script in an external file, we will need to create a link to the file within our web page. <br>
+To link to an external JavaScript file you need to use script tags.</p>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script
+ src="js/lab1.js" language="javascript" 
+type="text/javascript"&gt;&lt;/script&gt;</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Results of our Lab1 Web Page</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284601537_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301284601537.png" alt="Results of our Lab1 Web Page" height="232" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab1/images/Lab_1_Introduction_to_Progressive_Enhancement/media_1301284601537_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Notice how the information from the footer was printed dynamically from the external JavaScript file.</p>
+
+
+<p>This is an example of a <strong>fixed width layout.</strong> The 
+layout is fixed width because we defined the width of the content div at
+ a set width of 600 pixels. Notice also that the website is centered in 
+the middle of the browser window. The trick to accomplish this is to set
+ the right and left margins of a containing div (#content in this 
+example) to auto. </p>
+
+
+<p>To review, in order to center a web page in the middle of your 
+browser window, you need to give it a fixed width with left and right 
+margins set to auto.</p>
+
+
+<p><strong>#content {</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;width: 600px;</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;margin-right: auto;</strong><br>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;margin-left: auto;</strong><br>
+<strong>}</strong></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_12" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add a Full Page Background Image</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301290378236.png" alt="" height="339" width="560">
+
+</div> <p>Find a large Background image that is at least 960 pixels wide and save it into your Images folder, giving it the name bg.jpg.</p>
+
+
+<p>Add the CSS rule for the HTML selector to add a large background image that fills the entire page without whitespace.</p>
+
+
+<p><font color="#000000">html {</font><br>
+<font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; background: url(images/bg.jpg) no-repeat center center fixed;</font><br>
+<font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; -webkit-background-size: cover;</font><br>
+<font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; -moz-background-size: cover;</font><br>
+<font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; -o-background-size: cover;</font><br>
+<font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; background-size: cover;</font><br>
+<font color="#000000">}</font></p>
+
+
+<p><font color="#000000">You will need to delete any background color from the body style in your external CSS file. New body CSS rule:</font></p>
+
+
+<p>body {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-family: Georgia, "Times New Roman", Times, serif;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-size: 85%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #000;<br>
+}</p>
+
+
+<p>Tutorial: <a href="http://css-tricks.com/perfect-full-page-background-image/">http://css-tricks.com/perfect-full-page-background-image/</a></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_13" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add Opacity to the Content Div</h2>
+
+		<div class="image">
+
+<img src="Lab%201%20%20Introduction%20to%20Progressive%20Enhancement_files/media_1301290578176.png" alt="" height="339" width="560">
+
+</div> <p>Open up your lab1.css file add the last four lines of code to 
+your #content rule. This uses the filter declaration for Internet 
+Explorer and the CSS3 standard opacity declaration.</p>
+
+
+<p>#content {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFF;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding: 10px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width: 600px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-right: auto;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-left: auto;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;border:1px solid black;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;  /* for IE */<br>
+  filter:alpha(opacity=60);<br>
+  /* CSS3 standard */<br>
+  opacity:0.6;<br>
+}</p>
+
+
+<p>Transparency Tutorial: <a href="http://www.w3schools.com/Css/css_image_transparency.asp">http://www.w3schools.com/Css/css_image_transparency.asp</a></p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

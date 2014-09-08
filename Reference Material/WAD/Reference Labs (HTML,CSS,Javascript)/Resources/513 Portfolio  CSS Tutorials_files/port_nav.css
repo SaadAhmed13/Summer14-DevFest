@@ -1,0 +1,42 @@
+@charset "UTF-8";
+					
+#nav ul {
+	list-style:none;
+	padding: 0px;
+	vertical-align:bottom;
+	margin: 0px 0px 1.5em 0px;
+	background-color: #990;	
+}
+#nav li {display: block;}
+#nav li a {
+	display:block;
+	text-decoration:none;
+	padding: 0px 15px;
+	line-height: 2.5;
+	border-bottom: 1px solid #fff;
+	background-color: #A6AD00;		
+}
+
+#nav_hom a {
+	border-top: 1px solid #fff;	
+}
+
+
+#nav li a:hover { background: #fff;}
+
+#nav li a:link, #nav li a:visited {
+    color: #900;
+}
+#nav li a:hover, #nav li a:active {
+    color: #A6AD00;
+    background-color:#FFF;
+}
+
+
+#body_hom #nav_hom a, #body_css #nav_css a,
+#body_js #nav_js a, #body_prj #nav_prj a,
+#body_eval #nav_eval a {
+		background:#fff; 
+		font-weight:bold; 
+		color:#A6AD00;	
+}

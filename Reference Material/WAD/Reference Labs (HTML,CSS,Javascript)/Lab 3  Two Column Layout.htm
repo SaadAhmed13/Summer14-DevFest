@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 3: Two Column Layout</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%203%20%20Two%20Column%20Layout_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%203%20%20Two%20Column%20Layout_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%203%20%20Two%20Column%20Layout_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%203%20%20Two%20Column%20Layout_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 3: Two Column Layout</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>This lab will show you how to create a two column layout.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Download the Two Column Template</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302481791308.png" alt="" height="347" width="560">
+
+</div> <p>Download the two_column_template.html file and open it in 
+Dreamweaver. Also download a header image (I have given you several to 
+choose from) file and save it into your images folder nested inside your
+ 513 root directory. Name the file lab3_2col.html.</p>
+
+
+<p> If you want to use your own image make sure the width is 960 pixels and the height is 200 px.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Review the XHTML</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302481905034.png" alt="" height="435" width="362">
+
+</div> <p>Go to code view and review the structure of the 2 column 
+template file. All of the divs are nested within a container div. There 
+is also a second div with the id nav which will be used to create a left
+ hand column for the main navigation. Inside this div is an unordered 
+list which will be styled as the main navigation buttons later. </p>
+
+
+<p>One of the paragraphs has a class of note which will be used to create a pull quote later. </p>
+
+
+<p>The template also has the usual header, footer, and content divs.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Clear the margins and padding and add some default styles</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302484876472.png" alt="" height="291" width="276">
+
+</div> <p>Create a new custom external css file named lab3.css and save 
+it to your CSS folder. Link the file within the head section of your 
+lab3_2col.html page.<br>
+<i>          &lt;link href="css/lab3.css" rel="stylesheet" type="text/css" /&gt;</i></p>
+
+
+<p>The first step is to reset the margins and padding to 0 px and then 
+create some default styles for the html and body tags. This should look 
+familiar to you by now. I am just setting some text styles and the 
+background color for the page. Feel free to experiment with your own 
+color scheme.</p>
+
+
+<p>For the container div, I am creating a fixed width layout at 960px 
+with a styled border. I set the left and right margins to the container 
+div to auto so it would be centered in the browser. I gave the container
+ a background color of white and made sure the text was aligned left.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Define the header and footer styles</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302485593248.png" alt="" height="339" width="560">
+
+</div> <p>Like we have done in the past, I am just going to set some 
+default styles for my header and footer divs. You can add background 
+images, like I have done in this example or set some background colors.</p>
+
+
+<p><i>#header {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(../images/redwood_rings.jpg);</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-repeat: no-repeat;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;height: 190px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 0px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 10px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFF;</i><br>
+<i>}</i><br>
+<i>#footer {</i><br>
+<strong><i>&nbsp;&nbsp;&nbsp;&nbsp;clear: both; /*Forces footer below both columns*/</i></strong><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 10px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-size: 80%;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #A6AD00;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #A9421F;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;text-align: right;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(../images/moss.jpg);</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;height: 75px;</i><br>
+<i>}</i></p>
+
+
+<p>To make sure that the footer clears, both of the columns you need to add the clear: both: declaration.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Understanding the CSS Box Model</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302484243243.png" alt="" height="441" width="560">
+
+</div> <p>With CSS you can define the height and width of your content 
+and constrain it with padding and give it a margin. The border is 
+in-between your padding and margin. If you add a background image it 
+will be stacked on top of the defined background color.</p>
+
+
+<p>Now, in order to understand how to use CSS to create columns in a 
+layout it is important to know that your padding and margin is ADDED to 
+your height and width to come up with the total amount of space your div
+ will take up on your web page. If you have a div with a width of 200px,
+ padding of 5px and a margin of 10px. The total amount of space that 
+your column will take up in your design is 230px.</p>
+
+
+<p><strong>Content width 200 px + left and right padding (5px each) 10px + left and right margin (10px each) 20px = 230px</strong></p>
+
+
+<p>Illustration by Jon Hicks at http://hicksdesign.co.uk/else/images/3d_box_model-01-20100705-214448.png</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create the Two Column Layout: Style the Content and Nav divs</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302486399092.png" alt="" height="261" width="560">
+
+</div> <p>In our design, since we defined the total width of our 
+container div to 960 pixels this is the amount of space we have to work 
+with to create our two columns. This will also have to include any 
+padding and margins that we might want to have on each column. </p>
+
+
+<p>We have a main content div and a nav div.  The first column is going 
+to be for our navigation. I want the buttons to run right up to the 
+border of the container so I am not going to adding any padding or 
+margins. I will set the width of the nav div to 200 pixels and made sure
+ it is a block element. I want the nav div to float to the left and have
+ the main content wrap around it to the right. This is done with the 
+float: left declaration.</p>
+
+
+<p><i>#nav {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #A6AD00; </i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;width: 200px; </i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;float: left; </i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;display: block;</i><br>
+<i>}</i></p>
+
+
+<p>If you subtract 200px from 960px you are left with 760 pixels to work
+ with to create your main content div. I want to add 20 pixels of 
+padding to the right of the main content and I have to set the left 
+margin to be large enough to include the width of nav div and the amount
+ of white space I want between the two columns (20px). If you subtract 
+20 pixels from 760 for the right padding and 20 pixels for the left 
+margin (width of the white space in addition to the 200 pixel width of 
+the nav div), you are left with 720 pixels for the width of the content 
+div.</p>
+
+
+<p><i>#content {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 20px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-left: 220px;  /*20 pixels of white space and 200 pixels for the width of the nav div */</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;width: 720px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;</i><br>
+<i>}</i></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add some Heading and Paragraph Text Style</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302494133690.png" alt="" height="127" width="396">
+
+</div> <p>I defined a font and text color for my headings and added some
+ padding to the bottom of my paragraphs. Remember when you clear your 
+margin and padding to all your tag selectors, you have to go back and 
+add them to your paragraphs.</p>
+
+
+<p><i>p {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 1.5em;</i><br>
+<i>}</i></p>
+<p>&nbsp;</p>
+<p><i>h1, h2, h3, h4, h5, h6 {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #B0BF00;</i><br>
+<i>}</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Extra Style: Add a Drop Cap with CSS</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302495790729.png" alt="" height="126" width="510">
+
+</div> <p>We are going to create a new external css file named 
+lab3_text.css and save it into the css folder. Link this style sheet to 
+the head section of your template.</p>
+
+
+<p><i>         &lt;link href="css/lab3_text.css" rel="stylesheet" type="text/css" /&gt;</i></p>
+
+
+<p>We are going to create a drop cap effect using the :first pseudo 
+class selector. Pseudo-Classes are used to add special effects to some 
+selectors. They are often added to classes in this format:  
+selector.class:pseudo-class {property:value;}</p>
+
+
+<p>For our drop cap, we are going to create a selector that will be only
+ applied to the first letter of the paragraph with the class intro.</p>
+
+
+<p><i>p.intro:first-letter {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-family: "Century Gothic Bold Italic", "Old English", serif;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-size: 400%;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;line-height: 0.9em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-weight: bold;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #900;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;float: left;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-right: 0.05em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 0px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 0.05em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 0.02em;</i><br>
+<i>}</i></p>
+
+
+<p>In this style, we defined a custom font at a large size with a bold 
+color that is floated to the left, forcing the rest of the paragraph to 
+wrap to the right of the letter. </p>
+
+
+<p>If you look at the XHTML source code of our template, you can see 
+that we added a custom class to the first paragraph of the content div. </p>
+
+
+<p><i>      &lt;p class="intro"&gt;</i></p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Extra Style: Creating a Pull Quote Effect</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302496061834.png" alt="" height="141" width="560">
+
+</div> <p>Our next text effect will a pull quote and it will also be added to the lab3_text.css external style sheet. </p>
+
+
+<p>The pull quote is going to float to the right and force the rest of 
+the paragraphs to wrap around it to the left. The text will be slightly 
+smaller, italic, and be given a top and bottom border.</p>
+
+
+<p>Add the following style selector to your labe3_text.css style sheet. 
+Review your xhtml code and make sure one of the paragraphs has been 
+given a note class.</p>
+
+
+<p><i>.note {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-size: 0.8em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;font-style: italic;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;width: 40%;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 1em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-left: 1em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 0.3em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 0.4em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 0.3em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 0.4em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-top-width: 2px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom-width: 2px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-top-style: double;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom-style: double;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-top-color: #900;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom-color: #900;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;float: right;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #900;</i><br>
+<i>}</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Two Column Layout</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302496474832.png" alt="" height="339" width="560">
+
+</div> <p>This is the look of the two column layout. The final step to 
+define the style for our vertical navigation bar. Create a third 
+external style sheet named vert_nav.css and save it into your CSS sub 
+folder. Link the file to your template. You have now have three 
+different external style sheets for this page. One defines the layout of
+ your divs, one  the special text style, and the third one creates the 
+vertical navigation bar. Your head section should look something like 
+this:</p>
+
+
+<p>&lt;head&gt;<br>
+<i>&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;</i><br>
+<i>&lt;title&gt;Two Column Layout&lt;/title&gt;</i></p>
+
+
+<p><i>&lt;link href="css/lab3.css" rel="stylesheet" type="text/css" /&gt;</i><br>
+<i>&lt;link href="css/vert_nav.css" rel="stylesheet" type="text/css" /&gt;</i><br>
+<i>&lt;link href="css/lab3_text.css" rel="stylesheet" type="text/css" /&gt;</i><br>
+<i>&lt;/head&gt;</i></p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Vertical Navigation buttons</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302497080200.png" alt="" height="448" width="403">
+
+</div> <p>The first step is to eliminate the bullets from the unordered list and give the list a set width.</p>
+
+
+<p><i>#nav ul {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;list-style-type: none;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding: 0px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;vertical-align: bottom;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #990;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;width: 170;  /*Change width to a set pixel width */</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-top: 0px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-right: 0px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 1.5em;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;margin-left: 0px;</i><br>
+<i>}</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_12" class="lessonStep top">
+
+	    <h2 class="StepTitle">Turn the Unordered Lists into Buttons</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302497222347.png" alt="" height="478" width="473">
+
+</div> <p>The trick to make the unordered list look like a button is to 
+display the &lt;li&gt;tag as a block instead of inline element. Next, 
+the links are given a style to make them look like buttons.</p>
+
+
+<p><i>#nav li {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;display: block;</i><br>
+<i>}</i><br>
+<i>#nav li a {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;display:block;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;text-decoration: none;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding: 0 15px;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;line-height: 2.5;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-bottom: 1px solid #fff;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #900;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #A6AD00;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;padding: 0.2em 1em;</i><br>
+<i>  /*Delete float left */</i><br>
+<i>}</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_13" class="lessonStep top">
+
+	    <h2 class="StepTitle">Make the buttons roll overs</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302497784005.png" alt="" height="545" width="375">
+
+</div> 
+
+<p>View the XHTML source code and look at the unordered list and notice 
+how each &lt;li&gt; tag was given it's own unique ID. This will allow 
+you to apply a custom style to just the top and bottom buttons. Using 
+these selectors to eliminate the border on the bottom button and add a 
+border to the top button. Next,  add a custom roll over effect with the 
+a:hover pseudo-class.</p>
+<p>&nbsp;</p>
+<p><i>#nav_hom a {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;border-top: 1px solid #fff;</i><br>
+<i>}</i></p>
+
+
+<p><i>#nav #nav_con a { border: none; } </i><br>
+<i>#nav a:hover { background: #FFF; }</i><br>
+<i>#nav li a:link, #nav li a:visited {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #900;</i><br>
+<i>}</i><br>
+<i>#nav li a:hover, #nav li a:active {</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;color: #A6AD00;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;background-color:#FFF;</i><br>
+<i>}</i></p>
+
+
+<p> By adding a unique id to the body tag of each page of your site, you
+ could define the style for the button of the current page to look 
+differently from the rest of the buttons.</p>
+
+
+<p><i>#body_hom #nav_hom a, #body_css #nav_css a,</i><br>
+<i>#body_js #nav_js a, #body_prj #nav_prj a,</i><br>
+<i>#body_eval #nav_eval a</i><br>
+<i>{ background: #fff;font-weight: bold; color: #A6AD00; }</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_14" class="lessonStep top">
+
+	    <h2 class="StepTitle">Final Design with a Vertical Navigation Bar</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20Two%20Column%20Layout_files/media_1302498134015.png" alt="" height="457" width="560">
+
+</div> <p>See the final design above.</p>
+
+
+<p>Save and upload the files to the server. Link to your Lab 3 assignment on my website.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

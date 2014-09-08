@@ -1,0 +1,564 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>Google Maps - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h2 id="lecture-17---google-maps">Lecture 17 - Google Maps</h2>
+<p>In this lecture, we learn how to incorporate Google Maps into applications - this is very cool. We have all used Google Maps on laptop browsers and smartphones but only as user up until now.</p>
+<p>We will first learn how to install the Android Google Maps v2.0 environment. Then through two simple demos apps we get a sense of the main programming features needed to construct and control maps. I even named a demo app after the city recently described by New York Times journalist Neil MacFarquhar as a &quot;drab industrial city&quot;. Cheers Neil - I was born and brought up in the hip, bustling, vibrant town of Coventry. You clearly now &quot;darb&quot; when you see it Neil. I digress. Now we transition from one Android aka Neil to another.</p>
+<h2 id="what-this-lecture-will-teach-you">What this lecture will teach you</h2>
+<ul>
+<li>How to Install the Google Maps 2.0 environment.</li>
+<li>I Am Here app.</li>
+<li>Coventry Demo app (dedicated to <a href="http://www.neilmacfarquhar.com/">Neil MacFarquhar</a>)</li>
+</ul>
+<h2 id="demo-projects">Demo projects</h2>
+<p>The demo code used in this lecture include:</p>
+<ul>
+<li>We will use the <a href="..\code\i_am_here.zip">i_am_here.zip</a> app to demonstrate how to display a single map and update it as we move. This app can track you as you move around and put a marker on the map of your current location.</li>
+<li>We also use the <a href="..\code\coventrydemo.zip">coventrydemo.zip</a> app which allows the user to interact with the map by placing markers on the map and then connecting up the markers with <a href="http://developer.android.com/reference/com/google/android/gms/maps/model/Polyline.html">polylines</a> drawn on the map. A polyline is a list of points, where line segments are drawn between consecutive points.</li>
+</ul>
+<p>The Coventry demo is take from here: <a href="http://android-er.blogspot.com/2013/01/google-maps-android-api-v2-example_5213.html">detect MarkerClick and add Polyline</a> The app detects long click on map and adds a marker. Lines can be drawn between markers using polylines.</p>
+<p>These two apps will provide the necessary background to implement maps for [MyRuns4](http://www.cs.dartmouth.e</p>
+<p>Note, that when you download the <a href="..\code\i_am_here.zip">i_am_here.zip</a> and <a href="..\code\coventrydemo.zip">coventrydemo.zip</a> demo apps you will need to replace the Google MAP API key in the Manifest (which is mine) with your own key. These apps will not work if you do not do that. Instructions to do this are given Step 2 below.</p>
+<h2 id="resources">Resources</h2>
+<p>Some excellent references.</p>
+<ul>
+<li>Course book section on <a href="http://commonsware.com/Android/">Mapping with MapView</a> page 817</li>
+<li><a href="http://www.vogella.com/articles/AndroidGoogleMaps/article.html">Google Maps Android API v2 - Tutorial</a></li>
+<li><a href="http://android-er.blogspot.com/2013/01/google-maps-android-api-v2-example_5213.html">Google Maps Android API v2 example: detect MarkerClick and add Polyline</a></li>
+<li><a href="https://developers.google.com/maps/documentation/android/reference/com/google/android/gms/maps/package-summary">com.google.android.gms.maps</a> reference.</li>
+<li>Installing <a href="https://developers.google.com/maps/documentation/android/start">Google Maps Android API v2</a>.</li>
+</ul>
+<h2 id="how-to-install-the-google-maps-2.0-environment">How to Install the Google Maps 2.0 environment</h2>
+<p>The detailed process of creating a new Android application that uses the Google Maps Android API v2 <a href="https://developers.google.com/maps/documentation/android/start">requires several steps</a>. In what follows we provide a more truncated set of steps with some screen dumps to help you along</p>
+<p>Many of the steps outlined in this section will only have to be performed once, but some of the information will be a handy reference for future applications. The overall process of adding a map to an Android application is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>download and configure the <a href="https://play.google.com/store">Google Play</a> services SDK; the Google Maps Android API is distributed as part of this SDK. Note, the Play plays (forgive the pun) a large role in publishing an app and we will discuss that towards the end of the course.</li>
+<li>Obtain an API key for Google Maps v2.0: to do this, you will need to register a project in the <a href="https://code.google.com/apis/console/">Google APIs Console</a>, and get a <a href="http://developer.android.com/tools/publishing/app-signing.html">signing certificate for your app</a>.</li>
+<li>Specify settings in the Application Manifest: to do this you will need to add the dynamically created key to you Manifest file</li>
+<li>Add a map to a new or existing Android project: to do this you need to add a path to the Google Map APIs you download.</li>
+</ol>
+<p>You have to do step 1 only once for your Eclipse environment. You have to do steps 2-4 for each new project that uses maps. I'll repeat this and paraphrase: for each new project that uses Google Map v2.0 you have to get a new key using the Google APIs Console; then insert that key into your manifest, and finally, you have to add the path to the Google Map library into the new project.</p>
+<p>OK. That is the summary of how you do steps 1-4. Now let's provide more details with some illustrative screen dumps.</p>
+<h2 id="step-1-install-google-play-services">STEP 1: Install Google Play services</h2>
+<p>The API is distributed as part of the Google Play services SDK, which you can download with the Android SDK Manager. To use the Google Maps Android API v2 in your app, you will first need to install the Google Play services SDK. To learn how to install the package, see the <a href="http://developer.android.com/google/play-services/setup.html">Google Play services documentation</a> for full details.</p>
+<p>We need to install <a href="http://developer.android.com/google/play-services/setup.html">Google Play</a> to get Google Maps and other parts of the SDK; you need to:</p>
+<ol style="list-style-type: decimal">
+<li>Launch the SDK Manager. From Eclipse (with ADT), select Window &gt; Android SDK Manager.</li>
+</ol>
+<div class="figure">
+<img src="images\sdk.png">
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Scroll to the bottom of the package list, select Extras &gt; Google Play services, and install it (see figure below). The Google Play services SDK is saved in your Android SDK environment at <android-sdk-folder>/extras/google/google_play_services/. For example, in my environment it is in: cs65/workspace/adt-bundle-mac-x86_64/sdk/extras/google/google_play_services/</android-sdk-folder></li>
+<li>Copy the <android-sdk-folder>/extras/google/google_play_services/libproject/google-play-services_lib library project into the source tree where you maintain your Android app projects. Import the library project into your workspace. Click File &gt; Import, select Android &gt; Existing Android Code into Workspace, and browse to the copy of the library project to import it.</android-sdk-folder></li>
+</ol>
+<h2 id="step-2-obtain-an-api-key-for-google-maps-v2.0">STEP 2: Obtain an API key for Google Maps v2.0</h2>
+<p>Obtaining a key for your application requires several steps. These steps are outlined here, and described in detail in the following sections.</p>
+<ol style="list-style-type: decimal">
+<li>Retrieve information about your application's certificate.</li>
+<li>Register a project in the Google APIs Console and add the Maps API as a service for the project.</li>
+<li>Get a new key.</li>
+</ol>
+<h3 id="retrieve-information-about-your-applications-certificate">Retrieve information about your application's certificate</h3>
+<p>The Maps API key is based on a short form of your application's digital certificate, known as its SHA-1 fingerprint. Google Maps uses SHA-1 fingerprint in combination with the project name as a way to identify your application.</p>
+<p>To display the SHA-1 fingerprint for your certificate, first ensure that you have the certificate itself. To obtain a SHA-1 fingerprint for your certificate read <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html">this</a> or if you don't like reading the details follow these instructions:</p>
+<p>We use the keytool command to generate a debug signing certificate. To do this open a terminal on your mac (sorry windows people) and issue the following command:</p>
+<pre class="sourceCode java"><code class="sourceCode java">$ keytool -list -v -keystore ~/.<span class="fu">android</span>/debug.<span class="fu">keystore</span> -alias androiddebugkey -storepass android -keypass android</code></pre>
+<p>You should get the following output with the embedded SHA1: 65:24:35:7B:14:72:FC:B7:35:EF:A9:2E:01:3D:EA:41:E9:67:40:A4</p>
+<p>The output from keytool should be:</p>
+<pre class="sourceCode java"><code class="sourceCode java">Alias name: androiddebugkey
+Creation date: Aug <span class="dv">19</span>, <span class="dv">2011</span>
+Entry type: PrivateKeyEntry
+Certificate chain length: <span class="dv">1</span>
+Certificate[<span class="dv">1</span>]:
+Owner: CN=Android Debug, O=Android, C=US
+Issuer: CN=Android Debug, O=Android, C=US
+Serial number: 4e4eb341
+Valid from: Fri Aug <span class="dv">19</span> <span class="dv">15</span>:<span class="dv">02</span>:<span class="dv">25</span> EDT <span class="dv">2011</span> until: Sun Aug <span class="dv">11</span> <span class="dv">15</span>:<span class="dv">02</span>:<span class="dv">25</span> EDT <span class="dv">2041</span>
+Certificate fingerprints:
+     MD5:  F3:<span class="dv">82</span>:2F:FC:1E:9E:A8:B2:<span class="dv">89</span>:<span class="dv">48</span>:<span class="dv">92</span>:<span class="dv">13</span>:AF:B4:CB:F3
+     SHA1: <span class="dv">65</span>:<span class="dv">24</span>:<span class="dv">35</span>:7B:<span class="dv">14</span>:<span class="dv">72</span>:FC:B7:<span class="dv">35</span>:EF:A9:2E:<span class="dv">01</span>:3D:EA:<span class="dv">41</span>:E9:<span class="dv">67</span>:<span class="dv">40</span>:A4
+     Signature algorithm name: SHA1withRSA
+     Version: <span class="dv">3</span></code></pre>
+<p>If it fails, sorry you have to read the information above. One issue could be <a href="http://stackoverflow.com/a/9398619">how to find ~/.android/debug.keystore in Mac OS X for Android?</a> so read that stack overflow posting; summary: you can select Windows &gt; Prefs &gt; Android &gt; Build and you will see a field that tells the location of your debug keystore, as shown below</p>
+<div class="figure">
+<img src="images\keytool.png">
+</div>
+<p>Note, we replace /Users/atc/.android/debug.keystore with ~/.android/debug.keystore as in the keytool syntax shown in the command line above.</p>
+<p>If all fails go back over these <a href="https://developers.google.com/maps/documentation/android/start#displaying_certificate_information">steps</a>.</p>
+<p>OK. You have your SHA certificate. You need to use this every time you create a new project that uses Google Maps so store your SHA (it does not change) somewhere that you can find later. Or store the command -- you can always re-run it.</p>
+<h3 id="register-a-project-in-the-google-apis-console-and-add-the-maps-api">Register a project in the Google APIs Console and add the Maps API</h3>
+<pre><code>as a service for the project.</code></pre>
+<p>Now you have to get a project and register for the API. So after you have your signing certificate fingerprint we need to create a project for your application in the Google APIs Console and register for the Maps API.</p>
+<p>To that we have to follow these <a href="https://developers.google.com/maps/documentation/android/start#creating_an_api_project">steps</a>:</p>
+<ol style="list-style-type: decimal">
+<li>Click on Google APIs Console: <strong>https://code.google.com/apis/console</strong></li>
+<li>If it is the first time you open the console, it will show you an error.</li>
+</ol>
+<div class="figure">
+<img src="images\api_key_step_0.jpg">
+</div>
+<p>Click OK, then click &quot;Loading&quot; at the column on the left.</p>
+<div class="figure">
+<img src="images\api_key_step_1.jpg">
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>You will prompted to create a project that you use to track your usage of the Google Maps Android API. Click Create Project.</li>
+</ol>
+<div class="figure">
+<img src="images\api_key_step_2.jpg">
+</div>
+<p>Input your project name, select &quot;Terms and Service&quot; then click &quot;Create&quot; to create a new project.</p>
+<div class="figure">
+<img src="images\api_key_step_3.jpg">
+</div>
+<p>After creating the project, you can see the project in the project list. Click the project to go to the next step.</p>
+<div class="figure">
+<img src="images\api_key_step_4.jpg">
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Click &quot;APIs &amp; auth&quot; and &quot;APIs&quot; on the upper left corner.</li>
+</ol>
+<div class="figure">
+<img src="images\api_key_step_5.jpg">
+</div>
+<p>You will see a list of APIs. Find <strong>Google Maps Android API v2</strong> and click the &quot;Off&quot; button to turn it on.</p>
+<div class="figure">
+<img src="images\api_key_step_6.jpg">
+</div>
+<p>A dialog will show up, you need to agree the terms of services.</p>
+<div class="figure">
+<img src="images\api_key_step_7.jpg">
+</div>
+<ol start="5" style="list-style-type: decimal">
+<li>Now, you have enabled the Google Map API. You need to add credentials so that your app can be authorized to use the API. Click &quot;APIs &amp; auth&quot; and &quot;Credentials&quot; on the upper left corner, then click &quot;CREATE NEW KEY&quot; under &quot;Public API access&quot;</li>
+</ol>
+<div class="figure">
+<img src="images\api_key_step_8.jpg">
+</div>
+<p>Click <strong>Android Key</strong> in the following dialog.</p>
+<div class="figure">
+<img src="images\api_key_step_9.jpg">
+</div>
+<p>In the resulting dialog, enter the SHA-1 fingerprint, then a semicolon, then your application's package name. For example:</p>
+<p>You will need the package name from your project -- you find that in the manifest, for example:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package</span>=&quot;edu.dartmouth.cs.whereami_6&quot;</code></pre>
+<p>You will also need your SHA certificate</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="dv">65</span>:<span class="dv">24</span>:<span class="dv">35</span>:7B:<span class="dv">14</span>:<span class="dv">72</span>:FC:B7:<span class="dv">35</span>:EF:A9:2E:<span class="dv">01</span>:3D:EA:<span class="dv">41</span>:E9:<span class="dv">67</span>:<span class="dv">40</span>:A4</code></pre>
+<p>OK. Now follow the instructions and put your SHA and package name into the field, shown below using a <strong>;</strong> between the SHA and package name.</p>
+<p>You will also need your SHA certificate</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="dv">65</span>:<span class="dv">24</span>:<span class="dv">35</span>:7B:<span class="dv">14</span>:<span class="dv">72</span>:FC:B7:<span class="dv">35</span>:EF:A9:2E:<span class="dv">01</span>:3D:EA:<span class="dv">41</span>:E9:<span class="dv">67</span>:<span class="dv">40</span>:A4;edu.<span class="fu">dartmouth</span>.<span class="fu">cs</span>.<span class="fu">whereami_6</span></code></pre>
+<div class="figure">
+<img src="images\api_key_step_10.jpg">
+</div>
+<p>Now you will see the new key, as shown below</p>
+<div class="figure">
+<img src="images\api_key_step_11.jpg">
+</div>
+<p>The API key is:</p>
+<pre class="sourceCode java"><code class="sourceCode java">AIzaSyBzpZBg7esbJeF5UXYHnPX0ljwQfRSbNW4</code></pre>
+<p>You need to add that key to the mainfest of the project with the package name <strong>edu.dartmouth.cs.whereami_6</strong>. This key will <strong>only</strong> work with this project and no other one.</p>
+<p>One problem I had -- was I clicked not on <strong>New Android Key</strong> but by accident (because I'm an idiot) I clicked on Create New Browser Key. Guess what? My code would not work but compiled OK. I saw from the CatLog that the map was not loading from Google and knew the key was screwed up but it took me a couple of hours to see the nose on my face -- which is sizeable as you well know.</p>
+<h2 id="step-3-specify-settings-in-the-application-manifest">STEP 3: Specify settings in the Application Manifest</h2>
+<p>There are a number of additions to the Manifest file (we discuss them in this write up) but we focus here on the meta-data. Once you have the API key you need to add it into the Manifest as part of the meta-data, as shown below.</p>
+<pre class="mxml"><code>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+ 
+     [Snip code]
+         ........
+         ........
+   
+     &lt;permission
+        android:name=&quot;edu.dartmouth.cs.whereami_5.MAPS_RECEIVE&quot;
+        android:protectionLevel=&quot;signature&quot; /&gt;
+
+    &lt;uses-permission android:name=&quot;edu.dartmouth.cs.whereami_5.MAPS_RECEIVE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;
+    &lt;uses-permission android:name=&quot;com.google.android.providers.gsf.permission.READ_GSERVICES&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+
+    &lt;uses-feature
+        android:glEsVersion=&quot;0x00020000&quot;
+        android:required=&quot;true&quot; /&gt;
+
+   &lt;application
+ 
+     [Snip code]
+         ........
+         ........
+   
+
+
+         &lt;meta-data
+            android:name=&quot;com.google.android.maps.v2.API_KEY&quot;
+            android:value=&quot;AIzaSyBzpZBg7esbJeF5UXYHnPX0ljwQfRSbNW4&quot; /&gt;
+         &lt;meta-data
+            android:name=&quot;com.google.android.gms.version&quot;
+            android:value=&quot;@integer/google_play_services_version&quot; /&gt;
+
+   &lt;/application&gt;
+
+&lt;/manifest&gt;</code></pre>
+<p>There are the a number of additions to the manifest needed -- not necessarily in the sequential order, as they appear in the manifest:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>meta-data:</strong> The first meta-data element sets the key com.google.android.maps.v2.API_KEY to the value of your key -- that is, AIzaSyBzpZBg7esbJeF5UXYHnPX0ljwQfRSbNW4 -- and makes the API key visible to any <a href="https://developers.google.com/maps/documentation/android/reference/com/google/android/gms/maps/MapFragment">MapFragment</a> in your application. The second meta-data element sets the key com.google.android.gms.version to the value of your Google Play Services version. This is required for any app that uses Google Play Services.</p></li>
+<li><p><strong>permission:</strong> We set the permission for the app to receive maps. Make sure you add this permission of maps will not load.</p></li>
+<li><p><strong>uses-permission:</strong> The application must be granted uses permission in order for it to operate correctly. Permissions are granted by the user when the application is installed, not while it's running. There are a number related to maps:</p></li>
+</ol>
+<ul>
+<li>INTERNET is used by the API to download map tiles from Google Maps servers.</li>
+<li>ACCESS_NETWORK_STATE allows the API to check the connection status in order to determine whether data can be downloaded.</li>
+<li>READ_GSERVICES allows the API to access Google web-based services.</li>
+<li>WRITE_EXTERNAL_STORAGE allows the API to cache map tile data in the device's external storage area.</li>
+<li>ACCESS_COARSE_LOCATION allows the API to use WiFi or mobile cell data (or both) to determine the device's location.</li>
+<li>ACCESS_FINE_LOCATION allows the API to use the Global Positioning System (GPS) to determine the device's location to within a very small area.</li>
+<li>ACCESS_NETWORK_STATE allows applications to access information about networks.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>uses-feature:</strong> Google Maps Android API v2.0 requires OpenGL ES version 2. Therefore you must add a <uses-feature> element as a child of the <manifest> element in manifest. This it has the effect of preventing Google Play Store from displaying your app on devices that don't support OpenGL ES version 2.</manifest></uses-feature></li>
+</ol>
+<h2 id="step-4-add-a-path-to-the-google-map-apis.">STEP 4: Add a path to the Google Map APIs.</h2>
+<p>Almost there. You need to <a href="http://developer.android.com/tools/projects/projects-eclipse.html#ReferencingLibraryProject">set up your path library for Google Map APIs</a>:</p>
+<ol style="list-style-type: decimal">
+<li>Under <strong>Project</strong> in Eclipse (ADT) go to <strong>Properties</strong>.</li>
+<li>Click on <strong>Properties-&gt; Android -&gt; Library</strong></li>
+<li>Click <strong>Add</strong> to open the Project Selection dialog.</li>
+<li>Select the google-play-services_lib project (which you already loaded into your workspace in STEP 1) and click OK, as shown below.</li>
+<li>Click <strong>Apply</strong> in the Properties window and OK and you are done.</li>
+</ol>
+<p>See below for some image dumps of the process:</p>
+<p>First, goto Project &gt; Properties and select Android (in the left panel) as shown below.</p>
+<div class="figure">
+<img src="images\properties1.png">
+</div>
+<p>Under Library select <strong>Add</strong> and select google-play-services_lib and click OK as shown below.</p>
+<div class="figure">
+<img src="images\properties2.png">
+</div>
+<p>In your project you will see that the library has been installed under a number of libraries folders, as shown below.</p>
+<div class="figure">
+<img src="images\google-play-services_lib.png">
+</div>
+<p>OK you are all set in terms of adding the library to your project. Again, you have to repeat this step for each project that uses Google Maps.</p>
+<h2 id="i-amhere----a-tracking-app">I <em>Am</em>Here -- a tracking app</h2>
+<p>The first application we look at this is an extension of the applications we developed for the lecture on the <a href="..\lecture17\lecture17.html">LocationManger</a>. As shown in the image below the app lists:</p>
+<ul>
+<li>current longitude and latitude of your location</li>
+<li>the address</li>
+<li>and location on a map with a sickly green marker</li>
+</ul>
+<div class="figure">
+<img src="images\here.png">
+</div>
+<p>The cool thing about this app is that as you move around it will update your position on the map. It tracks you. There is little control over the app. You can move the map around or use the simple zoon in / zoom out buttons on the map -- that is about it.</p>
+<p>Let's discuss the code. Note, in the code examples below we <strong>snip</strong> some of the code that we have already discussed in the <a href="..\lecture17\lecture17.html">pervious lecture</a>. You can look at the demo app source code to see the complete source code.</p>
+<p>Much of the structure of the code is familiar now.</p>
+<h3 id="set-up-google-maps-in-oncreate">Set up Google Maps in onCreate()</h3>
+<p>The code first gets a reference to a GoogleMap using getFragmentManager() on MapFragment set up in layout/activity_main.xml, as shown below in the layout file</p>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    xmlns:tools=<span class="st">&quot;http://schemas.android.com/tools&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:orientation=<span class="st">&quot;vertical&quot;</span>
+    tools:context=<span class="st">&quot;.MainActivity&quot;</span> &gt;
+
+    &lt;TextView
+        android:id=<span class="st">&quot;@+id/locinfo&quot;</span>
+        android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>/&gt;
+    &lt;fragment
+        android:id=<span class="st">&quot;@+id/map&quot;</span>
+        android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+        <span class="kw">class</span>=<span class="st">&quot;com.google.android.gms.maps.MapFragment&quot;</span>/&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+<p>The getMap() method renders the Google Map returned from the server into the MapFragment in layout. The type of map is then set to normal.</p>
+<p>There are a number of types of maps that can be selected:</p>
+<ul>
+<li>MAP_TYPE_HYBRID: Satellite maps with a transparent layer of major streets.</li>
+<li>MAP_TYPE_NONE: No base map tiles.</li>
+<li>MAP_TYPE_NORMAL: Basic maps.</li>
+<li>MAP_TYPE_SATELLITE: Satellite maps with no labels.</li>
+<li>MAP_TYPE_TERRAIN Terrain maps.</li>
+</ul>
+<p>Change the type of the map in your code and look at the map rendered.</p>
+<pre class="sourceCode java"><code class="sourceCode java">   mMap.<span class="fu">setMapType</span>(GoogleMap.<span class="fu">MAP_TYPE_NORMAL</span>);</code></pre>
+<p>After the map type is set we get the current location and set a marker at that location and zooms in. The location manager sets up the time and distance parameters as well as the call back listener for location updates:</p>
+<pre class="sourceCode java"><code class="sourceCode java">locationManager.<span class="fu">requestLocationUpdates</span>(provider, <span class="dv">2000</span>, <span class="dv">10</span>,
+                                           locationListener);</code></pre>
+<p>We discussed these call backs in the <a href="..\lecture17\lecture17.html">last lecture</a>. So check that out again if you need to. The helper function then gets called to update the map if necessary.</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> WhereAmI <span class="kw">extends</span> Activity {
+
+    <span class="kw">public</span> GoogleMap mMap;
+    <span class="kw">public</span> Marker whereAmI;
+  @Override
+  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+    <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+    <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">main</span>);
+
+    <span class="co">// Get a reference to the MapView </span>
+    mMap = ((MapFragment) <span class="fu">getFragmentManager</span>().<span class="fu">findFragmentById</span>(R.<span class="fu">id</span>.<span class="fu">map</span>))
+            .<span class="fu">getMap</span>();
+
+    <span class="co">// Configure the map display options</span>
+    mMap.<span class="fu">setMapType</span>(GoogleMap.<span class="fu">MAP_TYPE_NORMAL</span>);
+   
+    LocationManager locationManager;
+    String svcName= Context.<span class="fu">LOCATION_SERVICE</span>;
+    locationManager = (LocationManager)<span class="fu">getSystemService</span>(svcName);
+
+    [Snip code]
+    ........
+    ........
+    ........
+
+    Location l = locationManager.<span class="fu">getLastKnownLocation</span>(provider);
+    
+    LatLng latlng=<span class="fu">fromLocationToLatLng</span>(l);
+        
+    whereAmI=mMap.<span class="fu">addMarker</span>(<span class="kw">new</span> <span class="fu">MarkerOptions</span>().<span class="fu">position</span>(latlng).<span class="fu">icon</span>(BitmapDescriptorFactory.<span class="fu">defaultMarker</span>(
+             BitmapDescriptorFactory.<span class="fu">HUE_GREEN</span>)));
+    <span class="co">// Zoom in</span>
+    mMap.<span class="fu">animateCamera</span>(CameraUpdateFactory.<span class="fu">newLatLngZoom</span>(latlng,
+            <span class="dv">17</span>));
+    
+    <span class="fu">updateWithNewLocation</span>(l);
+
+    locationManager.<span class="fu">requestLocationUpdates</span>(provider, <span class="dv">2000</span>, <span class="dv">10</span>,
+                                           locationListener);
+  }
+
+  <span class="kw">public</span> <span class="dt">static</span> LatLng <span class="fu">fromLocationToLatLng</span>(Location location){
+        <span class="kw">return</span> <span class="kw">new</span> <span class="fu">LatLng</span>(location.<span class="fu">getLatitude</span>(), location.<span class="fu">getLongitude</span>());
+        
+  }</code></pre>
+<h3 id="user-tracking">User Tracking</h3>
+<p>Each time the callback onLocationChanged() is called the map is updated simply by calling the helper function discussed below. There is no action for the other callbacks in this code -- there really should be.</p>
+<pre class="sourceCode java"><code class="sourceCode java">  <span class="kw">private</span> <span class="dt">final</span> LocationListener locationListener = <span class="kw">new</span> <span class="fu">LocationListener</span>() {
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onLocationChanged</span> (Location location) {
+      <span class="fu">updateWithNewLocation</span>(location);
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onProviderDisabled</span>(String provider) {}
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onProviderEnabled</span>(String provider) {}
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onStatusChanged</span>(String provider, <span class="dt">int</span> status, 
+                                Bundle extras) {}
+  };</code></pre>
+<h3 id="helper-for-tracking">Helper for Tracking</h3>
+<p>The helper function simply has the current location passed to it. It first removed the current marker and redraws a new marker at the new location.</p>
+<pre class="sourceCode java"><code class="sourceCode java"> <span class="kw">private</span> <span class="dt">void</span> <span class="fu">updateWithNewLocation</span>(Location location) {
+    TextView myLocationText;
+    myLocationText = (TextView)<span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">myLocationText</span>);
+      
+    String latLongString = <span class="st">&quot;No location found&quot;</span>;
+    String addressString = <span class="st">&quot;No address found&quot;</span>;
+    
+    <span class="kw">if</span> (location != <span class="kw">null</span>) {
+      <span class="co">// Update the map location.</span>
+      
+      LatLng latlng=<span class="fu">fromLocationToLatLng</span>(location);
+      
+      mMap.<span class="fu">animateCamera</span>(CameraUpdateFactory.<span class="fu">newLatLngZoom</span>(latlng,
+            <span class="dv">17</span>));
+
+
+      <span class="kw">if</span>(whereAmI!=<span class="kw">null</span>)
+          whereAmI.<span class="fu">remove</span>();
+      
+      whereAmI=mMap.<span class="fu">addMarker</span>(<span class="kw">new</span> <span class="fu">MarkerOptions</span>().<span class="fu">position</span>(latlng).<span class="fu">icon</span>(BitmapDescriptorFactory.<span class="fu">defaultMarker</span>(
+             BitmapDescriptorFactory.<span class="fu">HUE_GREEN</span>)).<span class="fu">title</span>(<span class="st">&quot;Here I Am.&quot;</span>));
+      
+    [Snip code]
+    ........
+    ........
+    ........
+
+    
+    }</code></pre>
+<h2 id="coventry-demo">Coventry Demo</h2>
+<p>The Coventry app allows the user to interact with the map by placing markers on the map and then connecting up the markers with <a href="http://developer.android.com/reference/com/google/android/gms/maps/model/Polyline.html">polylines</a> drawn on the map. A polyline is a list of points, where line segments are drawn between consecutive points. The app detects <strong>long clicks</strong> on map and adds a marker. Lines can be drawn between markers using polylines. To do this the use clicks (do not long click) on a marker then moves to another marker and clicks. To remove the markers and lines click on the map.</p>
+<div class="figure">
+<img src="images\cov.png">
+</div>
+<p>In the image below the user has <strong>long clicked</strong> on three places on the map creating three markers. Then the user has clicked (just normal short click) on each point and the lines are drawn constructing a triangle around the vibrant metropolis of Coventry, England.</p>
+<h3 id="oncreate">onCreate()</h3>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MainActivity <span class="kw">extends</span> Activity 
+    <span class="kw">implements</span> OnMapClickListener, OnMapLongClickListener, OnMarkerClickListener{
+    
+    <span class="dt">final</span> <span class="dt">int</span> RQS_GooglePlayServices = <span class="dv">1</span>;
+    <span class="kw">private</span> GoogleMap myMap;
+    
+    Location myLocation;
+    TextView tvLocInfo;
+    
+    <span class="dt">boolean</span> markerClicked;
+    PolylineOptions rectOptions;
+    Polyline polyline;
+
+    <span class="dt">static</span> <span class="dt">final</span> LatLng COVENTRY = <span class="kw">new</span> <span class="fu">LatLng</span>(<span class="fl">52.4081</span>, -<span class="fl">1.5106</span>);
+    
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_main</span>);
+        
+        tvLocInfo = (TextView)<span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">locinfo</span>);
+        
+        FragmentManager myFragmentManager = <span class="fu">getFragmentManager</span>();
+        MapFragment myMapFragment 
+            = (MapFragment)myFragmentManager.<span class="fu">findFragmentById</span>(R.<span class="fu">id</span>.<span class="fu">map</span>);
+        myMap = myMapFragment.<span class="fu">getMap</span>();
+        
+        myMap.<span class="fu">setMyLocationEnabled</span>(<span class="kw">true</span>);
+        
+        myMap.<span class="fu">setMapType</span>(GoogleMap.<span class="fu">MAP_TYPE_NORMAL</span>);
+        
+        myMap.<span class="fu">setOnMapClickListener</span>(<span class="kw">this</span>);
+        myMap.<span class="fu">setOnMapLongClickListener</span>(<span class="kw">this</span>);
+        myMap.<span class="fu">setOnMarkerClickListener</span>(<span class="kw">this</span>);
+        
+    
+        <span class="co">//Move the camera instantly to the best city in the world! with a zoom of 15.</span>
+        myMap.<span class="fu">moveCamera</span>(CameraUpdateFactory.<span class="fu">newLatLngZoom</span>(COVENTRY, <span class="dv">15</span>));
+        myMap.<span class="fu">animateCamera</span>(CameraUpdateFactory.<span class="fu">zoomTo</span>(<span class="dv">10</span>), <span class="dv">2000</span>, <span class="kw">null</span>); 
+
+        markerClicked = <span class="kw">false</span>;
+    }</code></pre>
+<h3 id="using-the-menu-to-display-opensourcesoftwarelicenseinfo">Using the menu to display OpenSourceSoftwareLicenseInfo</h3>
+<p>This code sets up and inflates the menu which is rendered. If the user selects the &quot;legal notice&quot; menu item a dialog with the licence is shown. Nothing new for us here. The dialog is constructed using a AlertDialog.Builder as normal.</p>
+<pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onCreateOptionsMenu</span>(Menu menu) {
+        <span class="co">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        <span class="fu">getMenuInflater</span>().<span class="fu">inflate</span>(R.<span class="fu">menu</span>.<span class="fu">activity_main</span>, menu);
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onOptionsItemSelected</span>(MenuItem item) {
+        <span class="kw">switch</span> (item.<span class="fu">getItemId</span>()) {
+        <span class="kw">case</span> R.<span class="fu">id</span>.<span class="fu">menu_legalnotices</span>:
+            String LicenseInfo = GooglePlayServicesUtil.<span class="fu">getOpenSourceSoftwareLicenseInfo</span>(
+                    <span class="fu">getApplicationContext</span>());
+            AlertDialog.<span class="fu">Builder</span> LicenseDialog = <span class="kw">new</span> AlertDialog.<span class="fu">Builder</span>(MainActivity.<span class="fu">this</span>);
+            LicenseDialog.<span class="fu">setTitle</span>(<span class="st">&quot;Legal Notices&quot;</span>);
+            LicenseDialog.<span class="fu">setMessage</span>(LicenseInfo);
+            LicenseDialog.<span class="fu">show</span>();
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        <span class="kw">return</span> <span class="kw">super</span>.<span class="fu">onOptionsItemSelected</span>(item);
+    }</code></pre>
+<h3 id="checking-connected-onresume">Checking connected onResume()</h3>
+<p>Before the app comes into focus the app checks if the map service is still available. If for example the app is pushed into the background the map needs to be updated and displayed again when it comes into focus. If the app can't &quot;connect&quot; to play services the app informs the user.</p>
+<pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onResume</span>() {
+        <span class="co">// TODO Auto-generated method stub</span>
+        <span class="kw">super</span>.<span class="fu">onResume</span>();
+
+        <span class="dt">int</span> resultCode = GooglePlayServicesUtil.<span class="fu">isGooglePlayServicesAvailable</span>(<span class="fu">getApplicationContext</span>());
+        
+        <span class="kw">if</span> (resultCode == ConnectionResult.<span class="fu">SUCCESS</span>){
+            Toast.<span class="fu">makeText</span>(<span class="fu">getApplicationContext</span>(), 
+                    <span class="st">&quot;isGooglePlayServicesAvailable SUCCESS&quot;</span>, 
+                    Toast.<span class="fu">LENGTH_LONG</span>).<span class="fu">show</span>();
+        }<span class="kw">else</span>{
+            GooglePlayServicesUtil.<span class="fu">getErrorDialog</span>(resultCode, <span class="kw">this</span>, RQS_GooglePlayServices);
+        }
+        
+    }</code></pre>
+<h3 id="adding-markers-and-drawing-lines">Adding markers and drawing lines</h3>
+<p>The user can move the map around and zoom in/out as they wish. The callbacks set up in onCreate() are shown below:</p>
+<ul>
+<li>onMapLongClick(LatLng point), which will create and display a marker</li>
+<li>onMarkerClick(Marker marker), which will enable a polyline to be drawn between to markers that are clicked consecutively.</li>
+<li>onMapClick(LatLng point) , which will clear the current lines after the map has been clicked followed by the user clicking on an existing marker or creating a new marker.</li>
+</ul>
+<p>Let's look at the code more below.</p>
+<pre class="sourceCode java"><code class="sourceCode java">    @Override
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onMapClick</span>(LatLng point) {
+        tvLocInfo.<span class="fu">setText</span>(point.<span class="fu">toString</span>());
+        myMap.<span class="fu">animateCamera</span>(CameraUpdateFactory.<span class="fu">newLatLng</span>(point));
+        
+        markerClicked = <span class="kw">false</span>;
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onMapLongClick</span>(LatLng point){
+        tvLocInfo.<span class="fu">setText</span>(<span class="st">&quot;New marker added@&quot;</span> + point.<span class="fu">toString</span>());
+        myMap.<span class="fu">addMarker</span>(<span class="kw">new</span> <span class="fu">MarkerOptions</span>().<span class="fu">position</span>(point).<span class="fu">title</span>(point.<span class="fu">toString</span>()));
+        
+        markerClicked = <span class="kw">false</span>;
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onMarkerClick</span>(Marker marker){
+        
+        <span class="kw">if</span>(markerClicked){
+            
+            <span class="kw">if</span>(polyline != <span class="kw">null</span>){
+                polyline.<span class="fu">remove</span>();
+                polyline = <span class="kw">null</span>;
+            }
+            
+            rectOptions.<span class="fu">add</span>(marker.<span class="fu">getPosition</span>());
+            rectOptions.<span class="fu">color</span>(Color.<span class="fu">RED</span>);
+            polyline = myMap.<span class="fu">addPolyline</span>(rectOptions);
+        }<span class="kw">else</span>{
+            <span class="kw">if</span>(polyline != <span class="kw">null</span>){
+                polyline.<span class="fu">remove</span>();
+                polyline = <span class="kw">null</span>;
+            }
+            
+            rectOptions = <span class="kw">new</span> <span class="fu">PolylineOptions</span>().<span class="fu">add</span>(marker.<span class="fu">getPosition</span>());
+            markerClicked = <span class="kw">true</span>;
+        }
+        
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+}</code></pre>
+<p>The logic for onMarkerClick() is straightforward. First time onMarkerClick() is called it will call new PolylineOptions().add(marker.getPosition()) to add the marker to the polyline. Next time it is called it will add the second marker --rectOptions.add(marker.getPosition()) -- and then draw the line. Each time a new marker is added (via a long click) and a line drawn -- the complete set of lines are redrawn starting at the first marker added to the rectOptions (i.e., the ployline). If the user clicks on the map (not the markers) and then clicks on any marker or does a long click to create a new marker then the line or polyline is remove - that is, the line between the markers is cleared.</p>
+</body>
+</html>

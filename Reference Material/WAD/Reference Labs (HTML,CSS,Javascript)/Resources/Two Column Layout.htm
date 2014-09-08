@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Two Column Layout</title>
+
+<style type="text/css">
+* {
+	margin: 0px;
+	padding: 0px;
+}
+html {
+	font-size: 100%;
+	line-height: 1.125em;
+}
+body {
+	background-color: #660;
+	text-align: center;
+	font-family: Verdana, Geneva, sans-serif;
+}
+#container {
+	text-align: left;
+	background-color: #FFF;
+	width: 960px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#header {
+	background-image: url(images/mendo_coast.jpg);
+	background-repeat: no-repeat;
+	height: 190px;
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	color: #000;
+}
+#footer {
+	font-size: 80%;
+	color: #FFFFFF;
+	text-align: right;
+	clear: both;
+	height: 75px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	background-image: url(images/moss.jpg);
+}
+#nav {
+	background-color: #A6AD00;
+	width:200px;
+	float:left;
+	display:block;
+}
+#content {
+	padding-top: 20px;
+	padding-right: 20px;
+	margin-left: 220px; /*20 pixels of white space and 200 pixels for the width of the nav div */
+	width: 720px;	
+}
+p {padding-bottom: 1.5em; }
+h1,h2,h3,h4,h5,h6 {font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+					color:#BOBF00;}
+					
+#nav ul {
+	list-style:none;
+	padding: 0px;
+	vertical-align:bottom;
+	margin: 0px 0px 1.5em 0px;
+	background-color: #990;
+	width: 170px;	
+}
+#nav li {display: block;}
+#nav li a {
+	display:block;
+	text-decoration:none;
+	padding: 0px 15px;
+	line-height: 2.5;
+	border-bottom: 1px solid #fff;
+	background-color: #A6AD00;		
+}
+</style>
+</head>
+
+<body id="body_hom">
+<div id="container">
+	<div id="header">
+<h1>Two Column Layout</h1></div>
+    <div id="nav">
+ <ul>
+    <li id="nav_hom"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/index.html">Home</a></li>
+    <li id="nav_css"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/css.html">CSS</a></li>
+    <li id="nav_js"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/scripts.html">JavaScripts</a></li>
+    <li id="nav_prj"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/project.html">Project</a></li>
+    <li id="nav_eval"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/evaluation.html">Evaluation</a></li>
+</ul>
+</div>
+	<div id="content"> 
+	  <p class="intro">Lorem ipsum dolor sit amet, consectetur adipiscing 
+elit. Aliquam imperdiet vehicula elit, et volutpat lacus suscipit vel. 
+Aenean at odio tortor. Lorem ipsum dolor sit amet, consectetur 
+adipiscing elit. Sed et mi nunc. Nullam in mi urna, sit amet congue 
+erat. Phasellus volutpat mauris id ante auctor sit amet suscipit nibh 
+faucibus. Cras nulla ante, posuere eu scelerisque vitae, commodo ut 
+mauris. Fusce varius ante sit amet ipsum placerat sit amet iaculis urna 
+porttitor. Class aptent taciti sociosqu ad litora torquent per conubia 
+nostra, per inceptos himenaeos. Integer condimentum, sapien vel interdum
+ elementum, est metus ornare ante, at tincidunt nulla ligula et arcu. 
+Suspendisse pulvinar sollicitudin consequat. Mauris bibendum, diam vitae
+ facilisis lacinia, nisi leo mattis mi, eu elementum ante diam 
+adipiscing nibh. Duis eget quam quis sem consequat molestie. Morbi erat 
+metus, posuere vel porttitor vitae, fringilla vestibulum est.</p>
+        
+      <p class="note">  Proin quis semper velit. Donec diam ante, 
+aliquam et congue quis, semper vel augue. Pellentesque blandit tristique
+ tempor. Suspendisse enim ligula, pellentesque tempor molestie non, 
+rhoncus mollis tellus. Morbi orci nibh, posuere vitae feugiat ut, semper
+ ac metus. </p>
+        
+   <p> Pellentesque lobortis lacinia pellentesque. In fringilla aliquet 
+ultrices. Donec nec iaculis tortor. Etiam adipiscing bibendum placerat. 
+Proin lacus turpis, feugiat tempor luctus id, pulvinar vitae tortor. 
+Pellentesque aliquet bibendum augue in interdum. Pellentesque 
+scelerisque, libero non commodo vehicula, quam tellus porttitor nulla, 
+vel porttitor erat nisl non ipsum. Nunc suscipit nisl et nisi varius 
+semper. Sed adipiscing pharetra fermentum. Vivamus a lacus lorem, non 
+dapibus tellus. Aliquam sollicitudin pharetra mi, tincidunt laoreet 
+libero viverra id. Mauris lorem nibh, cursus eu fringilla mollis, semper
+ sit amet neque. In hac habitasse platea dictumst. Aenean arcu ipsum, 
+congue a placerat quis, aliquam vitae nisi. Aenean ornare imperdiet 
+neque, at egestas tellus pretium vel. Sed ultricies sodales magna a 
+iaculis.</p>
+    </div>
+    <div id="footer">John C. McGarvey Design © 2011 | Contact: <a href="mailto:john@mcgarvey.com">john@mcgarvey.com</a>
+    </div>
+    </div>
+
+
+</body></html>

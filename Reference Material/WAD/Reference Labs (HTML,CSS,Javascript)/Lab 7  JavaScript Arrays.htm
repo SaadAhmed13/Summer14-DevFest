@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 7: JavaScript Arrays</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%207%20%20JavaScript%20Arrays_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%207%20%20JavaScript%20Arrays_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%207%20%20JavaScript%20Arrays_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%207%20%20JavaScript%20Arrays_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 7: JavaScript Arrays</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this lesson, you will learn how to create an array in JavaScript.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">What is an Array? (reference only)</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304914477347.png" alt="" height="247" width="368">
+
+</div> <p>An important feature found in most programming and scripting 
+languages is the use of an array. An array provides an indexed ordered 
+list that a program uses to manipulate or display information. In simple
+ terms, an array is "an ordered collection of data". The data in an 
+array can be a number, a text string, a Boolean value or another array.</p>
+
+
+<p>Arrays automatically assign a number to each entry in the array. 
+These numbers like most numerical data in JavaScript start off with 0 
+and count up. The first item in the list will be referred to as 0 and 
+the second item 1 and so on. These numbers are referred to as an Arrays 
+index. In the example above, the first indexed item in the myCar array 
+is chev.</p>
+
+
+<p>Arrays are referenced by their variable name, like a function. By 
+calling on the array and the index number, only that piece of data or 
+literal string is returned. The format is variableName[#] with 
+variableName being the name of the array and # being the index number of
+ the listed entry. In the example above, myCar[0] would return the data 
+Chev, while myCar[3] would return Lincoln.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Arrays and the document object model (Reference Only)</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab7/images/Lab_7_JavaScript_Arrays/media_1304914887778_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304914887778.png" alt="Arrays and the document object model (Reference Only)" height="297" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab7/images/Lab_7_JavaScript_Arrays/media_1304914887778_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Javascript creates several different arrays when a web page 
+loads. For example, all the images in a web page are placed into an 
+image array in the order they appear in the html code starting with the 
+number 0. This image is referred to in the array as image[0].</p>
+
+
+<p>You can find out how many images you have on a page by using the 
+length attribute. The DOM format would be document.images.length. If you
+ are using Firefox, visit the web page and then past the following into 
+the url address field and hit enter:</p>
+
+
+<p>        javascript: document.images.length</p>
+
+
+<p>In the example above, I visited the latimes website and pasted 
+"javascript: document.images.length" in the URL field and it return the 
+number 121. At that time the page contained 121 images.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Array Syntax (reference only)</h2>
+
+		 <p>There are two different ways to declare an array in Javascript. 
+One is shorter and easier to type while the second is longer but easier 
+to read and understand.</p>
+
+
+<p>First format (dense array) :<br>
+var variableName = new Array("literal0","literal1", "literal2", "literal3")</p>
+
+
+<p>Example:<br>
+var dayName = new Array("Sunday","Monday", Tuesday", "Wednesday", "Thursday", "Friday")</p>
+
+
+<p>Second format:<br>
+var variableName = new Array(5)<br>
+variableName[0] = "literal0"<br>
+variableName[1] = "literal1"<br>
+variableName[2] = "literal2"<br>
+variableName[3] = "literal3"<br>
+variableName[4] = "literal4"</p>
+
+
+<p>Example:<br>
+var dayName = new Array(7)<br>
+dayName[0] = "Sunday"<br>
+dayName[1] = "Monday"<br>
+dayName[2] = "Tuesday"<br>
+dayName[3] = "Wednesday"<br>
+dayName[4] = "Thursday"<br>
+dayName[5] = "Friday"<br>
+dayName[6] = "Saturday" </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Javascript Array Lab 7</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304916158305.png" alt="" height="276" width="440">
+
+</div> <p>Create a new file called lab7_js_names.html. In between the 
+body tags of the web page add some script tags. In this web page you are
+ going to create two arrays, one will store the names of the Beatles and
+ the second will store what instrument they played.  I have included the
+ two different ways that you can declare an array in this example.</p>
+
+
+<p><i>&lt;script type="text/javascript"&gt;</i></p>
+
+
+<p><i>var names=new Array("John","Paul","George","Ringo")</i></p>
+<p>&nbsp;</p>
+<p><i>var instrument=new Array(4);</i><br>
+<i>instrument[0]="guitar";</i><br>
+<i>instrument[1]="bass guitar";</i><br>
+<i>instrument[2]="lead guitar";</i><br>
+<i>instrument[3]="drums";</i></p>
+
+
+<p><i>&lt;/script&gt;</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Print the results of your array to your page</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304917257575.png" alt="" height="395" width="472">
+
+</div> <p>After you have declared your variables you can print them to 
+your page. In this example, a for loop was created to loop through the 
+array four times.</p>
+
+
+<p>Code:</p>
+
+
+<p><i>for(i=0;i&lt;=3;i++)</i><br>
+<i>{</i><br>
+<i>document.write("&lt;br /&gt;" +names[i]+ " plays " +instrument[i]+". ");</i><br>
+<i>}</i></p>
+
+
+<p><i>document.write("&lt;p&gt;Hello! ");</i><br>
+<i>document.write(names[0]+ "&lt;/p&gt;");</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Array Object with the sort method</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304917321760.png" alt="" height="397" width="479">
+
+</div> <p>There are several methods that can be used to manipulate array
+ objects. In this example, we are going to sort the elements of the 
+array in alphabetical order using the sort() method. Add the following 
+line of code after the for loop and before the document.write 
+statements.</p>
+
+
+<p><font color="#FF0000">names.sort();</font></p>
+
+
+<p>After the loop, the original names array is sorted alphabetically, resulting in George replacing John as the first indexed item.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add to an Array using the push method</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304917823101.png" alt="" height="450" width="486">
+
+</div> <p>You can add to an array using the push method. This method 
+will add an element to the end of an array and return the array's 
+length. In this example, I added the Beatles first drummer to the names 
+and instrument arrays by using the push method after I declared the 
+arrays and before the document.write statements.</p>
+
+
+<p><font color="#FF0000">names.push("Pete Best");</font><br>
+<font color="#FF0000">instrument.push("drums before Ringo");</font></p>
+
+
+<p>Notice in order to print the new items in the array the for loop has 
+to be increased by one. It would be easy to forget to increase the 
+increment number on the loop when dynamically adding to arrays. A way to
+ solve this problem is to use the .length property of the array object. 
+This will return the length of the array. In the above example, I added 
+names.length to the for loop to set the condition for how many times to 
+loop through the array. </p>
+<p>&nbsp;</p>
+<p>for(i=0;i&lt;<font color="#FF0000">names.length</font>;i++)<br>
+{<br>
+document.write("&lt;br /&gt;" +names[i]+ " played " +instrument[i]+". ");<br>
+}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Learning Arrays the Slice and Join Methods</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304918745856.png" alt="" height="483" width="554">
+
+</div> <p>The slice() method selects a part of an array, and returns the
+ new array. The original array will not be changed. The syntax is 
+array.slice(start, end) with start and end being the index numbers. If 
+end is omitted, slice() selects all elements from the start position to 
+the end of the array. In the example above, John and Paul are sliced 
+from the unsorted names array and stored in the variable songwriters 
+using the following code:</p>
+
+
+<p><font color="#FF0000"><i>var songwriters = names.slice(0,2);</i></font></p>
+
+
+<p>The join() method joins all elements of an array into a string, and 
+returns the string.The elements will be separated by a specified 
+separator. The default separator is comma (,). In the example above, the
+ text string " and " is used as the separator and stored in the 
+songwriters variable.</p>
+
+
+<p><font color="#FF0000"><i>var songwriters = songwriters.join(" and ");</i></font></p>
+
+
+<p>The two songwriters are then printed to the screen using a document.write statement.</p>
+
+
+<p><font color="#FF0000"><i>document.write("The main songwriters in the Beatles were " +songwriters+ ". ");</i></font></p>
+
+
+<p>Save the file, upload it to your server, and link to this weeks journal.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Arrays Lab 2: Adding Randomness to your page</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304920095388.png" alt="" height="139" width="495">
+
+</div> <p>In this example, we are going to create a web page that will 
+display a random image on the page. The first step is to store the paths
+ to the images in an array. In this example, I added the script in the 
+head section of the page and created a new array named image.</p>
+
+
+<p><i>&lt;script type="text/javascript"&gt;</i><br>
+<i>var image = new Array(3)</i><br>
+<i>image[0]="http://dsa.csupomona.edu/uhs/images/Bronco_Student_Center_WEB.jpg";</i><br>
+<i>image[1]="http://www.csupomona.edu/~carich/web/images/masthead.gif";</i><br>
+<i>image[2]="http://www.csupomona.edu/images/403.jpg";</i><br>
+<i>&lt;/script&gt;</i></p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Random number and the math object</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304920175643.png" alt="" height="223" width="480">
+
+</div> <p>By using the random method to the Math object you can return a
+ random number between 0 and 1. The .round method of the Math object to 
+round a number to the nearest integer. By rounding that number with the 
+.round method and multiplying it by a set number you can produce a 
+random number between 0 and that number. In this example, you want the 
+range to include all the items in the array (0-2). This is achieved by 
+multiplying the number by 2. For example: Math.round(2*Math.random()).</p>
+
+
+<p>I replaced 2 with image.length-1 so the random number script will work even if I add items to my array.</p>
+
+
+<p><i>&lt;script type="text/javascript"&gt;</i><br>
+<i>var num = Math.round(2 * Math.random());</i><br>
+<i>document.write("&lt;img src='" +image[num]+ "'&gt;");</i><br>
+<i>&lt;/script&gt;</i></p>
+
+
+<p>In this script, Math.random() produces a number between 1 and 0. This
+ number is multiplied by the length of the image array -1. This number 
+is then rounded to the nearest integer and stored in the variable num.<br>
+The document.write statement prints an image tag to the screen using the
+ image array to select the random image for the source property.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Preview your Results</h2>
+
+		<div class="image">
+
+<img src="Lab%207%20%20JavaScript%20Arrays_files/media_1304920691968.png" alt="" height="427" width="361">
+
+</div> <p>Preview your results and you should see an image. Now refresh 
+your page and you should see a new random image. Save the file, upload 
+to the server, and link to this weeks journal.</p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

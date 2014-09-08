@@ -1,0 +1,110 @@
+﻿[Tractable](http://www.cs.dartmouth.edu/~salsbury/CS65FinalProject/index.html)
+
+- Steve Beal
+- Nicole Hedley
+- Matt McNierny
+- Andrew Roberts
+- Diana Salsbury
+
+[Apptitude](http://www.cs.dartmouth.edu/~murray22/)
+
+- Shloka Kini
+- Stephen Morse
+- Molly Leen
+- Ryan Archer
+- Justin Murray
+
+[BioRhythm&Blues](http://www.cs.dartmouth.edu/~rennie/)
+
+- Matthew Diephuis,
+- Sophia Haim,
+- Grant Neubauer,
+- Joshua Kaplan,
+- Rennie Song
+
+[CollabSoup](http://www.cs.dartmouth.edu/~jaypatel/cs65.html)
+
+- Betty Huang
+- Dohwee Kim
+- Hilton Hart
+- Jay Patel
+- Sam Yoder
+
+[DropIn](http://www.cs.dartmouth.edu/~rzzhang/cs65/smartplan.html)
+
+- Yibo Long
+- Xinyu Li
+- Ruzi Zhang
+- Lauren Tran
+- Xin Wang
+
+[Good Thing Jets Fly Swiftly](https://sites.google.com/site/dartmouthcs65gtjfs/)
+
+- Ty Demarest
+- Gediminas Bertasius
+- Siddharth Hiregowdara
+- Jordan Kunzika
+- Flint Luu
+
+[Inflated Fragments](http://cs.dartmouth.edu/~klawson/)
+
+- Kyle Lawson
+- Scott Brookes
+- Carla Galarza
+- Christian Pitera
+- Marissa Allen
+
+[I Am in Your Eyes](http://cs.dartmouth.edu/~hou/TeamDProposal.html)
+
+- Tian Li
+- Xianan Hao
+- RuiXuan Hou
+- Longquan Qiao
+- Yuze Lang
+
+[Marcosoft](https://sites.google.com/site/cs65marcosoft/)
+
+- Chao An
+- Shijuan Jiang
+- Yue Xing
+- Marco Barragan
+
+[Party Hopper](http://www.cs.dartmouth.edu/~dberman/)
+
+- Alexander Murphy
+- Michael Levine
+- Gurkaran Singh
+- Eliza Hanson
+- Daniel M. Berman
+
+[SMILENCE](http://www.cs.dartmouth.edu/~kcywinter/project_proposal.html)
+
+- Huizhe Li
+- Wenyuan Feng
+- Yaozhong Kang
+- Yanan Li
+- Yusheng Miao
+
+[Timely App](http://dartmouthtimely.weebly.com/)
+
+- Delos Chang
+- Aaditya Talwai
+- Robin Wang
+- Maan Tinna
+- Justice Amoh
+
+[Titanium Jellyfish](http://www.cs.dartmouth.edu/~richard/CS65/proposal-main.html)
+
+- Richard Lange
+- Etai Klein
+- Julien Blanchet
+- Wesley Lau
+- Rebecca Leong
+
+[Team Conquest](http://www.bwcproductions.com/cs65/)
+
+- Richard Yu
+- Shuo Zheng
+- Royce Yap
+- Angela Gu
+- Joshua Hall

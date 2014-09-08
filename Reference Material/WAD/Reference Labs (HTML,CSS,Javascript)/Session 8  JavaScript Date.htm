@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Session 8: JavaScript Date</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Session%208%20%20JavaScript%20Date_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Session%208%20%20JavaScript%20Date_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Session%208%20%20JavaScript%20Date_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Session%208%20%20JavaScript%20Date_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Session 8: JavaScript Date</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this lesson you will learn how to use the JavaScript Date Object</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create the html and javascript files</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305300849720.png" alt="" height="315" width="560">
+
+</div> <p>For this lesson we will be creating separate html and external
+ javascript files. You will be able to reuse these javascript files in 
+your own web pages to add the date to your sites.<br>
+Create a new html file and save it as session 8_js_date.html. Give the page a title and a heading.</p>
+
+
+<p>Next create a new external javascript file, named date.js and save it in your js folder.<br>
+Link this external file to your web page with the script tag:<br>
+&lt;script type="text/javascript" 
+src="513_2010/js/date.js"&gt;&lt;/script&gt;                            
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+         </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open the external JS file</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305303758382.png" alt="" height="259" width="395">
+
+</div> <p>In the external javascript file, we are going to declare a 
+variable called d and assign it a new date object. This will then be 
+printed using a document.write statement. The result is not pretty as it
+ contains more information then you might want.</p>
+
+
+<p><strong><i>// JavaScript Document</i></strong><br>
+<strong><i>var d = new Date();</i></strong><br>
+<strong><i>document.write(d);     </i></strong>                         
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+          </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Use methods on the date object to return just the current month</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305304655511.png" alt="" height="345" width="383">
+
+</div> <p>Next, we are going to use the .getMonth() method to return the
+ number for the current month.  Declare a variable called month, and add
+ the method .getMonth() to the new date variable d.</p>
+
+
+<p>However, since Javascript counts up from 0 the month number is off by
+ one number. To fix this, you have to add 1 to the current month.</p>
+
+
+<p>The proper code is below:</p>
+
+
+<p><strong><i>// JavaScript Document</i></strong><br>
+<strong><i>var d = new Date();</i></strong><br>
+<strong><i>var month = d.getMonth()<font color="#FF0000"> +1;</font></i></strong><br>
+<strong><i>document.write("The current month is " +month);              
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                          </i></strong></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create new variables for the other get methods.</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305319254053.png" alt="" height="325" width="466">
+
+</div> <p>Next, we are going to create another series of variables for 
+the other get methods for the day of the month and the year. Then we 
+will rewrite the document.write statement to print the variables and 
+text string to the screen.</p>
+
+
+<p>The complete simple date script:<br>
+<strong>     var d = new Date();</strong><br>
+<strong>     var month = d.getMonth();</strong><br>
+<strong>     var monthDay = d.getDate();</strong><br>
+<strong>     var fullYear = d.getFullYear();</strong><br>
+<strong>     document.write(month+ "/" + monthDay+ "/" +fullYear);           </strong></p>
+
+
+<p><strong>Save the file.                                               
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                          </strong></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Advanced Date Script</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305311359030.png" alt="" height="180" width="498">
+
+</div> <p>For our advanced date script we are going to create a second 
+external js file and attach it to the same date.html web page. Save the 
+file as advanced_date.js in the js folder. Then attach the external 
+javascript to the date.html after the previous date script. I placed 
+each external script in it's own paragraph.</p>
+
+
+<p>Code: <br>
+<strong><i>   &lt;body&gt;</i></strong><br>
+<strong><i>    &lt;h1&gt;JavaScript Date Object&lt;/h1&gt;</i></strong><br>
+<strong><i>    &lt;p&gt;</i></strong><br>
+<strong><i>          &lt;script type="text/javascript" src="js/date.js"&gt;&lt;/script&gt;</i></strong><br>
+<strong><i>     &lt;/p&gt;</i></strong><br>
+<strong><i>     &lt;p&gt;</i></strong><br>
+<strong><i>        &lt;script type="text/javascript" src="js/advanced_date.js"&gt;&lt;/script&gt;</i></strong><br>
+<strong><i>    &lt;/p&gt;</i></strong><br>
+<strong><i>   &lt;/body&gt;   </i></strong>                             
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+            </p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create your new Date Object</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305319132340.png" alt="" height="102" width="389">
+
+</div> <p>Create a new Date Object name calendar. Then use the 
+".getMonth()", ".getDay()", ".getDate()", and ".getFullYear()" methods 
+of the date object and store them in an appropriately names variable. 
+Since we are going to be printing the names of the month from an an 
+array we don't have to add 1 to our getMonth() date method. References 
+the example code below:</p>
+
+
+<p><strong><i>          var calendar = new Date();</i></strong><br>
+<strong><i>          var m = calendar.getMonth();</i></strong><br>
+<strong><i>          var day = calendar.getDay();</i></strong><br>
+<strong><i>          var date = calendar.getDate();</i></strong><br>
+<strong><i>          var year = calendar.getFullYear();</i></strong><br>
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+               </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create an Array for the Month Names</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305313612300.png" alt="" height="326" width="407">
+
+</div> <p>In the external JS file, create an array to store the month names. </p>
+
+
+<p><strong><i>     var month=new Array(12);</i></strong><br>
+<strong><i>     month[0]="January";</i></strong><br>
+<strong><i>     month[1]="February"; </i></strong><br>
+<strong><i>     month[2]="March";</i></strong><br>
+<strong><i>     month[3]="April";</i></strong><br>
+<strong><i>     month[4]="May";</i></strong><br>
+<strong><i>     month[5]="June";</i></strong><br>
+<strong><i>     month[6]="July";</i></strong><br>
+<strong><i>     month[7]="August";</i></strong><br>
+<strong><i>     month[8]="September";</i></strong><br>
+<strong><i>     month[9]="October";</i></strong><br>
+<strong><i>     month[10]="November";</i></strong><br>
+<strong><i>     month[11]="December";          </i></strong>            
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                             <br>
+ </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create an array to store the day names</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab8/images/Session_8_JavaScript_Date/media_1305319065886_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Session%208%20%20JavaScript%20Date_files/media_1305319065886.png" alt="Create an array to store the day names" height="282" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab8/images/Session_8_JavaScript_Date/media_1305319065886_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Next, create an array to store the day names. Notice I decided to use the alternative syntax.<br>
+code: </p>
+
+
+<p><strong><i>      var dayname = new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");</i></strong><br>
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+     </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create the document.write statement to print the date to the screen</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20JavaScript%20Date_files/media_1305325221301.png" alt="" height="87" width="343">
+
+</div> <p>In the first document.write statement the uses an array to 
+print the day name of the week, a blank space is added to make sure 
+there will always be a space between the date and any content on your 
+page before the script. The second document.write uses an array to print
+ the month name. The third document.write statement prints the day of 
+the month while the final statement prints the full four digit year.</p>
+
+
+<p>The document.write statements needed to print the date to the screen:<br>
+<strong><i>      document.write(" " +dayname[day] +", ");</i></strong><br>
+<strong><i>      document.write(month[m] +" ");</i></strong><br>
+<strong><i>      document.write(date+ ", ");</i></strong><br>
+<strong><i>      document.write(year + " ");                  </i></strong></p>
+
+
+<p><strong><i>Save the file. Preview in your browser and should see both
+ dates displayed on your web page. Upload all three files and link to 
+this weeks labs.                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                         </i></strong></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	  
+
+		 
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

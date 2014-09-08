@@ -1,0 +1,3 @@
+#!/bin/bash
+pandoc -o cs65.html -c db-simple.css -B header.html cs65.txt
+scp cs65.html campbell@bear.cs.dartmouth.edu:public_html/cs65/.

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h2 id="notifications">Notifications</h2>
+<p>In this lecture, we discuss Android's <a href="http://developer.android.com/guide/topics/ui/notifiers/notifications.html">notification</a> mechanism which allows apps or services associated with an app to inform the user of an event. Android supports a number of different ways to inform the user including:</p>
+<ol style="list-style-type: decimal">
+<li>Staus bar at the top of the UI, owned and managed by the Android system but apps can display messages or icon in the notification area.</li>
+<li>Play sounds, uses lights and vibrate the phone to inform the user of an app related event</li>
+<li>Notification tray or drawer which allows the app to present more information and certain control elements such as navigating back to the main app, that is, bring the app back into focus if its paused.</li>
+</ol>
+<p>We will focus on the status bar notification in this lecture. You will need to implement this type of notification for MyRuns4.</p>
+<h2 id="what-this-lecture-will-teach-you">What this lecture will teach you</h2>
+<ul>
+<li>Interacting with the status bar</li>
+<li>Notify Demo</li>
+</ul>
+<h2 id="demo-projects">Demo projects</h2>
+<p>The demo code used in this lecture include:</p>
+<ul>
+<li>We will use the <a href="..\code\notifydemo.zip">notifydemo.zip</a> app to demonstrate how to interact with the status bar.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<p>Some excellent references.</p>
+<ul>
+<li>Course book section on <a href="http://commonsware.com/Android/">Introducing Notifications</a> page 405</li>
+<li>Developers discussion of <a href="http://developer.android.com/guide/topics/ui/notifiers/notifications.html">notifications</a></li>
+</ul>
+<h2 id="interacting-with-the-status-bar">Interacting with the status bar</h2>
+<p>Typically a programmer develops an app and needs to inform the user of an event that is outside of the normal UI. For example if we consider MyRuns4 that you are coding right now. When the user starts an exercise using the GPS mode (or automatic) the code creates a service to process location updates. When this service starts on an independent thread in the background it informs the user that it is running by display first message (i.e., &quot;MyRuns is recording your path&quot; ) and then an icon (i.e., the D icon) in the <strong>notification area</strong>. We can see this below</p>
+<div class="figure">
+<img src="images/status.png">
+</div>
+<p>To see the details of the MyRuns4 notification, the user needs to wipe down on the status bar (i.e., notification area) to open the <strong>notification drawer</strong>. The system controls the notification area and drawer and allows the user to view and interact with it at any point For example, in the case of MyRuns4 notification in the drawer the user can wipe down the status bar and click on the MyRuns notification in the drawer and it bring the app back into focus.</p>
+<div class="figure">
+<img src="images/d.png">
+</div>
+<h2 id="notify-demo-app">Notify demo app</h2>
+<pre class="sourceCode java"><code class="sourceCode java">$ keytool -list -v -keystore ~/.<span class="fu">android</span>/debug.<span class="fu">keystore</span> -alias androiddebugkey -storepass android -keypass android</code></pre>
+</body>
+</html>

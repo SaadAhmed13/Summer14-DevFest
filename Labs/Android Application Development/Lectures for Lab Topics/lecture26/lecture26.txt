@@ -1,0 +1,56 @@
+﻿
+## Deploying Application to Google App Engine
+
+We carry on discussing App Engine and discuss how to deploy your application to the Google App Engine (i.e. cloud).
+
+## What this lecture will teach you
+ * Deploy your application to Google App Engine
+
+## Deploying to Google App Engine
+
+There are two steps to deploy your application to the cloud: 1. create an application on the cloud, and 2. upload your project to the cloud. In what follows, we show you how to do these two steps.
+
+### Creating an Application
+
+1. Login to Google App Engine's [Application Overview](https://appengine.google.com), click "Create Application".
+
+![](images/gae_create_0.png)
+
+2. Input the "Application Identifier" and click "Check Availability" to make sure it is available. Input the "Application Title" in the following text box. Your application's url will be http://<app_id>.appspot.com. In the example showing below, the url is http://cs65gcmdemo.appspot.com.
+
+![](images/gae_create_1.png)
+
+3. After creating the application, you can access your application's dash board by clicking the "dashboard" link on the result page.
+
+![](images/gae_create_2.png)
+
+### Deploying an Application
+
+Before deploying your application, you need to make sure your project is compiled using Java 1.7. To do this, right click your project and click "Properties". Go to "Project Facets", and make sure the facet names "Java" is 1.7 and checked.
+
+![](images/gae_deploy_error.png)
+
+
+1. In eclipse, right click your project and click "Properties". Go to "Google" -> "App Engine", input your application id and version as shown below. It is up to you to decide the version number.
+
+![](images/gae_deploy_0.png)
+
+2. Right click your project, go to "Google" -> "Deploy to App Engine", a login window will open. Login to your Gmail account to proceed.
+
+
+![](images/gae_deploy_1.png)
+![](images/gae_deploy_2.png)
+
+3. After login, click "Deploy" in the next window to start deploying your application to Google App Engine.
+
+![](images/gae_deploy_3.png)
+
+A progress bar will be showing.
+
+![](images/gae_deploy_4.png)
+
+4. After deploying the application, go to the dashboard. Go to "Versions", and make the version you just deployed default.
+
+![](images/gae_deploy_5.png)
+
+5. You can access your application using the URL now.

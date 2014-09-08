@@ -1,0 +1,1048 @@
+﻿
+# User Inferface (UI)
+
+Android is all about creating beautiful interfaces that are intuitive to use. 
+
+## What this lecture will teach you
+
+- Understanding how to create a number of common UI layouts
+- Using XML and the graphical layout tool for specifying layouts
+- Styles and themes
+- Phone dimensions
+- Operations and attributes of views
+
+## Checkout the demo project
+
+Download the demo the [layout.zip](../code/layouts.zip) app specifically designed to go with these notes. 
+
+How to run the code: You need to unzip the code in your download folder or desktop and then use the **File->import->Existing Android code in workspace**. Then the project should just run.
+
+OK. Let's get started. Where else but with terminology and UI classes.
+
+## Terminology: views, widgets, view groups, layouts,  containers
+
+The user interface is implemented as collection of view ojects (e.g., a date widget, or editable text) -- a view is a class and a widget  (e.g., a button) which is drawn on some part of the screen and is responsible for event handling such as when the user interacts with the UI (e.e., clicks on a button, enters the date). User's can construct sophisticated UIs by bundling views together using layouts (or ViewGroups) which can be considered as invisible containers. These containers can hold child containers. Each container defines its views (or other ViewGroups) and their layout properties. 
+
+![](images/views.png)
+
+Take a look at the simple UI below -- it's not very exciting but demonstrates a number of common layouts and views. It consists of a simple linear vertical layout of widgers including TextViews, EditTexts, a couple of RadioButtons, a Spinner (currently indicating Happy) and a button with the text *go back*. We will discuss how to create a common set of layouts using XML. 
+
+![](images/simpleview.png)
+
+The Andriod UI framework is flexible and easily extended. As you would imagine from all the apps you have used on smartphones the UI is a hugely important area to an app. It is also a huge topic that we will not have time to cover in any great depth -- we will take a slice through it. The book covers the UI in great detail so if you wantt to know more start there.
+
+## Sample project: Layout
+
+**Download, import, view and run the demo [layout.zip](lecture06.txt) but first just install and run the [layout.apk](lecture06.txt).** We will use the layout sample code in this lecture to understand a number of things: different UI layouts, click input, toast, saving user data and more. Make sure you don't blindly laod and run the code -- you'll learn almost zero from that. Rather, connect the dots. Check through the various activity, layout and resource files.
+
+**Try the demo** Start the app and check it out. 
+ 
+Try out the layout sample project, which includes a number of activities with their associated layouts- we will use it to illustrate a number or important UIs, how to handle user input (e.g., email address or the time). If you install the layouts app you will see its main screen represents a simple linear layout of a bunch of buttons. The first four button render different layouts, specifically: linear layout,  relative layout, scrollview and listview. Following this there is a data and time screen and then a button that says SharedPreferences. Date and time use special widgets that the user can interact with to set, yes, the date and time. SharedPreferences is an object that can be used to store small amounts of user data so that when the app is killed and restarted the user's data is restored. Over the course of this lecture we will discuss how to design each of these views and discuss user data more. 
+
+![](images/layouts.png)
+
+## Writing XML layouts and/or using the graphical layout tool
+
+You can build UIs using XML and/or using the the graphical layout tool. The graphical representation is shown below. My preference is to use XML once I have done some basic layout with the tool. On the left of the figure you can see a list of wdigets that you can select, drag, drop and arrange on the screen. **Note, that the XML/graphical views can be toggled as shown in the figure**. The figure shows the type of layout and highlights the first button -- on the right side you can see the properties of the button, for example, the button id `@+id/btn_linear_layout`, the width and height are `match_parent` and `match_content` respectively.
+
+![](images/s-uidesign.png)
+
+Let's look at the xml view of the same screen -- we only show the first two buttons in this linear layout because they are almost identical. You can look at the complete layout in the file `activity_main_layout.xml` in the project's layout folder.
+
+In fact you can define your UI with XML or the graphical tool and programmatically in your code in you wish. I recommend specifying your UI not in your program but using the xml presentation. Why? Because it is a good idea to seperate the specification of UI from your code. It is more extensible (for example, having different layouts for different devices) rather than littering your program with lots of unnecessary UI code.  By keeping things seperate you can completely change your UI without changing your code -- that's cool.
+
+It is worth noting in the xml below that the UI elements for example Button closely resemble the name of the class and the methods; for example, Button is the class and the `onLinearLayoutClicked` is the call back set up to handle user interaction with this button. Other elements are properties of the object. We will discus those shortly.
+
+
+## Styles and themes
+
+Themes are Android's mechanism for applying a consistent style to an app or activity. The style specifies the visual properties of the elements that make up your user interface, such as color, height, padding and font size.  Android provides three system themes that you can choose from when building apps for Ice Cream Sandwich (Android 4.0).
+
+- holo light
+- holo dark
+- holo light with dark action bars (we will discuss action bars later)
+
+When designing the UI you could start with selecting the theme that matches your needs and then, if you wish, customise it further. For now let's look at the layout app with different sytles - Theme.Holo.Light (left) and Theme.Holo (right).
+
+![](images/theme.png)
+
+These are set in the `res/values/style.xml
+
+~~~{.java}
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>
+~~~
+
+The Theme.Holo (is holo.dark in actual fact) style is the default when you create a project and has the dark look. If you want the lighter theme use:
+
+~~~{.java}
+<resources>
+  <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+~~~
+
+The manifest specifies android:theme="@style/AppTheme">
+
+What is the difference between a theme and style?
+
+A style is a collection of properties that specify the look and format for a view or screen. A style can specify properties such as height, padding, font color, font size, background color, and much more. A style is defined in an XML resource that is separate from the XML that specifies the layout. A theme is a style applied to an entire activity or application, rather than an individual view. When a style is applied as a theme, every view in the activity or application will apply each style property that it supports, as is the case above: style name="AppBaseTheme" parent="android:Theme.Holo
+
+## Setting up the Theme when you create a new project
+
+When you create a new Android project in ADT you can specify the theme rather than writing the xml ADT sets it up, as shown below.
+
+![](images/themes.png)
+
+## LinearLayout
+
+**Try the demo:** Click on Linear Layout button and check it out (the screen is shown above). 
+
+The file below is the `activity_main_layout.xml` that is associated with the MainActivityLayout activity. This is a simple linear layout with a root or parent element and a vertical layout  -- that is, LinearLayout object. In the layout below this represents a container for all the buttons -- so this is a viewgroup with a number of views/widgets (child elements). 
+
+~~~{.java}
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainLayoutActivity" >
+
+    **snippet**
+
+    <Button
+        android:id="@+id/btn_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="onLinearLayoutClicked"
+        android:text="@string/ui_button_linear_layout_title" />
+
+    <Button
+        android:id="@+id/btn_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="onRelativeLayoutClicked"
+        android:text="@string/ui_button_relative_layout_title" />
+
+</LinearLayout>
+~~~
+
+In the code snippet [`MainLayoutActivity.java`](lecture06.txt)  loads the [`activity_main_layout.xml`](lecture06.txt) in the onCreate() callback. We also print some toast to the screen -- just for fun.  Toast prints the text  screen 
+
+~~~{.java}
+public class MainLayoutActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main_layout);
+		Toast.makeText(getApplicationContext(),
+				getString(R.string.i_am_here_message), Toast.LENGTH_SHORT).show();
+
+	}
+
+	public void onLinearLayoutClicked(View v) {
+
+		Intent intent = new Intent(MainLayoutActivity.this,
+				LinearLayoutActivity.class);
+		startActivity(intent);
+	}
+}
+~~~
+
+The LinearLayoutActivity displays the screen and simply 
+
+~~~{.java}
+public class LinearLayoutActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		Toast.makeText(getApplicationContext(),
+				getString(R.string.i_am_here_message), Toast.LENGTH_SHORT).show();
+
+		setContentView(R.layout.linear_layout);
+	}
+
+	public void onGoBackClicked(View v) {
+
+		Intent intent = new Intent(LinearLayoutActivity.this,
+				MainLayoutActivity.class);
+		startActivity(intent);
+	}
+
+}
+~~~
+
+Once the intent is fired and LinearLayoutActivity in started it setContentView on R.layout.linear_layout -- the complete XML is shown for this example code. It is busy but you will be able to pick out the layout, viewgroups, views and widgets. There are a number of new views here. Let's briefly discuss them and some of their properties. Explain....
+
+![](images/linear2.png)
+
+~~~{.java}
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainLayoutActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_name_title" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_name_hint"
+        android:inputType="textCapWords"
+        android:singleLine="true" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_email_title" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_email_hint"
+        android:inputType="textEmailAddress"
+        android:singleLine="true" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_phone_title" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_phone_hint"
+        android:inputType="phone"
+        android:singleLine="true" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_gender_title" >
+    </TextView>
+
+    <RadioGroup
+        android:id="@+id/radioGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radioGenderF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_female" />
+
+        <RadioButton
+            android:id="@+id/radioGenderM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_male" >
+        </RadioButton>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textInputType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_mood_spinner_title" >
+    </TextView>
+
+    <Spinner
+        android:id="@+id/spinnerInputType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:entries="@array/ui_mood_spinner_entries" >
+    </Spinner>
+
+    <Button
+        android:id="@+id/btn_goback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:onClick="onGoBackClicked"
+        android:text="@string/ui_button_goback_title" />
+
+</LinearLayout>
+~~~
+
+## Using the graphical mode to design and implement the UI
+
+You can implement the layout using XML or using the graphical mode as mentioned earlier -- or a combo. Below, the properties of the layout (e.g., layout_width, orientation, etc.) can be set by first drop and dragging the button (in this example case) and the highlight the button and left click to set the properties of the button such as id, layout_width, layout_height, layout_margin, onClick, text.
+
+~~~{.java}
+    <Button
+        android:id="@+id/btn_goback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:onClick="onGoBackClicked"
+        android:text="@string/ui_button_goback_title" />
+~~~
+
+![](images/s-graphicalmode.png)
+
+Note, that we use labels for text and not direct text (go back). All string resources are defined in strings.xml file in the resources/values folder - a snippet relating to  [`srings.xml`](lecture06.txt)  for the linear layout are shown below. Agan, you can use the graphical mode to define strings or just cut and paste in the strings.xml (which is preferable). 
+
+~~~{.java}
+    <string name="ui_button_goback_title">go back</string>
+    <string name="ui_profile_name_hint">Your name here</string>
+    <string name="ui_profile_name_title">Name</string>
+    <string name="ui_profile_email_hint">Your Email here</string>
+    <string name="ui_profile_email_title">Email:</string>
+    <string name="ui_profile_phone_hint">Your phone number here</string>
+    <string name="ui_profile_phone_title">Phone:</string>
+    <string name="ui_profile_gender_title">Gender:</string>
+    <string name="ui_profile_gender_male">Male</string>
+    <string name="ui_profile_gender_female">Female</string>
+~~~
+
+If you open strings.xml in ADT then you can view and add to strings using the Resources view or strings.xml as show below. My preference is cut and paste in the xml but as the figure showns you can use a graphical mode to add and remove strings.
+
+![](images/s-strings.png)
+
+Note, that strings can hold a wide set of items: strings, arrays of strings, integer arrays, colours, styles/themes -- these items are circkes on the figure above.  We will mostly define strings, string arrays, integer arrays.
+
+For example, we want people to enter their mood using a drop down/up menu selection. We use the Spinner for this an populate it with a set of moods defined by entries that is @array/ui_mood_spinner_entries which is defined in strings.xml. Later in ListView layout we will add an array to the layour programmatically in the code but here we do it all in the xml -- below is a snippet from linear_layout.xml
+
+~~~{.java}
+    <Spinner
+        android:id="@+id/spinnerInputType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:entries="@array/ui_mood_spinner_entries" >
+    </Spinner>
+~~~
+
+And here is the corresponding string array of entries defined in strings.xml. It is better to put these strings and resources in XML and in the resource folder. It is easy to maintain -- if you change the list entries later you simply change the XML and not the code. Again, this is a nice seperation of code and resources i.e., data.
+
+~~~{.java}
+    <string-array name="ui_mood_spinner_entries">
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Tired</item>
+        <item>Rested</item>
+        <item>Stressed</item>
+        <item>Fair to middling</item>
+        <item>Great</item>
+    </string-array>
+~~~
+
+## Demensions of a phone used in laying out the UI
+
+How you design a layout is determined by the real estate of the screen -- essentially the size (read pixels dimensions) and pixel density. The figure below shows these display properties of the Nexus 4. The physical size of the phone is 4.7 inches diagnoally, the resolution is 768 x 1280 pixels, and the pixel density is 318 ppi (where ppi is _pixels per inch_. Why does this matter. Well we have to know a little about these display characteristics when designing our views. 
+
+![](images/s-nexus4.png)
+
+When specifying the UI you need to be aware of a number of scaling units. The first is `dp`, which stands for density-independent pixel. Most people confuse dp with ppi mentioned above. 1 dp is equivalent to one pixel on a 160 dpi screen. Android specifies four screen densities that you see reflected when you create a projec. The quantity of pixels within a physical area of the screen is referred to as `dpi (dots per inch)`. Typically, a lowdensity screen has fewer pixels within a given physical area, compared to a medium or high density screens. Android groups all actual screen densities into four generalized densities:
+
+- low desnity (ldpi) which is 120 dpi
+- medium density (mdpi) is 160 dpi
+- high density (hdpi) is 240 dpi
+- extra high density (xhdpi) is 320 dpi
+
+Examples of dp being used include _android:layout_margin="5dp"_ where the margin inside the border of a view is 5dp all around. Another example is using fount size. Here we use `sp`: the units used below for android:textSize="30sp" is based on `scale-independent pixels (sp)`.
+
+~~~{.java}
+	** used to set margins in some of the layouts **
+	android:layout_marginRight="40dp"
+	android:layout_margin="5dp"
+   
+	** used to specify the absolute size of conan's image**
+ 	android:maxHeight="250dp"
+	android:maxWidth="250dp"
+	android:minHeight="50dp"
+	android:minWidth="50dp"
+
+	** used to specify font size
+	android:textSize="30s
+~~~
+
+## Operations and Attributes of Views
+
+Once you have created a set of views, viewgroups, etc. typically as a programmer their are a common set of operations and attributes associated with views. 
+
+. properties: for example setting the text of a TextView such as the text, style, font size, position on the screen, how much real estate the view should take up on the screen. These proporties can be set in the XML or programmatically in the code -- a number of time when designing applications some UI properties are known at build time and therefore can be captured in XML and other aspects of the UI remain unknown until run time, in which case, programmability is the solution. 
+
+. focus: When you design a screen made up of a bunch of views and view groups you may typically want to focus on one of the views or different views from time to time. You can do this in XML with <requestFocus/> or programmatically call requestFocus().
+
+. listeners: Many times when you are design a view the user needs to interact with the object. The user can setup listeners or callbacks that will be called when an event fires and specific behavior programmed; for example, when a RadioButton is set by the user the state is saved.
+
+If we look at the attributes associated with the Linear Layout XML (above) we will see a number of strange looking syntax -- these attributes include the following:
+
+
+~~~{.java}
+     <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_name_hint"
+        android:inputType="textCapWords"
+        android:singleLine="true" >
+    </EditText>
+~~~
+
+- android:id = "@+id/editName"; represents the view object ID which is typically a string such as "@+id/editName"
+- android:layout_width="match_parent"; match_parent, which means that the view wants to be as big as its parent minus any padding).
+- android:layout_height="wrap_content"; which means that the view wants to be just big enough to enclose its content plus any padding.
+- android:layout_margin="5dp"; this is the space outside of the border of the view (e.g., a button) and between what is next to or around the view.
+- android:hint="@string/ui_profile_name_hint"; when associated in this case with a EditText it is a hint of what the user should enter (e.g., your email).
+- android:inputType="textCapWords"; The user input where the letter of the each word will begin with a capital by defaul -- for example in this case the users name Andrew Thomas Campbell. There are many other types of input such textEmailAddress and textAutoComplete.
+- android:singleLine="true"; this restricts the input by the user to a single line.
+
+There are many other attributes associated with views. 
+
+First, here are a bunch of margin based attributes. BTW, padding is the space inside the border between the border and the actual view's content. There is padding all around the content.  Margins is outside the border between the border and the other elements next to this view. 
+
+- android:layout_marginBottom: specifies extra space on the bottom side of this view. 
+- android:layout_marginEnd; specifies extra space on the end side of this view. 
+- android:layout_marginLeft; specifies extra space on the left side of this view. 
+- android:layout_marginRight; sSpecifies extra space on the right side of this view. 
+- android:layout_marginStart; specifies extra space on the start side of this view. 
+- android:layout_marginTop; specifies extra space on the top side of this view. 
+
+Some other important attributes include:
+
+- android:layout_gravity: Standard gravity constant that a child supplies to its parent. Defines how the child view should be positioned, on both the X and Y axes, within its enclosing layout; some positions include top, botton, left and right; start, center and end.
+- android:layout_weight; specifies how child views are specified, specifically, how much of the extra space will be allocated to the view: 0 if the view should not be stretched. Otherwise the extra pixels will be pro-rated among all views whose weight is greater than 0. Note, how layout_weight is used within the RadioGroup for the Linear Layout snippet below -- each of the RadioButtons is equally weighted in the RadioGroup. 
+
+~~~{.java} 
+        <RadioButton
+            android:id="@+id/radioGenderF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_female" />
+
+        <RadioButton
+            android:id="@+id/radioGenderM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_male" >
+        </RadioButton>
+~~~
+
+## RelativeLayout: Click on Connan (he reveals a hideous opinion)
+
+This is a relative layout and a simple one at that -- much more complex relative position of views and widgets within the layout can be achieved. Here we alogh the AnalogClock at bottom of the layout (layout_alignParentBottom); the ImageView of our pal Connan (run the apk and click on the dastardly dude) at the top (layout_alignParentTop); and by default the RatingBar is sandwiched between the two widgets -- note we could explicitly do this too.
+
+**Try the demo:** Click on RelativeLayout button and check it out. Don't you just hate Conan ;-)
+
+![](images/relative.png)
+
+The RelativeLayout has a number of properties that all makes good sense; match_parent will fill the screen and the padding left and right positions the other widgets in the container.
+
+~~~{.java}
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+ 
+# User Interface (UI)
+ 
+Android is all about creating beautiful interfaces that are intuitive to use.
+ 
+## What this lecture will teach you
+ 
+- Understanding how to create a number of common UI layouts
+- Using XML and the graphical layout tool for specifying layouts
+- Styles and themes
+- Phone dimensions
+- Operations and attributes of views
+ 
+## Checkout the demo project
+ 
+Download the demo the [layout.zip](../code/layouts.zip) app specifically designed to go with these notes.
+ 
+How to run the code: You need to unzip the code in your download folder or desktop and then use the **File->import->Existing Android code in workspace**. Then the project should just run.
+ 
+OK. Let's get started. Where else but with terminology and UI classes.
+ 
+## Terminology: views, widgets, view groups, layouts,  containers
+ 
+The user interface is implemented as collection of view objects (e.g., a date widget, or editable text) -- a view is a class and a widget  (e.g., a button) which is drawn on some part of the screen and is responsible for event handling such as when the user interacts with the UI (e.g., clicks on a button, enters the date). User's can construct sophisticated UIs by bundling views together using layouts (or ViewGroups), which can be considered as invisible containers. These containers can hold child containers. Each container defines its views (or other ViewGroups) and their layout properties.
+ 
+![](images/views.png)
+ 
+Take a look at the simple UI below -- it's not very exciting but demonstrates a number of common layouts and views. It consists of a simple linear vertical layout of widgets including TextViews, EditTexts, a couple of RadioButtons, a Spinner (currently indicating Happy) and a button with the text *go back*. We will discuss how to create a common set of layouts using XML.
+ 
+![](images/simpleview.png)
+ 
+The Android UI framework is flexible and easily extended. As you would imagine from all the apps you have used on smartphones the UI is a hugely important area to an app. It is also a huge topic that we will not have time to cover in any great depth -- we will take a slice through it. The book covers the UI in great detail so if you want to know more start there.
+ 
+## Sample project: Layout
+ 
+**Download, import, view and run the demo [layout.zip](lecture06.txt) but first just install and run the [layout.apk](lecture06.txt).** We will use the layout sample code in this lecture to understand a number of things: different UI layouts, click input, toast, saving user data and more. Make sure you don't blindly load and run the code -- you'll learn almost zero from that. Rather, connect the dots. Check through the various activity, layout and resource files.
+ 
+**Try the demo** Start the app and check it out.
+ 
+Try out the layout sample project, which includes a number of activities with their associated layouts- we will use it to illustrate a number or important UIs, how to handle user input (e.g., email address or the time). If you install the layouts app you will see its main screen represents a simple linear layout of a bunch of buttons. The first four button render different layouts, specifically: linear layout,  relative layout, scrollview and listview. Following this there is a data and time screen and then a button that says SharedPreferences. Date and time use special widgets that the user can interact with to set, yes, the date and time. SharedPreferences is an object that can be used to store small amounts of user data so that when the app is killed and restarted the user's data is restored. Over the course of this lecture we will discuss how to design each of these views and discuss user data more.
+ 
+![](images/layouts.png)
+ 
+## Writing XML layouts and/or using the graphical layout tool
+ 
+You can build UIs using XML and/or using the graphical layout tool. The graphical representation is shown below. My preference is to use XML once I have done some basic layout with the tool. On the left of the figure you can see a list of widgets that you can select, drag, drop and arrange on the screen. **Note, that the XML/graphical views can be toggled as shown in the figure**. The figure shows the type of layout and highlights the first button -- on the right side you can see the properties of the button, for example, the button id `@+id/btn_linear_layout`, the width and height are `match_parent` and `match_content` respectively.
+ 
+![](images/s-uidesign.png)
+ 
+Let's look at the xml view of the same screen -- we only show the first two buttons in this linear layout because they are almost identical. You can look at the complete layout in the file `activity_main_layout.xml` in the project's layout folder.
+ 
+In fact you can define your UI with XML or the graphical tool and programmatically in your code in you wish. I recommend specifying your UI not in your program but using the xml presentation. Why? Because it is a good idea to separate the specification of UI from your code. It is more extensible (for example, having different layouts for different devices) rather than littering your program with lots of unnecessary UI code.  By keeping things separate you can completely change your UI without changing your code -- that's cool.
+ 
+It is worth noting in the xml below that the UI elements for example Button closely resemble the name of the class and the methods; for example, Button is the class and the `onLinearLayoutClicked` is the call back set up to handle user interaction with this button. Other elements are properties of the object. We will discus those shortly.
+ 
+ 
+## Styles and themes
+ 
+Themes are Android's mechanism for applying a consistent style to an app or activity. The style specifies the visual properties of the elements that make up your user interface, such as color, height, padding and font size.  Android provides three system themes that you can choose from when building apps for Ice Cream Sandwich (Android 4.0).
+ 
+- holo light
+- holo dark
+- holo light with dark action bars (we will discuss action bars later)
+ 
+When designing the UI you could start with selecting the theme that matches your needs and then, if you wish, customize it further. For now let's look at the layout app with different styles - Theme.Holo.Light (left) and Theme.Holo (right).
+ 
+![](images/theme.png)
+ 
+These are set in the `res/values/style.xml
+ 
+~~~{.java}
+<resources>
+ 
+    <!--
+    	Base application theme, dependent on API level. This theme is replaced
+    	by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+    	<!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+    	-->
+    </style>
+ 
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+    	<!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+ 
+</resources>
+~~~
+ 
+The Theme.Holo (is holo.dark in actual fact) style is the default when you create a project and has the dark look. If you want the lighter theme use:
+ 
+~~~{.java}
+<resources>
+  <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+~~~
+ 
+The manifest specifies android:theme="@style/AppTheme">
+ 
+What is the difference between a theme and style?
+ 
+A style is a collection of properties that specify the look and format for a view or screen. A style can specify properties such as height, padding, font color, font size, background color, and much more. A style is defined in an XML resource that is separate from the XML that specifies the layout. A theme is a style applied to an entire activity or application, rather than an individual view. When a style is applied as a theme, every view in the activity or application will apply each style property that it supports, as is the case above: style name="AppBaseTheme" parent="android:Theme.Holo
+ 
+## Setting up the Theme when you create a new project
+ 
+When you create a new Android project in ADT you can specify the theme rather than writing the xml ADT sets it up, as shown below.
+ 
+![](images/themes.png)
+ 
+## LinearLayout
+ 
+**Try the demo:** Click on Linear Layout button and check it out (the screen is shown above).
+ 
+The file below is the `activity_main_layout.xml` that is associated with the MainActivityLayout activity. This is a simple linear layout with a root or parent element and a vertical layout  -- that is, LinearLayout object. In the layout below this represents a container for all the buttons -- so this is a viewgroup with a number of views/widgets (child elements).
+ 
+~~~{.java}
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainLayoutActivity" >
+ 
+    **snippet**
+ 
+    <Button
+        android:id="@+id/btn_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="onLinearLayoutClicked"
+        android:text="@string/ui_button_linear_layout_title" />
+ 
+    <Button
+        android:id="@+id/btn_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+    	android:onClick="onRelativeLayoutClicked"
+        android:text="@string/ui_button_relative_layout_title" />
+ 
+</LinearLayout>
+~~~
+ 
+In the code snippet [`MainLayoutActivity.java`](lecture06.txt)  loads the [`activity_main_layout.xml`](lecture06.txt) in the onCreate() callback. We also print some toast to the screen -- just for fun.  Toast prints the text  screen
+ 
+~~~{.java}
+public class MainLayoutActivity extends Activity {
+ 
+        	@Override
+        	protected void onCreate(Bundle savedInstanceState) {
+        	        	super.onCreate(savedInstanceState);
+        	        	setContentView(R.layout.activity_main_layout);
+        	        	Toast.makeText(getApplicationContext(),
+        	        	        	        	getString(R.string.i_am_here_message), Toast.LENGTH_SHORT).show();
+ 
+        	}
+ 
+        	public void onLinearLayoutClicked(View v) {
+ 
+        	        	Intent intent = new Intent(MainLayoutActivity.this,
+        	        	        	        	LinearLayoutActivity.class);
+        	        	startActivity(intent);
+        	}
+}
+~~~
+ 
+The LinearLayoutActivity displays the screen and simply
+ 
+~~~{.java}
+public class LinearLayoutActivity extends Activity {
+ 
+        	@Override
+        	protected void onCreate(Bundle savedInstanceState) {
+        	        	super.onCreate(savedInstanceState);
+ 
+        	        	Toast.makeText(getApplicationContext(),
+        	        	        	        	getString(R.string.i_am_here_message), Toast.LENGTH_SHORT).show();
+ 
+        	        	setContentView(R.layout.linear_layout);
+        	}
+ 
+        	public void onGoBackClicked(View v) {
+ 
+        	        	Intent intent = new Intent(LinearLayoutActivity.this,
+        	        	        	        	MainLayoutActivity.class);
+        	        	startActivity(intent);
+        	}
+ 
+}
+~~~
+ 
+Once the intent is fired and LinearLayoutActivity in started it setContentView on R.layout.linear_layout -- the complete XML is shown for this example code. It is busy but you will be able to pick out the layout, viewgroups, views and widgets. There are a number of new views here. Let's briefly discuss them and some of their properties. Explain....
+ 
+![](images/linear2.png)
+ 
+~~~{.java}
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainLayoutActivity" >
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_name_title" >
+    </TextView>
+ 
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_name_hint"
+        android:inputType="textCapWords"
+        android:singleLine="true" >
+    </EditText>
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_email_title" >
+    </TextView>
+ 
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_email_hint"
+    	android:inputType="textEmailAddress"
+        android:singleLine="true" >
+    </EditText>
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/ui_profile_phone_title" >
+    </TextView>
+ 
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_phone_hint"
+        android:inputType="phone"
+        android:singleLine="true" >
+    </EditText>
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:text="@string/ui_profile_gender_title" >
+    </TextView>
+ 
+    <RadioGroup
+        android:id="@+id/radioGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:orientation="horizontal" >
+ 
+    	<RadioButton
+            android:id="@+id/radioGenderF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_female" />
+ 
+    	<RadioButton
+            android:id="@+id/radioGenderM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_male" >
+    	</RadioButton>
+    </RadioGroup>
+ 
+    <TextView
+        android:id="@+id/textInputType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:text="@string/ui_mood_spinner_title" >
+    </TextView>
+ 
+    <Spinner
+        android:id="@+id/spinnerInputType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:entries="@array/ui_mood_spinner_entries" >
+    </Spinner>
+ 
+    <Button
+        android:id="@+id/btn_goback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:onClick="onGoBackClicked"
+        android:text="@string/ui_button_goback_title" />
+ 
+</LinearLayout>
+~~~
+ 
+## Using the graphical mode to design and implement the UI
+ 
+You can implement the layout using XML or using the graphical mode as mentioned earlier -- or a combo. Below, the properties of the layout (e.g., layout_width, orientation, etc.) can be set by first drop and dragging the button (in this example case) and the highlight the button and left click to set the properties of the button such as id, layout_width, layout_height, layout_margin, onClick, text.
+ 
+~~~{.java}
+    <Button
+        android:id="@+id/btn_goback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+    	android:onClick="onGoBackClicked"
+        android:text="@string/ui_button_goback_title" />
+~~~
+ 
+![](images/s-graphicalmode.png)
+ 
+Note, that we use labels for text and not direct text (go back). All string resources are defined in strings.xml file in the resources/values folder - a snippet relating to  [`srings.xml`](lecture06.txt)  for the linear layout are shown below. Again, you can use the graphical mode to define strings or just cut and paste in the strings.xml (which is preferable).
+ 
+~~~{.java}
+    <string name="ui_button_goback_title">go back</string>
+    <string name="ui_profile_name_hint">Your name here</string>
+    <string name="ui_profile_name_title">Name</string>
+    <string name="ui_profile_email_hint">Your Email here</string>
+    <string name="ui_profile_email_title">Email:</string>
+    <string name="ui_profile_phone_hint">Your phone number here</string>
+    <string name="ui_profile_phone_title">Phone:</string>
+    <string name="ui_profile_gender_title">Gender:</string>
+    <string name="ui_profile_gender_male">Male</string>
+    <string name="ui_profile_gender_female">Female</string>
+~~~
+ 
+If you open strings.xml in ADT then you can view and add to strings using the Resources view or strings.xml as show below. My preference is cut and paste in the xml but as the figure shows you can use a graphical mode to add and remove strings.
+ 
+![](images/s-strings.png)
+ 
+Note, that strings can hold a wide set of items: strings, arrays of strings, integer arrays, colors, styles/themes -- these items are circled on the figure above.  We will mostly define strings, string arrays, integer arrays.
+ 
+For example, we want people to enter their mood using a drop down/up menu selection. We use the Spinner for this and populate it with a set of moods defined by entries that is @array/ui_mood_spinner_entries, which is defined in strings.xml. Later in ListView layout we will add an array to the layout programmatically in the code but here we do it all in the xml -- below is a snippet from linear_layout.xml
+ 
+~~~{.java}
+    <Spinner
+  	  android:id="@+id/spinnerInputType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:entries="@array/ui_mood_spinner_entries" >
+    </Spinner>
+~~~
+ 
+And here is the corresponding string array of entries defined in strings.xml. It is better to put these strings and resources in XML and in the resource folder. It is easy to maintain -- if you change the list entries later you simply change the XML and not the code. Again, this is a nice separation of code and resources i.e., data.
+ 
+~~~{.java}
+    <string-array name="ui_mood_spinner_entries">
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Tired</item>
+        <item>Rested</item>
+    	<item>Stressed</item>
+    	<item>Fair to middling</item>
+        <item>Great</item>
+    </string-array>
+~~~
+ 
+## Dimensions of a phone used in laying out the UI
+ 
+How you design a layout is determined by the real estate of the screen -- essentially the size (read pixels dimensions) and pixel density. The figure below shows these display properties of the Nexus 4. The physical size of the phone is 4.7 inches diagonally, the resolution is 768 x 1280 pixels, and the pixel density is 318 ppi (where ppi is _pixels per inch_. Why does this matter. Well we have to know a little about these display characteristics when designing our views.
+ 
+![](images/s-nexus4.png)
+ 
+When specifying the UI you need to be aware of a number of scaling units. The first is `dp`, which stands for density-independent pixel. Most people confuse dp with ppi mentioned above. 1 dp is equivalent to one pixel on a 160 dpi screen. Android specifies four screen densities that you see reflected when you create a project. The quantity of pixels within a physical area of the screen is referred to as `dpi (dots per inch)`. Typically, a low-density screen has fewer pixels within a given physical area, compared to a medium or high-density screens. Android groups all actual screen densities into four generalized densities:
+ 
+- low density (ldpi), which is 120 dpi
+- medium density (mdpi) is 160 dpi
+- high density (hdpi) is 240 dpi
+- extra high density (xhdpi) is 320 dpi
+ 
+Examples of dp being used include _android:layout_margin="5dp"_ where the margin inside the border of a view is 5dp all around. Another example is using fount size. Here we use `sp`: the units used below for android:textSize="30sp" is based on `scale-independent pixels (sp)`.
+ 
+~~~{.java}
+        	** used to set margins in some of the layouts **
+        	android:layout_marginRight="40dp"
+        	android:layout_margin="5dp"
+  
+        	** used to specify the absolute size of conan's image**
+         	android:maxHeight="250dp"
+        	android:maxWidth="250dp"
+        	android:minHeight="50dp"
+        	android:minWidth="50dp"
+ 
+        	** used to specify font size
+        	android:textSize="30s
+~~~
+ 
+## Operations and Attributes of Views
+ 
+Once you have created a set of views, viewgroups, etc. typically as a programmer their are a common set of operations and attributes associated with views.
+ 
+. properties: for example setting the text of a TextView such as the text, style, font size, position on the screen, how much real estate the view should take up on the screen. These properties can be set in the XML or programmatically in the code -- a number of time when designing applications some UI properties are known at build time and therefore can be captured in XML and other aspects of the UI remain unknown until run time, in which case, programmability is the solution.
+ 
+. focus: When you design a screen made up of a bunch of views and view groups you may typically want to focus on one of the views or different views from time to time. You can do this in XML with <requestFocus/> or programmatically call requestFocus().
+ 
+. listeners: Many times when you are design a view the user needs to interact with the object. The user can setup listeners or callbacks that will be called when an event fires and specific behavior programmed; for example, when a RadioButton is set by the user the state is saved.
+ 
+If we look at the attributes associated with the Linear Layout XML (above) we will see a number of strange looking syntax -- these attributes include the following:
+ 
+ 
+~~~{.java}
+     <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/ui_profile_name_hint"
+        android:inputType="textCapWords"
+        android:singleLine="true" >
+    </EditText>
+~~~
+ 
+- android:id = "@+id/editName"; represents the view object ID which is typically a string such as "@+id/editName"
+- android:layout_width="match_parent"; match_parent, which means that the view wants to be as big as its parent minus any padding).
+- android:layout_height="wrap_content"; which means that the view wants to be just big enough to enclose its content plus any padding.
+- android:layout_margin="5dp"; this is the space outside of the border of the view (e.g., a button) and between what is next to or around the view.
+- android:hint="@string/ui_profile_name_hint"; when associated in this case with a EditText it is a hint of what the user should enter (e.g., your email).
+- android:inputType="textCapWords"; The user input where the letter of the each word will begin with a capital by default -- for example in this case the users name Andrew Thomas Campbell. There are many other types of input such textEmailAddress and textAutoComplete.
+- android:singleLine="true"; this restricts the input by the user to a single line.
+ 
+There are many other attributes associated with views.
+ 
+First, here are a bunch of margin based attributes. BTW, padding is the space inside the border between the border and the actual view's content. There is padding all around the content.  Margins is outside the border between the border and the other elements next to this view.
+ 
+- android:layout_marginBottom: specifies extra space on the bottom side of this view.
+- android:layout_marginEnd; specifies extra space on the end side of this view.
+- android:layout_marginLeft; specifies extra space on the left side of this view.
+- android:layout_marginRight; Specifies extra space on the right side of this view.
+- android:layout_marginStart; specifies extra space on the start side of this view.
+- android:layout_marginTop; specifies extra space on the top side of this view.
+ 
+Some other important attributes include:
+ 
+- android:layout_gravity: Standard gravity constant that a child supplies to its parent. Defines how the child view should be positioned, on both the X and Y axes, within its enclosing layout; some positions include top, button, left and right; start, center and end.
+- android:layout_weight; specifies how child views are specified, specifically, how much of the extra space will be allocated to the view: 0 if the view should not be stretched. Otherwise the extra pixels will be pro-rated among all views whose weight is greater than 0. Note, how layout_weight is used within the RadioGroup for the Linear Layout snippet below -- each of the RadioButtons is equally weighted in the RadioGroup.
+ 
+~~~{.java}
+    	<RadioButton
+            android:id="@+id/radioGenderF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_female" />
+ 
+    	<RadioButton
+            android:id="@+id/radioGenderM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ui_profile_gender_male" >
+    	</RadioButton>
+~~~
+ 
+## RelativeLayout: Click on Conan (he reveals a hideous opinion)
+ 
+This is a relative layout and a simple one at that -- much more complex relative position of views and widgets within the layout can be achieved. Here we locate the AnalogClock at bottom of the layout (layout_alignParentBottom); the ImageView of our pal Conan (run the apk and click on the dastardly dude) at the top (layout_alignParentTop); and by default the RatingBar is sandwiched between the two widgets -- note we could explicitly do this too.
+ 
+**Try the demo:** Click on RelativeLayout button and check it out. Don't you just hate Conan ;-)
+ 
+![](images/relative.png)
+ 
+The RelativeLayout has a number of properties that all makes good sense; match_parent will fill the screen and the padding left and right positions the other widgets in the container.
+ 
+~~~{.java}
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+ 
+    <AnalogClock
+        android:id="@+id/analogClock1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+ 
+    <ImageView
+        android:id="@+id/imageViewOfGirl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:contentDescription="@string/ui_conans_picture"
+        android:maxHeight="250dp"
+        android:maxWidth="250dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:onClick="onClickConan"
+        android:scaleType="fitXY"
+        android:src="@drawable/conan" />
+ 
+    <RatingBar
+        android:id="@+id/ratingBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/analogClock1"
+        android:layout_centerHorizontal="true"
+    	android:layout_marginBottom="18dp" />
+ 
+</RelativeLayout>
+~~~
+ 
+RelativeLayoutActivity is simple code with two callbacks - one for onGoBackClicked and onGoBackClicked. Note that in both cases the view object is passed to the callback method.
+ 
+~~~{.java}
+public class RelativeLayoutActivity extends Activity {
+ 
+        	@Override
+        	protected void onCreate(Bundle savedInstanceState) {
+        	        	super.onCreate(savedInstanceState);
+        	        	
+        	        	setContentView(R.layout.relative_layout);
+        	}
+ 
+        	public void onGoBackClicked(View v) {
+ 
+        	        	Intent intent = new Intent(RelativeLayoutActivity.this,
+        	        	        	        	MainLayoutActivity.class);
+        	        	startActivity(intent);
+        	}
+ 
+        	public void onClickConan(View v) {
+ 
+        	        	Toast.makeText(this, getString(R.string.ui_conans_message),
+        	        	        	        	Toast.LENGTH_LONG).show();
+ 
+        	        	}
+ 
+}
+~~~
+ 
+

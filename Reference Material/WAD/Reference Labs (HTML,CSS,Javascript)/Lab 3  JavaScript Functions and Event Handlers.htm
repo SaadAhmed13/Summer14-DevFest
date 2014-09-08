@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 3: JavaScript Functions and Event Handlers</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 3: JavaScript Functions and Event Handlers</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>This is an introduction to JavaScript Functions and Event Handlers</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Functions Explained</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302534759019_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302534759019.png" alt="Functions Explained" height="209" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302534759019_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p><strong>Define a Function</strong></p>
+
+
+<p>A function includes the function name, a list of arguments to the 
+function, enclosed in parentheses and separated by commas, and the 
+JavaScript statements that define the function, enclosed in curly 
+braces.</p>
+
+
+<p><strong>Call a Function</strong></p>
+
+
+<p>Defining a function does not execute the statements.The function must
+ be called to run. Functions are usually called by event handlers or a 
+call to the function followed by the paraenthses and parameters. 
+Functions can also be called by other functions.</p>
+
+
+<p><strong>Variables and Functions</strong></p>
+
+
+<p>If you declare a variable within a function, the variable can only be
+ accessed within that function. When the function is exited, the 
+variable is destroyed. Variables within functions are local variables. 
+You can have local variables with the same name in different functions 
+though that is not advised. This is possible because each variable is 
+recognized only by the function in which it is declared.</p>
+
+
+<p>If a variable is declared outside a function, all other functions can
+ access the variable. The lifetime of these variables starts when they 
+are declared, and ends when the page is closed.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a new file called lab3_function.html</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302559871386.png" alt="" height="226" width="498">
+
+</div> <p>Save the file into your JS folder. This is a more practical 
+example of the greeting script from last week because it takes into 
+account all the possible user actions.</p>
+
+
+<p>The function is placed between script tags in the head section of the page.<br>
+1.  The first step is you need to define the function with the function 
+command. The function name ends with a set of parenthesis and when it is
+ called it executes the code between the curly brackets.<br>
+2.  The first statement within the curly brackets creates the name variable and stores the users prompt response into it.<br>
+3.  Here we have an if statement that checks to makes sure the variable 
+name is not null and not empty (an ! in javascript means not.). If these
+ are true then it writes the greeting onto the page.<br>
+4.  The final statement uses the getElementById method to select the msg
+ div and place within it the greetings using the .innerHTML.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Complete Code: lab3_functions.html</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302559829378.png" alt="" height="374" width="499">
+
+</div> <p>In order to execute a function, it needs to be called. In this
+ example, an onload  event handler within the body tag executes the 
+function.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Event Handlers</h2>
+
+		 <p><strong>Understanding "event handlers" in JavaScript</strong><br>
+So, what are event handlers? Very powerful and useful! They are <i>JavaScript code that are not added inside the &lt;script&gt; tags, but rather, inside the html tags, </i>that
+ execute JavaScript when something happens, such as pressing a button, 
+moving your mouse over a link, submitting a form etc. The basic syntax 
+of these event handlers is:<br>
+name_of_handler="JavaScript code here" </p>
+
+
+<p>For example:<br>
+                       <i>&lt;a href="http://google.com" onClick="alert('hello!')"&gt;Google&lt;/a&gt;</i></p>
+
+
+<p>As you can, this is certainly unlike a regular JavaScript code in 
+that here we're inserting it directly inside a HTML tag, via the onClick
+ event handler. When the above link is clicked, the user will first see 
+an alert message before being taken to Google. <br>
+Different event handlers with with different HTML tags. For example, 
+while "onclick" can be inserted into most HTML tags to respond to that 
+tag's onclick action, something like "onload" (see below) only works 
+inside the &lt;body&gt; and &lt;img&gt; tags. Below are some of the most
+ commonly used event handlers supported by JavaScript:</p>
+
+
+<p><strong>Event Handlers:</strong><br>
+<strong>onclick:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this to invoke JavaScript upon clicking (a link, or form boxes)<br>
+<strong>onload:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this to invoke JavaScript after the page or an image has finished loading.<br>
+<strong>onmouseover:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this to invoke JavaScript if the mouse passes by some link<br>
+<strong>onmouseout:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this to invoke JavaScript if the mouse goes pass some link<br>
+<strong>onunload:</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this to invoke JavaScript right after someone leaves this page.</p>
+
+
+<p>Quoted fromhttp://www.javascriptkit.com/javatutors/event1.shtml</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Circle Function</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302539356383.png" alt="" height="125" width="560">
+
+</div> <p>Create a file named lab3_circle.html and save it into your js folder.</p>
+
+
+<p>Create the function above between the head tags of your page.</p>
+
+
+<p>The first state of the function creates the area variable and 
+multiples the square of the  radius variable to the Math.PI object 
+(3.14).<br>
+The next stateament rounds off the area of the cirlce use the Math.round() object and then prints the result into an alert box</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Call the Circle Function</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302539621608_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302539621608.png" alt="Call the Circle Function" height="289" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302539621608_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>You need to add an onclick event handler to execute your function.</p>
+
+
+<p><i>                    &lt;a href="#"  onclick="cArea(prompt('What is
+ the radius of your circle',''));"&gt; Click to enter the radius of your
+ circle,&lt;/a&gt; </i></p>
+
+
+<p><i>Notice that this function is passing a user prompt as the radius </i>parameters<i> into the function.</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Function and Event Handler Example: Study Guide Script</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302558768214.png" alt="" height="178" width="498">
+
+</div> <p>Create a third file named lab3_study_guide.html and save it 
+into your js folder. Add the function above, between script tags within 
+the head of the page.</p>
+
+
+<p>The clicker function has two parameters that are passed through the 
+funciton. One is named answer and the other explain. You can think of 
+parameters as variables that pass values into the JavaScript statements 
+within the function. In this example, each parameter will be printed in a
+ popup alert.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Call the clicker function with an event handler</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302559100558_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302559100558.png" alt="Call the clicker function with an event handler" height="145" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab3/images/Lab_3_JavaScript_Functions_and_Event_Handlers/media_1302559100558_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>The clicker function does not execute when the page loads. 
+Instead, an event handler within the body of the web page will execute 
+the function when the buttons are clicked.</p>
+
+
+<p>This clicker functions have two text strings. <br>
+1) The first text string is stored in the answer parameter and<br>
+2) the second text string is stored within the explain parameter.</p>
+
+
+<p><i>                              &lt;a href="#" 
+onclick="clicker('function','Functions can execute multiple JS 
+statements')"&gt; Answer&lt;/a&gt;                                      
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                    </i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Complete Code of Study Guide Lab</h2>
+
+		<div class="image">
+
+<img src="Lab%203%20%20JavaScript%20Functions%20and%20Event%20Handlers_files/media_1302559393291.png" alt="" height="293" width="560">
+
+</div> <p>Here is the complete code for the Study Guide Lab:</p>
+<p>&nbsp;</p>
+<p><i>&lt;html&gt;</i><br>
+<i>&lt;head&gt;</i><br>
+<i>&lt;title&gt;Study Guide&lt;/title&gt;</i><br>
+<i>&lt;script&gt;</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;function clicker(answer,explain)</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(answer);</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert("Details: " +explain);</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;}</i><br>
+<i>&lt;/script&gt;</i><br>
+<i>&lt;/head&gt;</i><br>
+<i>&lt;body&gt;</i><br>
+<i>&lt;h1&gt;Study Guide&lt;/h1&gt;</i><br>
+<i>&lt;ol&gt;</i><br>
+<i>  &lt;li&gt;To declare a function use the reserved word_________?</i><br>
+<i>   &lt;a href="#" onclick="clicker('function','Functions can execute multiple JS statements')"&gt; Answer&lt;/a&gt;&lt;/li&gt;</i><br>
+<i>  &lt;li&gt;True or False. A function is a little script within a larger script?</i><br>
+<i>   &lt;a href="#" onclick="clicker('True','The litte script will be 
+executed when the larger script is 
+executed')"&gt;Answer&lt;/a&gt;&lt;/li&gt;</i><br>
+<i>  &lt;li&gt;What surrounds the code inside a function? </i><br>
+<i>  &lt;a href="#" onclick="clicker('Curly Brackets','Curly brackets 
+surround the statements that will be 
+executed')"&gt;Answer&lt;/a&gt;&lt;/li&gt;</i><br>
+<i>  &lt;li&gt;True or False. When a function is defined the javascript statements are immediately executed. </i><br>
+<i>  &lt;a href="#" onclick="clicker('False','Functions are only executed when they are called')"&gt;Answer&lt;/a&gt;&lt;/li&gt;</i><br>
+<i>&lt;/ol&gt;</i><br>
+<i>&lt;/body&gt;</i><br>
+<i>&lt;/html&gt;</i><br>
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                            </p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

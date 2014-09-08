@@ -1,0 +1,266 @@
+﻿# Customizing Dialogs with DialogFragment
+ 
+We have looked at dialogs before where a dialog box pops up and floats over the UI (that is, partially obscuring the current UI) in a transparent manner prompting the user for input needed by the program -- e.g., date, time.  We use dialogs quite a lot in the MyRuns set of labs. Android supports [DialogFragment](http://developer.android.com/reference/android/app/DialogFragment.html), which is a fragment that displays a dialog window, floating on top of its activity's window. In what follows we show how DialogFragment can be used to construct and customize dialogs. You can use this knowledge for your MyRuns2 lab and future labs.
+ 
+## What this lecture will teach you
+ 
+- Demo project - PreferenceFragment app
+- PreferenceFragment
+- Preference hierarchy specified in an XML 
+- PreferenceFragment code
+ 
+## Resources
+ 
+The code used in this demo comes form the Android developers site. For more information see: [dialogs](
+http://developer.android.com/guide/topics/ui/dialogs.html)
+
+In addition, checkout the section on [Dialogs and DialogFragments](http://commonsware.com/Android/) in the course book.
+ 
+## Checkout the demo project
+ 
+- Download the demo the [fragmentalertdialog.zip](../code/fragmentalertdialog.zip) app specifically designed to go with these notes.
+ 
+## Dialogs
+ 
+In this lecture, we will first show how the DialogFragment can be extended and customized. When designing MyRuns you should think about how to come up with an implementation that handles all dialogs rather than write code here and there in your source to cover the current dialog at hand -- that is, there are lots of points in the app where dialogs are used so develop code of reuse.
+ 
+Android supports three ways to use dialogs:
+ 
+1. Use the Dialog class and its numerous extensions; such as AlertDialogs, DatePickerDialog. There a large number of canned dialog boxes that you can use depending on the sort of user interaction you need. For your own custom dialogs, you could extend the Dialog base class, as do DatePickerDialog and TimePickerDialog.
+ 
+2. You can apply the dialog theme directly by the activity giving the feel of a dialog box.
+ 
+3. Toast.
+ 
+We initially focus on the first approach of using standard dialog boxes that extend the dialog class. We use DialogFragment and the FragmentManager to control the experience.
+ 
+Dialog fragments embed the dialog lifecycle which control the fragment and the rendered Dialog's behavior. DialogFragment contains a Dialog object, which it displays as appropriate based on the fragment's state. Control of the dialog (deciding when to show, hide, dismiss it) should be done through the API here, not with direct calls on the dialog.
+Implementations should override this class and implement onCreateView(LayoutInflater, ViewGroup, Bundle) to supply the content of the dialog. Alternatively, they can override onCreateDialog(Bundle) to create an entirely custom dialog, such as an AlertDialog, with its own content.
+ 
+## Creating a Dialog
+ 
+It is straightforward to create a dialog box. A new dialog instantiates a new Dialog instance and sets up the layout -- title, etc. -- using various methods on the class. The ContentView() method uses a resource ID for the layout, which is subsequently used to inflate and display the dialog to the UI, as shown in the code snippet below.
+ 
+~~~{.java}
+ 
+// Created a new Dialog
+Dialog dialog = new Dialog(MyActivity.this);
+ 
+// Set the title
+dialog.setTitle("Dialog Title");
+ 
+// inflate the layout
+dialog.setContentView(R.layout.dialog_view);
+ 
+// Set the dialog text -- this is better done in the XML
+TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
+text.setText("This is the text that does in the dialog box");
+ 
+// Display the dialog
+dialog.show();
+ 
+~~~
+ 
+## Alert Dialog
+ 
+One common dialog box used fairly widely is the alert dialog. Let's discuss that.  AlertDialog can be used to construct a common set of use cases:
+ 
+1. Asking the user for input with a number of buttons (OK, cancel, save, etc.).
+2. Presenting a list of options using check boxes or radio buttons
+3. Presenting a text entry box for user input.
+ 
+AlertDialog is used in conjunction with the AlertDialog.Builder, a builder class used to  construct a custom dialog using a -- a long -- single Java statement. You can use the builder rather than creating a new custom class every time you want to use some variant on the base alert dialog class.
+ 
+To construct an alert dialog box you need to first create a new AlertDialog.Builder object
+ 
+ 
+~~~{.java}
+ 
+AlertDialog.Builder ad = new AlerDialog.Builder(context);
+ 
+~~~
+ 
+Once done you can then set up the various parts of the dialog as discussed above -- title, assign buttons programmatically, text to be displayed, and importantly, *event listeners* to handle user interaction such as text input, touching buttons, making a selection.
+ 
+In the simple code example below [taken from Meier] we configure a dialog box. We create and build an alert dialog, set up various options define two buttons, event listeners. The code is self-explanatory.
+ 
+~~~{.java}
+ private void displayAlertDialog() {
+ 
+	Context context = MyActivity.this;
+	String title = "It is Pitch Black";
+	String message = "You are likely to be eaten by a Grue.";
+	String button1String = "Go Back";
+	String button2String = "Move Forward";
+ 
+	 AlertDialog.Builder ad = new AlertDialog.Builder(context);
+    	 ad.setTitle(title);
+    	 ad.setMessage(message);
+ 
+	ad.setPositiveButton(
+  	button1String,
+  	new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int arg1) {
+          eatenByGrue();
+    	}
+  	}
+	);
+ 
+    ad.setNegativeButton(
+  	button2String,
+  	new DialogInterface.OnClickListener(){
+    	public void onClick(DialogInterface dialog, int arg1) {
+      	// do nothing
+    	}
+  	}
+	);
+ 
+	//
+	ad.show();
+  }
+~~~
+ 
+## Using Dialog Fragments
+ 
+We will use fragments to build, display and interact with the user.
+  
+We are going to use DialogFragment to build and display the dialog shown below. It shows the first presentation of the dialog and the when the user touches the button it displays the custom dialog box and waits to handle user interaction.
+ 
+![](images/dialog.png)
+ 
+ 
+~~~{.java}
+public class FragmentDialogAlarmActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_fragment_dialog_alarm);
+
+		View tv = findViewById(R.id.text);
+		((TextView) tv)
+				.setText("Example of displaying an alert dialog with a DialogFragment");
+
+		// Watch for button clicks.
+		Button button = (Button) findViewById(R.id.show);
+		button.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				showDialog();
+			}
+		});
+	}
+
+	void showDialog() {
+		DialogFragment newFragment = MyAlertDialogFragment
+				.newInstance(R.string.alert_dialog_two_buttons_title);
+		newFragment.show(getFragmentManager(), "dialog");
+	}
+
+	public void doPositiveClick() {
+		// Do stuff here.
+		Log.i("FragmentAlertDialog", "Positive click!");
+	}
+
+	public void doNegativeClick() {
+		// Do stuff here.
+		Log.i("FragmentAlertDialog", "Negative click!");
+	}
+
+	public static class MyAlertDialogFragment extends DialogFragment {
+
+		public static MyAlertDialogFragment newInstance(int title) {
+			MyAlertDialogFragment frag = new MyAlertDialogFragment();
+			Bundle args = new Bundle();
+			args.putInt("title", title);
+			frag.setArguments(args);
+			return frag;
+		}
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			int title = getArguments().getInt("title");
+
+			return new AlertDialog.Builder(getActivity())
+					.setIcon(R.drawable.alert_dialog_dart_icon)
+					.setTitle(title)
+					.setPositiveButton(R.string.alert_dialog_ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doPositiveClick();
+								}
+							})
+					.setNegativeButton(R.string.alert_dialog_cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doNegativeClick();
+								}
+							}).create();
+		}
+	}
+
+}
+~~~
+ 
+This one very long line of code that it is hard to get your head around the first time you see it. Do not worry. Consider it a template you fill in when you need to create and set up a new dialog.
+ 
+~~~{.java}
+			return new AlertDialog.Builder(getActivity())
+					.setIcon(R.drawable.alert_dialog_dart_icon)
+					.setTitle(title)
+					.setPositiveButton(R.string.alert_dialog_ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doPositiveClick();
+								}
+							})
+					.setNegativeButton(R.string.alert_dialog_cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doNegativeClick();
+								}
+							}).create();
+~~~
+ 
+The convoluted line could be rewritten as multiple times for simplicity of reading
+ 
+~~~{.java}
+ 
+AlertDialog.Builder myDialog =new AlertDialog.Builder(getActivity());
+ 
+// Set icon and title
+myDialog.setIcon(R.drawable.alert_dialog_dart_icon);
+myDialog.setTitle(title);
+ 
+// set up buttons
+myDialog.setPositiveButton(R.string.alert_dialog_ok,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+						int whichButton) {
+					((FragmentDialogAlarmActivity) getActivity())
+									.doPositiveClick();
+				}
+		});
+myDialog.setNegativeButton(R.string.alert_dialog_cancel,
+			 new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+						int whichButton) {
+					((FragmentDialogAlarmActivity) getActivity())
+									.doNegativeClick();
+					}
+		});
+ 
+// return the created Dialog
+ 
+return myDialog.create();
+ 
+~~~
+ 
+

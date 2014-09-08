@@ -1,0 +1,184 @@
+﻿# Using PreferenceFragment to store user preferences
+ 
+Most applications we use today on the laptop and phone from the common or garden browser to specialized activity app (Nike+) allow users to personalize the app using user of system preferences which need to be updated and stored persistently. We will need to do that in MyRuns2.
+ 
+## What this lecture will teach you
+ 
+- Demo project - PreferenceFragment app
+- PreferenceFragment
+- Preference hierarchy specified in an XML 
+- PreferenceFragment code
+ 
+## Resources
+ 
+The code used in this demo comes form the Android developers site. For more information see: [PreferenceFragment](http://developer.android.com/reference/android/preference/PreferenceFragment.html)
+ 
+## Checkout the demo project
+ 
+- Download the demo the [fragmentpreference.zip](../code/fragmentpreference.zip) app specifically designed to go with these notes.
+ 
+## PreferenceFragment
+ 
+Earlier on we used the SharedPreference to store data using key-value pairs. Android supports PreferfenceActivity and PreferenceFragment to edit and store preferences.  It is easy to create a hierarchy of preferences (that can be shown on multiple screens) via XML. The example we discuss below does 90% of the work in XML and very little code. When the user interacts with the fragment there is no code needed to create dialogs or new screens to handle input from the user or storage. This is a simple and powerful way to handle system preferences.
+ 
+PreferenceFragment contains a hierarchy of preference objects as lists. These preferences will automatically save to SharedPreferences (which we discussed earlier in the course) as the user interacts with them. 
+
+To retrieve an instance of SharedPreferences that the preference hierarchy in this fragment will use, call PreferenceManager.getDefaultSharedPreferences(android.content.Context) with a context in the same package as this fragment.
+ 
+![](images/frag1.png)
+ 
+## Preference hierarchy specified in an XML 
+ 
+The preference.xml file is set up in "res/xml". How is this file created. You should just set up a new folder call it xml and the create  preference.xml and save it there.
+ 
+There are a large number of example preferences shown in the preference.xml example. First not that you have to create a <PreferenceScreen> to specifying the hierarchy. The PreferenceScreen object should be at the top of the preference hierarchy. As you an see from the xml and running the example that another PreferenceScreen in the hierarchy denote a screen break--that is the preferences contained within subsequent PreferenceScreen should be shown on another screen. If you tap any of the preferences you will go to a dialog or new screen. This is  determined by the type of preference object that is specified; for example:
+ 
+- edit text preference will launch a dialog to enter text;
+- screen preferences will launch a new screen for input.
+ 
+The preference framework handles showing these other screens from the preference hierarchy.
+ 
+This PreferenceScreen tag serves as a screen break (similar to page break in word processing). Like for other preference types, we assign a `key` (e.g., android:key="checkbox_preference") here so it is able to save and restore its instance state.
+ 
+~~~{.java}
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	
+    <PreferenceCategory
+            android:title="@string/inline_preferences">
+        	
+        <CheckBoxPreference
+                android:key="checkbox_preference"
+                android:title="@string/title_checkbox_preference"
+                android:summary="@string/summary_checkbox_preference" />
+ 
+    </PreferenceCategory>
+            	
+    <PreferenceCategory
+            android:title="@string/dialog_based_preferences">
+ 
+        <EditTextPreference
+                android:key="edittext_preference"
+                android:title="@string/title_edittext_preference"
+                android:summary="@string/summary_edittext_preference"
+                android:dialogTitle="@string/dialog_title_edittext_preference" />
+            	
+        <ListPreference
+                android:key="list_preference"
+                android:title="@string/title_list_preference"
+                android:summary="@string/summary_list_preference"
+                android:entries="@array/entries_list_preference"
+                android:entryValues="@array/entryvalues_list_preference"
+                android:dialogTitle="@string/dialog_title_list_preference" />
+ 
+    </PreferenceCategory>
+ 
+    <PreferenceCategory
+            android:title="@string/launch_preferences">
+ 
+    	<!-- This PreferenceScreen tag serves as a screen break (similar to page break
+         	in word processing). Like for other preference types, we assign a key
+         	here so it is able to save and restore its instance state. -->
+        <PreferenceScreen
+                android:key="screen_preference"
+                android:title="@string/title_screen_preference"
+                android:summary="@string/summary_screen_preference">
+                  	
+            <CheckBoxPreference
+                    android:key="next_screen_checkbox_preference"
+                    android:title="@string/title_next_screen_toggle_preference"
+                    android:summary="@string/summary_next_screen_toggle_preference" />
+            	
+        </PreferenceScreen>
+ 
+        <PreferenceScreen
+                android:title="@string/title_intent_preference"
+                android:summary="@string/summary_intent_preference">
+ 
+        	<intent android:action="android.intent.action.VIEW"
+                    android:data="http://www.android.com" />
+ 
+        </PreferenceScreen>
+ 
+    </PreferenceCategory>
+	
+    <PreferenceCategory
+            android:title="@string/preference_attributes">
+	
+        <CheckBoxPreference
+                android:key="parent_checkbox_preference"
+                android:title="@string/title_parent_preference"
+                android:summary="@string/summary_parent_preference" />
+ 
+    	<!-- The visual style of a child is defined by this styled theme attribute. -->
+        <CheckBoxPreference
+                android:key="child_checkbox_preference"
+                android:dependency="parent_checkbox_preference"
+            	android:layout="?android:attr/preferenceLayoutChild"
+                android:title="@string/title_child_preference"
+                android:summary="@string/summary_child_preference" />
+        	
+    </PreferenceCategory>
+	
+</PreferenceScreen>       	
+~~~
+ 
+The class below is a snippet from the XML. Recall <PreferenceScreen> means a new screen will be shown. And in this XML we can see that an Intent is fired and the data past to the browser in this case is the developer.android.com. **The cool think here is you can see how a built-in application -- that is the browser can be called form the MainActivity to to display a webpage**.
+ 
+~~~{.java}
+  <PreferenceScreen
+                android:title="@string/title_intent_preference"
+                android:summary="@string/summary_intent_preference">
+ 
+        	<intent android:action="android.intent.action.VIEW"
+                    android:data="http://developer.android.com" />
+ 
+  </PreferenceScreen>
+~~~
+##  PreferenceFragment code
+ 
+The code is trivial. The launched MainActivity uses the FragmentManager to load the PreferenceFragment into the activities root view.  The fragment implementation itself simply populates the preferences when created. Note that the preferences framework takes care of loading the current values out of the app preferences and writing them when changed. 
+ 
+To inflate from XML, use the addPreferencesFromResource(int). addPreferencesFromResource simply inflates the given XML resource specified in preferences.xml and adds the preference hierarchy to the current preference hierarchy. The root element should be a PreferenceScreen. Subsequent elements can point to actual Preference subclasses. As mentioned above, subsequent PreferenceScreen in the hierarchy will result in the screen break.
+ 
+Once the preference fragment is created and the UI inflated the transactions replaces the fragment and commits -- at which point it is drawn on the screen.
+ 
+~~~{.java}
+ 
+public class MainActivity extends Activity {
+ 
+        	@Override
+        	protected void onCreate(Bundle savedInstanceState) {
+                    	super.onCreate(savedInstanceState);
+ 
+                    	// Display the fragment as the main content.
+                    	FragmentManager mFragmentManager = getFragmentManager();
+                    	FragmentTransaction mFragmentTransaction = mFragmentManager
+                    	                    	.beginTransaction();
+                    	PrefsFragment mPrefsFragment = new PrefsFragment();
+                    	mFragmentTransaction.replace(android.R.id.content, mPrefsFragment);
+                    	mFragmentTransaction.commit();
+        	 
+        	}
+ 
+        	public static class PrefsFragment extends PreferenceFragment {
+ 
+                    	@Override
+                    	public void onCreate(Bundle savedInstanceState) {
+                                	super.onCreate(savedInstanceState);
+ 
+                                	// Load the preferences from an XML resource
+                                	addPreferencesFromResource(R.xml.preferences);
+                    	}
+        	}
+}
+~~~
+ 
+We could replace 5 lines of code with one line.
+ 
+~~~{.java}
+                    	getFragmentManager().beginTransaction()
+                                            	.replace(android.R.id.content, new PrefsFragment()).commit();
+~~~
+ 
+

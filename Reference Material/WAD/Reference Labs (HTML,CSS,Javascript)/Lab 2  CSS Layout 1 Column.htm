@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 2: CSS Layout 1 Column</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%202%20%20CSS%20Layout%201%20Column_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%202%20%20CSS%20Layout%201%20Column_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%202%20%20CSS%20Layout%201%20Column_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%202%20%20CSS%20Layout%201%20Column_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 2: CSS Layout 1 Column</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this lab you will learn how to create a one column fixed and fluid layout using CSS.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Download the session2 templates files</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301761376138.png" alt="" height="293" width="560">
+
+</div> <p>Download the one_column_template.html file and open it in 
+Dreamweaver. Also download the poppiesHeader.jpg file and save it into 
+your images folder nested inside your 513 root directory. If you want to
+ use your own image make sure the width is 960 pixels and the height is 
+200 px.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">XHTML Structure</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301761898618.png" alt="" height="291" width="340">
+
+</div> <p>The web page is divided up into various sections by giving 
+each section its own div with a unique id. A container div surrounds the
+ whole website. There are also header, content and footer divs. Inside 
+the header is a first level h1 header and inside the content  is a h2 
+header.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Basic CSS Structure</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301761926482.png" alt="" height="177" width="424">
+
+</div> <p>This template contains an embedded style sheet between style 
+tags. When we have completed this lab we will export this as an external
+ stylesheet.<br>
+The first style rule uses the * wildcard character and resets all the 
+margins and paddings for all the tags on the page to 0px. This over 
+rides the browser default styles that give certain padding to paragraphs
+ and headings.</p>
+
+
+<p>I have also created empty style rules for the body tag and container,
+ header, content and footer IDs. You will be defining these styles in 
+this tutorial.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Dreamweaver CSS Panel</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301762233344.png" alt="" height="351" width="246">
+
+</div> <p>You can use Dreamweaver to define the CSS styles in your web 
+page by using the CSS panel on the right side of the screen. By double 
+clicking on the name of each style rule you can set its declaration.</p>
+
+
+<p>We are going to set the pages default text color, text size and background color in the body tag style.</p>
+
+
+<p>body  {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #C3D795;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-size: 1em;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #000;<br>
+}</p>
+
+
+<p>You can do this by typing the code in code view or double clicking on
+ the body tag name in the CSS panel and setting the values in the Type 
+and Background categories of the CSS rule definition dialogue box.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Style your Container Div</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301764399145.png" alt="" height="349" width="560">
+
+</div> <p>The style container controls the overall width of the web 
+site. If you want a fixed width layout, you set the width in pixels  
+(ex: width: 960px) if you want a fluid width layout you would set the 
+width in as a percentage of the browser window (ex: width: 70%).</p>
+
+
+<p>Double click on the #container rule name in the CSS Panel, it opens 
+the CSS rule definition dialogue box. Click on the background category 
+and set the background to a white color (#FFF).  </p>
+
+
+<p>Click on the Box category and set the width to 960 px and Margin Top: 20px, Bottom: 20px, Right: auto, and Left: auto.</p>
+
+
+<p>Then click on the Border category, set Style to Solid, Width to thin and Color to #484E35.</p>
+
+
+<p>Click ok button.<br>
+Look at the code view of your website and review the #container style rule. It should look like this:</p>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;#container{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #FFF;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-right: auto;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-bottom: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-left: auto;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width: 960px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;border: thin solid #484E35;<br>
+}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Style the #header div</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301764922946.png" alt="" height="349" width="560">
+
+</div> <p>Double click on the #header rule name in the CSS Panel, it 
+opens the CSS rule definition dialogue box. Click on the background 
+category, then click on the Browse button. Select the poppiesHeader.jpg 
+in the images subfolder. Set the Background-repeat to no-repeat, 
+Background-position to left and Background-position to top.</p>
+
+
+<p>You will also go to the Box Category and set the height to 200px and the right and left padding to 20px. Click OK.</p>
+
+
+<p>Review your CSS code in code view.</p>
+
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;#header{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(images/poppiesHeader.jpg);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height: 200px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-repeat: repeat;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 20px;<br>
+}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Style the padding on all your Content and Footer divs</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301765356055.png" alt="" height="264" width="560">
+
+</div> <p>Go to code view of your web page and style your content and 
+footer divs. You will be setting the right and left paddings to 20px and
+ adding a background and text color to your footer.</p>
+
+
+<p>#content{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 20px;<br>
+}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#footer{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-right: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-left: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #484E35;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #FFF;<br>
+}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Style your headings and paragraphs</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301765492719.png" alt="" height="294" width="560">
+
+</div> <p>Give your headings a red color and set the padding on your 
+paragraphs. I also defined the font-size of your h1 and h2 headings 
+using a relative em font size.</p>
+
+
+<p>h1, h2 {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #E90000;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 0px;<br>
+}<br>
+h1 {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-size: 2em;<br>
+}<br>
+h2 {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-size: 1.5em;<br>
+}<br>
+p {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 5px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-bottom: 20px;</p>
+
+
+<p>}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Turn your Embedded Style Sheet into an External Style</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301767852513.png" alt="" height="398" width="249">
+
+</div> <p>Hold down the shift key and select all the style rules in your
+ CSS panel in Dreamweaver. Right Click on the selected styles and click 
+on Move CSS Rules . . .<br>
+In the dialogue box that appears click on the A new style sheet . . . radio button. Click the OK button.</p>
+
+
+<p>Name the style lab2.css and save the file in your CSS sub folder.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Save the file as lab2_fixed.html</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301768323966.png" alt="" height="154" width="232">
+
+</div> <p>Save the file as lab2_fixed.html in your root 513 folder</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a Fluid One Column Layout</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20CSS%20Layout%201%20Column_files/media_1301770061432.png" alt="" height="163" width="429">
+
+</div> <p>Under the file menu select Save As . . and name it <strong>lab2_fluid.html.</strong>  Change the Title of the web page to One Column Fluid Layout.</p>
+
+
+<p>Change the H2 heading to say This is a Fluid One Column Layout</p>
+
+
+<p>Go to code view and look for the style tags. Notice that there are no
+ rules between the style tags. The external stylesheet is attached 
+through the link tag.</p>
+
+
+<p>The C in CSS stands for cascading. This means that certain styles 
+over ride and cascade into each other. For example, an embedded style 
+will take precedence and over ride an external style. An inline style 
+will override an embedded style. We are going to add an embedded style 
+rule that will over ride the set width of the container in the external 
+style sheet.</p>
+
+
+<p>Between the style tags add a style rule for the div containter (#container ). Set the width of the container div to 70%.</p>
+
+
+<p>On some browsers you need to make sure the style tags are after your 
+link to your external style sheet. Copy and past the style tags after 
+the link tag so it looks like the image above.</p>
+
+
+<p>Preview the lab2_fluid.html page in your browswer. As you change the 
+width of your browser window, the width of the container div should also
+ change.</p>
+
+
+<p>Upload these files to your webserver and copy and paste the URL to this weeks assignment so I can grade them.</p>
+
+
+<p>Take a break, you have done a great job!</p>
+
+
+<p>When you are ready, you can continue on with Lab 2: Javascript Variables.</p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

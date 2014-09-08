@@ -1,0 +1,83 @@
+﻿![](images/s_biorhythm_icon_cropped.jpg)
+
+![](images/s_Dart_biorhythm.png)
+
+# Dartmouth Biorhythm Project
+ 
+##Ever wondered where the term went?
+ 
+It was over before it started -- I was so busy my friends don't think we are friends anymore; I managed to cram in so much  -- how did I do it all and stay sane?; I lost sleep as the term progressed but stayed healthy, exercised and engaged in three really demanding classes -- how did I manage that?; I met new people -- friendships were formed in the group projects and collaborative assignments; did I manage to relax during the term? -- can't remember; how did my mood change day to day, week to week, assignment to assignment -- don't remember; I was near burnout a few times but kept going; how did the workload and assignment due dates impact my grades - there were a number of weeks when all the due dates overlapped; most classes were great overall but there were lots of moments when I did not understand what was being taught -- but I don't remember the specifics now term is over;  exams are done and I can finally sleep, run, eat well, relax, and, enjoy my friends, the great weather, and the Green -- life is good again :) -- the snow is history and summer is finally here!
+ 
+This story is not an outlier but is it the norm? We do not know. 
+
+##Some anecdotal information
+
+Computer science is known across campus as a place that you learn stuff deeply -- it's a demanding major. We have a  sense as professors what the biorhythm is like but we do not have the day by day data, or the week by week data-- nor, importantly do the students. What we have is a course assessment from students but it only tells us their view of the class three weeks after the end of term -- and little else.  
+
+Here are some [anecdotal comments by students](assessment.pdf) on pace, load and retrospective for one CS course -- I know, this is not a statistically significant sample but I'd bet you see it across many Dartmouth classes:
+
+### Pace
+
+* "SO.SO.SO FAST. I know that's how it has to be, but I'm not gonna say it was slow"
+* "Very fast, especially after the first few weeks. Very challenging to undertake"
+*  "Reasonable"
+
+### Load
+
+* "The labs and lectures were great, RIDICULOUSLY hard, and so much work but I really enjoyed them, I can't think of a ten week period in my life when I have learned more"
+* "The assignments were very challenging but helped me learn a large amount quickly" 
+* "Wow. This really was a fantastic class. On nearly every count--effectiveness of teaching, appropriateness of assignments, what we learned--just great. Loved this class. Of course, it dominated my life, but fair enough--I'm here to learn!"
+
+### Retrospective
+
+* "There is too. much. work. I'm an avid hiker, but I only went on one hike this past term because I knew that I would have to be in Sudikoff all weekend every weekend. Each lab took me (on average) 25-30 hours to complete"
+* "Tens of hours each week coding. This class sucked out my soul."
+* "coding day and night"
+
+## How can we shine more light on the Dartmouth term?
+ 
+Today's smartphones are capable of automatically understanding behavior.
+ 
+Dartmouth has these intense 10-week terms - the Dartmouth term has its own unique  biorhythm. The first few weeks are low key students are relaxed smile a lot and then as the complexity and demands of the term increase students get more stressed, have less sleep and time to exercise, and spend a lot of time -- particularly in this course -- hacking Android code.
+ 
+Multiply that by 3 and you have the Dartmouth term - it is unique to Dartmouth because we tend to push students to learn complex topics typically taught over a 15-week semester in a 10-week term. This works at Dartmouth because kids are very capable and want to be challenged, whereas it wouldn't work at many other institutions of higher learning.
+ 
+Similarly, teaching staff including the professor, teaching assistants and section leaders follow a similar biorhythm were increase stress, lack of sleep, changing moods, lack of time for exercise cycle through the term and impact performance and quality of life -- for 10 weeks at least. Particularly with the demands of teaching (which we like to do well), research (which we like to do well) and family life (which we like to do well). 
+ 
+I've taught semesters at Columbia for a decade prior to coming to Dartmouth. As a lecturer it took me at least 3 years to adapt to the pace of the Dartmouth term -- and I've run 10 marathons ;-). The semester has its own cycle and feels more like a marathon in my experience: I would have to pace myself for the semester so I could make it to the end -- I would find myself loosing steam and interest here and there over the 15 weeks but never burning out because it was very manageable.  The Dartmouth term is more like a sprint -- it's an intense learning experience for the student and demanding for the professor -- I never have time to loose interest in the Dartmouth dash where I cram a semester's information into a term in terms of knowledge dissemination because if I'm going to teach smartphone programming I have to get the material across, the fundamental skills needed, it is hard to water it down and leave the student with partial knowledge -- so you compress the basics and squeeze them into a term.
+ 
+## What is Dartmouth Biorhythm Project?
+ 
+The  Dartmouth Biorhythm Project aims to shine a light on the impact of the Dartmouth term and its workload on stress, sleep, mood, activity, sociability, health and burnout.  We aim to understand the term of a typical Dartmouth student. We plan to study the students in one Dartmouth class over one term -- that is, this class.  This is a uniquely Dartmouth experience which brings advance computer technology and research into the classroom so students can get first hand experience with new untested ideas. 
+
+Today's phones can automatically infers some user behavior while  [experience sampling]( http://en.wikipedia.org/wiki/Experience_sampling_method) allows students to record other information.  The images below show the two apps we have developed that students can use in the project: the first app is Bio (left) and it runs in the background of your Android phone; the second app is [Paco](https://code.google.com/p/paco/) (developed as a framework by Google for [quantified-self](http://en.wikipedia.org/wiki/Quantified_Self) studies) which we extended to allow experience sampling to capture parts of the Dartmouth biorhythm.
+ 
+![](images/bio.png)
+
+As part of group projects each student (and only them) in the study will have access to their data. All students will have access to some of the class anonymized data to use in the group project. The group project is to develop a new app. All students in the class have the opportunity to opt in or not to the study which is covered  by the college's [CPHS](http://www.dartmouth.edu/~cphs/) to make sure your privacy is protected at all times. Students that choose not to opt in will be able to complete their group project.
+ 
+A study like this has not been attempted before at Dartmouth or anywhere else for that matter  -- a single class over a single term. Results from the study will help us understand what makes the Dartmouth term tick, its rhythm, ups and downs, stresses, engagement levels, coping mechanisms, failure rates, achievements. 
+ 
+Dartmouth Biorhythm trivia: Note, the professor is more [stressed](http://infogr.am/DartmouthBiorhythm/) than the students in class today but the students are more [rested](http://infogr.am/DartmouthBiorhythm/). Dartmouth professors stressed, surely not.
+
+![](images/stress1.png)
+
+
+## Biorhythm People
+ 
+### Faculty
+* [Andrew Campbell](http://www.cs.dartmouth.edu/~campbell/) (Dartmouth)
+* [Catherine Norris](http://www.dartmouth.edu/~psych/people/faculty/norris.html) (Dartmouth)
+* [Tanzeem Choudhury](http://www.cs.dartmouth.edu/~tanzeem/) (Cornell)
+* [Sam Gosling](http://homepage.psy.utexas.edu/homepage/faculty/gosling/) (UTA)
+* [Randy Colvin](http://www.northeastern.edu/psychology/people/faculty/c-randall-colvin/) (Northeasten)
+* [Ethan Berke](http://tdi.dartmouth.edu/faculty/ethan-berke-md-mph) (DHMC)
+* [Nicholas Lane](http://www.niclane.org/) (MSRA)
+
+### Students
+
+* Fanglin Chen
+* Rui Wang
+* Tianxing Li
+* Zhengyu Chen
+

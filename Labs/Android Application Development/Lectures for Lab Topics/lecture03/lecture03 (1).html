@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h1 id="activity-lifecycle">Activity Lifecycle</h1>
+<p>Android apps run in a different mode than typical apps run on laptops -- resources are limited (e.g., battery), the form factor and realistate of the screen size is small and can't easily display more than one app at a time -- that is, only one app is in <em>focus</em> in the foreground at a time. That make sense because the user can only focus on one thing at a time while on the go. However, other apps can be started pushing the current app in focus into the backgound. Once the user has completed their interaction with the new app they might want to bring into focus the app that was previously running in the foreground.</p>
+<p>These various events (plus others) are captured in the blue print for each application -- the set of possible states that the app can go through is called the activity lifecycle. BTW, app == activity in the example above but in reality a application (just like MyFirstProgram) comprises one or more activities. Each activity has its own state machine and the user can define what actions to take when certain activiy events fire -- for example, before the activity is killed by the system, perhaps because the system needs to reclaim resoucres then the user might care to safe any etheral data to more persistant storage so that the next time the app/activity runs it starts from where it left off.</p>
+<p>In what follows we discuss this blueprint and the types of operations that can take place as apps or activities to be precise transition through the lifecycle.</p>
+<h2 id="starting-an-activity">Starting an Activity</h2>
+<p>The figure below illustrates the life cycle. The figure captures the states and call back methods that get called as the app transtions. From the first moment an activity is created at the bottom of the pyramid each call back method (e.g., <code>onCreate()</code>, <code>onStart(),</code>onResume()`) moves the activity state up toward the top. At this point the activity is said to be in the <em>foreground</em> and the user freely interacts with it; for example, the activity transitions through <em>Created</em>, <em>Started</em> to <em>Resumed</em> state where it is <em>visible</em> and can be interacted with by the user.</p>
+<p>Once the user is finished interacting with the app say FourSquare, Skype, Google Now they loose interest in the current foreground app and may kill it -- in which case the activity moves to the background and then is destroyed. Here again a sequence of lifecycle methods are called to handle this transition in an orderly manner.</p>
+<p>In each case that a call back method is invoked the user call provide application specific code to deal with the event, for example, saving variabled to persistance storage, on in constrast, when an activity is restated restoring data from storage. As the user looses interest in the foreground application it the control flow moves down the pyramid. Consider the case were the user simpy wants to start another application without destroying the current app (e.g., a navigation app). In this case the app is not destroyed but pushed to the background by traversing down the pyramid from <em>Resumed</em> to <em>Paused</em> to <em>Stopped</em> -- at this point the application is <em>hidden</em> (not visible) from the user. The user can use the back key to navigate back to a background app and bring it back into focus, thereby moving back up the pyramid to the <em>Resumed</em> state via callback methods such as <code>onRestart()</code> and <code>onResumed()</code> -- in the case the code in the call back methods might restore the app so it could pick up where it left off.</p>
+<div class="figure">
+<img src="images\activitymodel.png">
+</div>
+<p>As you can see from the lifecycle figure there are a number of states and in many cases the types of applications we will write will not need to take any actions is many of these states so we will just ignore then if not needed.</p>
+<p>We want to use a necessary subset of these states so that our apps behalve well when user and system driven events occur; for example, the app should not</p>
+<ul>
+<li>crash when a user suddenly receives a phone call;</li>
+<li>crash when the user switches app (e.g., from facebook to google maps);</li>
+<li>use valuable system resources (e.g., cores) when the user is not working it;</li>
+<li>loose the user's context (data) or progress if the user leaves and then later returns to the app; and finally,</li>
+<li>crash or loose the user's progress when the screen flips between landscape and portriat orientation.</li>
+</ul>
+<p>Most states tranistion quickly for example <code>Started</code> but others for example <code>Resumed</code>, <code>Paused</code> and <code>Stopped</code> allow the application to remain in these states for extended periods of time; more specifically:</p>
+<ul>
+<li><p>Resumed: The activity is in the foreground and the user can interact with it.</p></li>
+<li><p>Paused: In this state, the activity is partially obscured by another activity—the other activity that's in the foreground is semi-transparent or doesn't cover the entire screen. The paused activity does not receive user input and cannot execute any code. Need to explain these terms and relevance to phones, typically apps cover other apps.</p></li>
+<li><p>Stopped: The activity is completely hidden and therefore not visible to the user -- we say that the activity is in the <em>background</em> In the Stopped state the activity instance and all its state information such as member variabled are stored but no code can execute in this state.</p></li>
+</ul>
+<p>In contrast to these extended states, after the system calls onCreate(), it transitions quickly to the next states by calling onStart(), which is quickly followed by onResume(). These are thought as as transient states. Again short pieces of code can be executed in the callback methods.</p>
+<p>The activity lifecyle comes across as being abstract if you have not used finite state machines (FSMs) in the design of software -- again, because lots of events can occur with a mobile device -- you get a call, arrive at a destination, get a notification of some application speicific event, system is running out of resouces. the orientation is flip to view a photo better in landscape -- when events like these occur a mobile app has to react in an orderly way.</p>
+<p>We will code up an simple application and watch as the actvities associated with the app tranistion from state to state. In this way we will come to understand the life cycle and through further use we will become comfortable with the idea and the need for lifecycle states and methods.</p>
+<h2 id="the-launcher-activity">The launcher activity</h2>
+<p>Note: can you use the idea of persistance data storage in the example? That way its covered and you don't need a special lecture on it.</p>
+</body>
+</html>

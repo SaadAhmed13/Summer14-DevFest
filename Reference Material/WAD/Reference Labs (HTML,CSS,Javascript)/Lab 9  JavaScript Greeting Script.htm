@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 9: JavaScript Greeting Script</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%209%20%20JavaScript%20Greeting%20Script_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%209%20%20JavaScript%20Greeting%20Script_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%209%20%20JavaScript%20Greeting%20Script_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%209%20%20JavaScript%20Greeting%20Script_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 9: JavaScript Greeting Script</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>This simple external JavaScript will print different data onto the page based on the time of the day.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open the index page to your portfolio.</h2>
+
+		<div class="image">
+
+<img src="Lab%209%20%20JavaScript%20Greeting%20Script_files/media_1306111741446.png" alt="" height="42" width="541">
+
+</div> <p>Create a new external js file and name it lab9_js_greeting.js.
+ Open the index.html page in your portfolio. Within the first intro 
+paragraph inside the div with the id content, create scripts tags that 
+link to this external javascript.</p>
+
+
+<p><strong>Code:</strong><br>
+<i>&lt;script src="js/lab9_js_greetings.js" type="text/javascript"&gt;&lt;/script&gt;</i></p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Get the Current Hour</h2>
+
+		<div class="image">
+
+<img src="Lab%209%20%20JavaScript%20Greeting%20Script_files/media_1306111962174.png" alt="" height="48" width="174">
+
+</div> <p>Create a variable called now that stores a new date() object. 
+Then use the getHours() method to get the current hour and store it in 
+the variable hr.</p>
+
+
+<p><strong>Code:</strong><br>
+<i>var now = new Date();</i><br>
+<i>var hr = now.getHours();</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Based on the Hour of the Date Print a Statement to the Page</h2>
+
+		 <p>Use a series of if statements to evaluate the hour of the day, and
+ then print the appriopriate document.write statement to the page.</p>
+
+
+<p><strong>Code:</strong><br>
+<i>if (hr &gt;= 18)</i><br>
+<i>{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good evening, ");</i><br>
+<i>}</i><br>
+<i>if (hr &gt;=12 &amp;&amp; hr &lt; 18)</i><br>
+<i>{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good afternoon, ");</i><br>
+<i>}</i><br>
+<i>if (hr &lt; 12)</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good morning, ");</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;}</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Results of the Code</h2>
+
+		<div class="image">
+
+<img src="Lab%209%20%20JavaScript%20Greeting%20Script_files/media_1306112174639.png" alt="" height="152" width="560">
+
+</div> <p>The screenshot above was taken at 4:00 in the afternoon and it printed "Good afternoon, "  to the page.</p>
+
+
+<p><strong>Complete Code:</strong><br>
+<i>// JavaScript Document</i><br>
+<i>var now = new Date();</i><br>
+<i>var hr = now.getHours();</i></p>
+
+
+<p><i>if (hr &gt;= 18)</i><br>
+<i>{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good evening, ");</i><br>
+<i>}</i><br>
+<i>if (hr &gt;=12 &amp;&amp; hr &lt; 18)</i><br>
+<i>{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good afternoon, ");</i><br>
+<i>}</i><br>
+<i>if (hr &lt; 12)</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;{</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;document.write("Good morning, ");</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;}</i><br>
+<i>&nbsp;&nbsp;&nbsp;&nbsp;</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>Android Programming - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<p><strong>Want</strong> to be the next <a href="http://www.guardian.co.uk/theguardian/shortcuts/2013/mar/26/how-to-become-an-app-millionaire">Nick D'Aloisio</a> who at the ripe old age of 17 sold his smartphone app to Yahoo for $27 million?</p>
+<p><strong>Want</strong> to know the ins and outs of rolling your own Android app?</p>
+<p><strong>Want</strong> to develop your own app as part of a group project?</p>
+<p>Then read on ....</p>
+<p>[If you are not a Dartmouth student feel free to use the material found below. All the notes and code are online. Let me know what you think]</p>
+<h2 id="android">AndroiD</h2>
+<p>The coolest technology to emerge over the last decade is the smartphone -- it's had a huge impact on our lives. Today, over half of all Americans own a smartphone and I bet you are reading this webpage on your phone.</p>
+<p>If you've been curious about programming phones and creating great apps then this course is for you. We'll focus on programming Android phones -- sorry iPhone.</p>
+<p>The course has no exams or midterms -- it's all about programming. But there will be a lot of programming. The prerequisite for this course is Computer Science 10 (no exceptions given).</p>
+<p>Because we plan to give each student a Google nexus 4 (thanks to the <a href="http://www.dartmouth.edu/~neukom/">Neukom Institute</a> and Computer Science department) for the duration of the course we have capped the course. However, if we exceed the cap we might be able to accommodate more students -- I'm assuming a good chunk of the class own an Android.</p>
+<div class="figure">
+<img src="images\androidbio.png">
+</div>
+<h2 id="lectures">Lectures</h2>
+<ul>
+<li>Location: Spanos Auditorium in Cummings</li>
+<li>Monday Wednesday Friday 10:00-11:05 AM</li>
+<li>Thursday 12:00-12:50 x-period</li>
+<li>Office hours: Sudikoff 260 Monday and Friday 4-5 pm</li>
+</ul>
+<h2 id="what-well-teach-you">What we'll teach you</h2>
+<p>The goal of this course is to teach students how to design, implement, test, debug and publish smartphone applications on java based android phones. Students will learn how to take their innovative ideas from conception to the android market through a series of rigorous hands-on programming assignments and group projects.</p>
+<p>This is an introductory course aimed at undergraduate students (but graduate students are most welcome) who have Java programming experience. However, there is a significant amount of programming in this course requiring a commitment on the part of the student.</p>
+<p>Topics covered: the android development environment including eclipse, android SDK and phone emulator; key programming paradigms; UI design including views and activities; data persistence including SQLite; content providers; messaging and networking; phone sensors, location based services (e.g., Google Maps), background services; broadcast receivers; cloud programming using App Engine; and publishing applications to the android market.</p>
+<p>Android programming concepts are reinforced through a set of thematic programming exercises that introduce these topics and incrementally allow the student to build a complex application; that is, programming labs form a set of components that collectively implement a continuous sensing application. The resulting phone app allows user to log their exercises (e.g., walks, runs) and display them on Google maps.</p>
+<p>A key part of this course is group projects where students will work in small teams for joint problem solving.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Computer Science 10 (no exceptions). Android is based on Java programming.</p>
+<h2 id="we-are-using-piazza-for-information-dissemination-and-qa">We are using Piazza for information dissemination and Q&amp;A</h2>
+<p>Sign up to <a href="https://piazza.com/dartmouth/spring2014/cs65165/home">CS65 Piazza</a> The best way to get answers to programming problems is crowdsourcing -- so the first time someone comes across a problem and we know the answer - everyone sees it. I encourage students to actively use piazza. It's a great system.</p>
+<h2 id="grading">Grading</h2>
+<p>There are no exams or mid terms in this class -- it's all about hacking.</p>
+<p><strong>70% - Thematic programming exercises</strong></p>
+<p>There are 6 weekly programming assignments over the first 7 weeks. These labs are designed to help students learn the android programming environment and key programming paradigms. Assignments are done individually. Each lab will receive the same percentage of the grade.</p>
+<p>Each student will demonstrate their standalone MyRuns5 (after lab 5 is complete). We will meet on the green to assess your app. You will be asked to demo two activities: walking around the green and running (if you don't feel up to running we will find someone to run with your phone).</p>
+<p>Your MyRuns5 app should correctly capture the activity (walking and running) and the details of the exercise. Andrew should be able to see the exercised saved in your history tab displayed on Google Maps.</p>
+<p>Labs are graded on completeness of the required features, the correctness of the functionality, and the robustness: <strong>note, if your lab crashes it will not be graded and you will have to resubmit a working version with 20% penalty against your lab grade.</strong></p>
+<p><strong>30% - Group projects</strong></p>
+<p>Students will develop their own app.</p>
+<p>Projects are made up of a small (2 people) teams and require strong collaboration and a problem solving mindset. The goals of this activity are to help you develop the confidence, skills, and habits necessary to write real phone apps while part of a multi-person team.</p>
+<p>Each team member will get the same grade assuming all goes well. The grade will breakdown as follows:</p>
+<p>4% The Pitch</p>
+<p>4% Design document. Similar to the MyRuns design document.</p>
+<p>4% The Checkpoint: Design/code/project review. Important, some running code must be demoed; that is, as much running code that can be demoed during this review the better.</p>
+<p>14% Demo and Code</p>
+<p>4% Report</p>
+<h2 id="teaching-team">Teaching Team</h2>
+<p>Lecturer: <a href="http://www.cs.dartmouth.edu/~campbell/">Andrew T. Campbell</a>. Andrew's <a href="http://sensorlab.cs.dartmouth.edu/">research group</a> has been at the forefront of developing a class of mobile apps called continuous sensing apps -- for example download and checkout the <a href="https://play.google.com/store/apps/details?id=org.bewellapp&amp;hl=en">BeWell app</a> on Google Play. This class will apply ideas and technologies from research to the classroom.</p>
+<p>TAs:</p>
+<p>Fanglin.Chen.GR@dartmouth.edu. Office hours: Thursday 10:00-12:00 at Sudikoff 249 Rui.Wang.GR@dartmouth.edu. Office hours: Wednesday 11-1 PM at Sudikoff 249</p>
+<p>Both TAs will also cover lab hours Monday 6-10 PM in L002</p>
+<p>Section leaders (Androidistas):</p>
+<ul>
+<li>Betty Huang <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#98;&#x65;&#116;&#116;&#x79;&#46;&#104;&#x75;&#x61;&#110;&#x67;&#46;&#x31;&#52;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Betty.Huang.14@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#66;&#x65;&#116;&#116;&#x79;&#46;&#72;&#x75;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#98;&#x65;&#116;&#116;&#x79;&#46;&#104;&#x75;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Rui Wang <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#114;&#x75;&#x69;&#46;&#x77;&#x61;&#110;&#x67;&#46;&#x67;&#114;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Rui.Wang.GR@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#82;&#x75;&#x69;&#46;&#x57;&#x61;&#110;&#x67;&#46;&#x47;&#82;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#114;&#x75;&#x69;&#46;&#x77;&#x61;&#110;&#x67;&#46;&#x67;&#114;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Jordan S. Kunzika <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#106;&#x6f;&#114;&#100;&#x61;&#110;&#46;&#x73;&#46;&#x6b;&#x75;&#110;&#122;&#x69;&#x6b;&#x61;&#46;&#x31;&#54;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Jordan.S.Kunzika.16@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#74;&#x6f;&#114;&#100;&#x61;&#110;&#46;&#x53;&#46;&#x4b;&#x75;&#110;&#122;&#x69;&#x6b;&#x61;&#46;&#x31;&#54;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#106;&#x6f;&#114;&#100;&#x61;&#110;&#46;&#x73;&#46;&#x6b;&#x75;&#110;&#122;&#x69;&#x6b;&#x61;&#46;&#x31;&#54;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Shuyang Fang <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x73;&#104;&#x75;&#x79;&#x61;&#110;&#x67;&#46;&#102;&#x61;&#110;&#x67;&#46;&#x31;&#52;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Shuyang.Fang.14@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x53;&#104;&#x75;&#x79;&#x61;&#110;&#x67;&#46;&#70;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#x73;&#104;&#x75;&#x79;&#x61;&#110;&#x67;&#46;&#102;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Fanglin Chen <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#102;&#x61;&#110;&#x67;&#108;&#x69;&#110;&#46;&#x63;&#104;&#x65;&#110;&#46;&#x67;&#114;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Fanglin.Chen.GR@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#70;&#x61;&#110;&#x67;&#108;&#x69;&#110;&#46;&#x43;&#104;&#x65;&#110;&#46;&#x47;&#82;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#102;&#x61;&#110;&#x67;&#108;&#x69;&#110;&#46;&#x63;&#104;&#x65;&#110;&#46;&#x67;&#114;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Robin Wang <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#114;&#x6f;&#98;&#x69;&#110;&#46;&#x77;&#x61;&#110;&#x67;&#46;&#x31;&#52;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Robin.Wang.14@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#82;&#x6f;&#98;&#x69;&#110;&#46;&#x57;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#114;&#x6f;&#98;&#x69;&#110;&#46;&#x77;&#x61;&#110;&#x67;&#46;&#x31;&#52;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+<li>Samuel W. Yoder&quot; <script type="text/javascript">
+<!--
+h='&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;';a='&#64;';n='&#x73;&#x61;&#x6d;&#x75;&#x65;&#108;&#46;&#x77;&#46;&#x79;&#x6f;&#100;&#x65;&#114;&#46;&#x31;&#x35;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'Samuel.W.Yoder.15@dartmouth.edu'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x53;&#x61;&#x6d;&#x75;&#x65;&#108;&#46;&#x57;&#46;&#x59;&#x6f;&#100;&#x65;&#114;&#46;&#x31;&#x35;&#64;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#46;&#x65;&#100;&#x75;&#32;&#40;&#x73;&#x61;&#x6d;&#x75;&#x65;&#108;&#46;&#x77;&#46;&#x79;&#x6f;&#100;&#x65;&#114;&#46;&#x31;&#x35;&#32;&#x61;&#116;&#32;&#100;&#x61;&#114;&#116;&#x6d;&#x6f;&#x75;&#116;&#104;&#32;&#100;&#x6f;&#116;&#32;&#x65;&#100;&#x75;&#x29;</noscript></li>
+</ul>
+<p><a href="https://docs.google.com/spreadsheets/d/1c3Tco8GAmHQq2RUCq-spSoesGRoV8mMEtX1R3X9EDbc/edit#gid=0">Section Times</a></p>
+<p><strong>Labs</strong></p>
+<p>Sudikoff Lab 002 is the best place for this but the only room available.</p>
+<ul>
+<li>Friday 5-7 PM (Sudi 002)</li>
+<li>Saturday 4-6 PM (Sudi 002)</li>
+<li>Sunday 7-10 PM (Sudi 002)</li>
+<li>Monday 6-10 PM (Sudi 002)</li>
+</ul>
+<div class="figure">
+<img src="images\nexus.png">
+</div>
+<h2 id="submission-of-programming-assignments">Submission of programming assignments</h2>
+<p>We are using <a href="http://www.cs.dartmouth.edu/~campbell/cs50/svn.html">Subversion Version Control (SVN)</a> for the submission of programming assignments. You should read those note before proceeding.</p>
+<p>SVN is a tool for source code management. Your svn repository root is at https://svn.cs.dartmouth.edu/classes/cs65-S13/Your_Name/ so for me: https://svn.cs.dartmouth.edu/classes/cs65-S13/Andrew_Campbell</p>
+<p>(Note, for classes after 2013 this is relevant: change cs65-s13 to the correct year and term for example W14 changes the svn commands below to cs65-W14)</p>
+<p>How are we going to submit programming labs using SVN?</p>
+<ul>
+<li><p>Create a directory for each new lab in your root repository directory (viz. Lab1_submission, Lab2_submission, Lab3_submission, Lab4_submission, Lab5_submission, Lab6_submission) -- for example, https://svn.cs.dartmouth.edu/classes/cs65-S13/Andrew_Campbell</p></li>
+<li><p><a href="submit.html">Commit the following files for each lab</a>.</p></li>
+</ul>
+<h2 id="policy-for-late-assignments">Policy for late assignments</h2>
+<p>You should always aim to get your lab in on time.</p>
+<pre><code>Penalties: &lt; 8 hours: 10%; &lt; 24 hours: 20%; &lt; 48 hours: 40%; more: no credit.</code></pre>
+<p>Under extenuating circumstances, alternative arrangements may be made with the instructor, if possible before the due date.</p>
+<p>Our late policy is a bit harsh but here's the reasoning. Each lab builds on the previous lab so falling behind is a taxation unto itself. To balance this late policy I add this sweetner: <strong>you get one free 12 hour pass and 1 free 24 hour pass without penalties</strong>. These are atomic units -- you can't divide them up, before you ask. Take it when you like but put a note in your README.txt file and email the TA.</p>
+<p>It is not good to fall behind because it limits the time you can spend on the next lab which comes out as you finish the currenmt one. Therefore, three final pieces of advice from CS1:</p>
+<pre><code>  Don&#39;t fall behind in this course.
+  Don&#39;t fall behind in this course.
+  Don&#39;t fall behind in this course.</code></pre>
+<h2 id="group-project">Group Project</h2>
+<p>Group projects are made up of 3 students.</p>
+<p>The project starts in week 5, pitches week 6. The last two weeks of class are held over for working on collaborative project -- there will be no classes during the last two weeks of term.</p>
+<p>The grade will breakdown as follows:</p>
+<ul>
+<li>Project webpage, team and project pitch</li>
+<li>Reviews</li>
+<li>App demo day. The app/code has to work.</li>
+<li>Report</li>
+</ul>
+<p>There is a focus on <strong>working code</strong> and a <strong>demoable app</strong>. Rules of demo day. The professor should be able to download the application from Google Play and it should work off the shelf.</p>
+<p>The ground rules; the <a href="http://www.cs.dartmouth.edu/~cs65/groups2014.html">teams and projects</a> will:</p>
+<ul>
+<li>Form their own groups and come up with the theme of their app;</li>
+<li>Make a webpage with 1) one page pitch; 2) team names; 3) project name; 4) slides;</li>
+<li>Make a 90 sec elevator pitch in front of the complete class;</li>
+<li>Have a design/code review;</li>
+<li>Publish it on Google Play Store; and</li>
+<li>Show their working app on demo or die date.</li>
+<li>Write a report</li>
+</ul>
+<p><strong>Project Deadlines</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Teams and webpage set up no later than Wednesday 23 April</p></li>
+<li><p>90 seconds project pitches during x-hour Thursday 2nd May</p></li>
+</ol>
+<ul>
+<li>Each team gets 90 seconds to pitch. 1 slides only linked into your webpage.</li>
+<li>Plus a 1 pager project description: What is the idea of the app?</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Submit Design Document: Friday 16 May before midnight</li>
+</ol>
+<ul>
+<li>Similar to MyRuns design document</li>
+<li>Top Level Design Document (approximately 5 pager). Link the document to your project webpage;</li>
+<li><strong>Include</strong>: Revised project description; project should focus on a single simple idea;<br></li>
+<li>UI, top level systems/component design diagram; and a brief description of classes</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Checkpoint: Wednesday 21 May 12-6 pm</li>
+</ol>
+<ul>
+<li><p><em>You should show working code during this checkpoint. The more the better</em>.</p></li>
+<li>See Fanglin for sign up. Each team gets 20 mins. Campbell's office.</li>
+<li><p>Free format discussion. Demo some code.</p></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>App Demo Day: Wednesday 28 May 4-8 pm. Meet at classroom</li>
+</ol>
+<ul>
+<li>All students should be able to download each groups app and play with it.</li>
+<li>Best project will be voted on by the complete group.</li>
+<li>App must be available for download from Play or project website.</li>
+<li>Bonus points for Play but takes 48 hours to process.</li>
+<li>App has to work!</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Project report and code submitted: Thursday 29 May before midnight</li>
+</ol>
+<h2 id="myruns-project-document">MyRuns project document</h2>
+<p>The <a href="myruns\myruns_manual.html">MyRuns document</a> captures the complete app specification and lab assignment information. Please read this a couple of times and refer back to it.</p>
+<h2 id="week-1-march-24-28">Week 1 (March 24-28)</h2>
+<ul>
+<li><a href="cs65intro.pdf">Introduction</a></li>
+<li><a href="lecture01\lecture01.html">Lecture 1: Getting started</a></li>
+<li><a href="lecture05\lecture05.html">Lecture 2: The wonderful world of Android</a></li>
+<li><a href="lecture02\lecture02.html">Lecture 3: Our First Android Application</a></li>
+</ul>
+<h2 id="week-2-march-31-april-4">Week 2 (March 31-April 4)</h2>
+<ul>
+<li>OUT <a href="myruns\myruns_manual.html#chap:labs:1">MyRuns_Lab_1: User Profile</a></li>
+<li><a href="lecture06\lecture06.html">Lecture 4: User Interface I</a></li>
+<li><a href="lecture07\lecture07.html">Lecture 5: User Interface II</a></li>
+<li><a href="lecture03\lecture03.html">Lecture 6: Activity Lifecycle</a></li>
+<li><a href="lecture04\lecture04.html">Lecture 7: A very cool activity lifecycle app to play with</a></li>
+<li><a href="lecture14\lecture14.html">Lecture 8: Using the Camera and Data Storage</a></li>
+</ul>
+<h2 id="week-3-march-31-april-4">Week 3 (March 31-April 4)</h2>
+<ul>
+<li>IN <a href="submit.html">MyRuns_Lab_1: User Profile</a> - Monday before midnight</li>
+<li>OUT <a href="myruns\myruns_manual.html#chap:labs:2">MyRuns_Lab_2: User Interface</a></li>
+<li><a href="lecture08\lecture08.html">Lecture 9: Fragments and ActionBars</a></li>
+<li><a href="lecture10\lecture10.html">Lecture 10: Debugging</a></li>
+<li><a href="lecture09\lecture09.html">Lecture 11: Dynamic Layouts using the Fragment Manager</a></li>
+<li><a href="lecture11\lecture11.html">Lecture 12: Tools</a></li>
+<li><a href="lecture12\lecture12.html">Lecture 13: Using PreferenceFragment to store user preferences</a></li>
+<li><a href="lecture13\lecture13.html">Lecture 14: Customizing Dialogs with DialogFragment</a></li>
+</ul>
+<h2 id="week-4-april-14-18">Week 4 (April 14-18)</h2>
+<ul>
+<li>IN: <a href="submit.html">MyRuns_Lab_2: User Interface</a> - Monday before midnight</li>
+<li>OUT: <a href="myruns\myruns_manual.html#chap:labs:3">MyRuns_Lab_3: Database</a></li>
+<li><a href="lecture15\lecture15.html">Lecture 15: SQLite Database</a></li>
+<li><a href="lecture17\lecture17.html">Lecture 16: Location-based Services</a></li>
+<li><a href="lecture18\lecture18.html">Lecture 17: Google Maps</a></li>
+</ul>
+<h2 id="week-5-21-25-april">Week 5 (21-25 April)</h2>
+<ul>
+<li>IN: <a href="submit.html">MyRuns_Lab_3: Database</a> - Monday before midnight</li>
+<li>OUT: <a href="myruns\myruns_manual.html#chap:labs:4">MyRuns_Lab_4: Google Maps</a></li>
+<li><a href="lecture19\lecture19.html">Lecture 18: Services, BroadcastReceivers and Notifications</a></li>
+<li><a href="lecture20\lecture20.html">Lecture 19: AsyncTask</a></li>
+<li><a href="lecture21\lecture21.html">Lecture 20: Sensor Manager</a></li>
+</ul>
+<h2 id="week-6-april-28--may-2">Week 6 (April 28- May 2)</h2>
+<ul>
+<li>IN: <a href="submit.html">MyRuns_Lab_4: Google Maps</a> - Monday before midnight</li>
+<li>OUT: <a href="myruns\myruns_manual.html#chap:labs:5">MyRuns_Lab_5: Activity Recognition</a></li>
+<li><a href="lecture22\lecture22.html">Lecture 21: Activity Recognition</a> and <a href="lecture22\slides.pdf">slides</a></li>
+<li><a href="http://www.cs.dartmouth.edu/~cs65/groups2014.html">Lecture 22: Project pitches</a></li>
+</ul>
+<h2 id="week-7-may-5-9">Week 7 (May 5-9)</h2>
+<ul>
+<li>IN: <a href="submit.html">MyRuns5</a> - Monday before midnight</li>
+<li>OUT: <a href="myruns\myruns_manual.html#chap:labs:6">MyRuns6: AppEngine</a></li>
+<li><a href="lecture23\lecture23.html">Lecture 23 The Cloud: App Engine</a></li>
+<li><a href="lecture24\lecture24.html">Lecture 24 The Cloud: Google Cloud Messaging</a></li>
+<li><a href="lecture26\lecture26.html">Lecture 25 The Cloud: Running on the Real Cloud</a></li>
+<li><a href="lecture25\lecture25.html">Lecture 26 Publishing Apps</a></li>
+</ul>
+<h2 id="week-8-may-12-16">Week 8 (May 12-16)</h2>
+<ul>
+<li>IN: <a href="submit.html">MyRuns6</a> - Monday before midnight</li>
+<li>Design Document due Friday 16 May before midnight.</li>
+</ul>
+<p>Similar to MyRuns design document. Top Level Design Document (approximately 5 pager). Link the document to your project webpage; Include: Revised project description; project should focus on a single simple idea; UI, top level systems/component design diagram; and a brief description of classes Each project group should have an SVN. There should be the following directories:</p>
+<ul>
+<li>Pitch -- pitch slides</li>
+<li>DesignDoc -- the design.pdf</li>
+<li>Code -- source code</li>
+<li>FinalPresentation -- final presentation slides</li>
+<li>Report -- final project</li>
+</ul>
+<p>No Classes</p>
+<h2 id="week-9-may-19-23">Week 9 (May 19-23)</h2>
+<ul>
+<li>Checkpoint: Wednesday 21 May 12-6 pm. There will be a sign up sheet. Each team gets 20 mins to discuss and demo the project so far.</li>
+</ul>
+<p>No Classes</p>
+<h2 id="week-10-may-26-30">Week 10 (May 26-30)</h2>
+<ul>
+<li>App Demo Day: Wednesday 28 May 4-8 pm. Meet at classroom</li>
+</ul>
+<p>All students should be able to download each groups app and play with it. Best project will be voted on by the complete group. App must be available for download from Play or project website. Bonus points for Play but takes 48 hours to process. App has to work!</p>
+<ul>
+<li>Project report, presentation and code submitted: Thursday 29 May before midnight.</li>
+<li>All project products: pitch, design doc, code, final presentation and report have to be linked into your project page.</li>
+</ul>
+<h2 id="online-book">Online book</h2>
+<p><a href="http://commonsware.com/Android/">The Busy Coder's Guide to Android Development</a></p>
+<p>It is an online book $45.00</p>
+<div class="figure">
+<img src="images\androidbook.png">
+</div>
+<p>I like the online book because you pay once and you get the revised versions for free (sort of). This is important because the APIs are still fluid. Many APIs are being added and depreciated at the same time. So the book at least quickly tracks major changes.</p>
+<p>I really like these other books too. The first one is more introductory -- the second, more depth, more kungfu. But if you want to go deeper after this class buy both.</p>
+<div class="figure">
+<img src="images\book1.png">
+</div>
+<div class="figure">
+<img src="images\book2.png">
+</div>
+<p>Having all three books might seem excessive -- call me excessive.</p>
+</body>
+</html>

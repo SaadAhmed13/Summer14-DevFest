@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>3 Column Layout Lesson</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="3%20Column%20Layout%20Lesson_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="3%20Column%20Layout%20Lesson_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="3%20Column%20Layout%20Lesson_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="3%20Column%20Layout%20Lesson_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">3 Column Layout Lesson</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this lesson, you will learn how to create a three column layout.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open the 2 Column Layout</h2>
+
+		 <p>Open the 2 column layout template from last week. We are going to add a third column to this layout.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add the sidebar div to the XHTML file</h2>
+
+		<div class="image">
+
+<img src="3%20Column%20Layout%20Lesson_files/media_1302989813134.png" alt="" height="160" width="457">
+
+</div> <p>Look into the source code and add a div tag right after the 
+nav div and before the content div. Give the div the id = sidebar. Add a
+ he header and a paragraph inside your sidebar.<br>
+Code:<br>
+&lt;div id="sidebar"&gt;<br>
+&lt;h3&gt;Sidebar&lt;/h3&gt;<br>
+&lt;p&gt;Add sidebar text here.&lt;/p&gt;<br>
+&lt;/div&gt;</p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a New CSS File</h2>
+
+		<div class="image">
+
+<img src="3%20Column%20Layout%20Lesson_files/media_1302990652688.png" alt="" height="118" width="461">
+
+</div> <p>Open the lab3.css file and save it as lab4_3col.css.</p>
+
+
+<p>Look between the head tags of your source code and find the link tag 
+that embedded the lab3.css file. You need to change this to link to your
+ new lab3_3col.css file.</p>
+
+
+<p>The new link tag should look like this:</p>
+
+
+<p><i>      &lt;link href="css/lab4_3col.css" rel="stylesheet" type="text/css" /&gt;</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create Room for the Sidebar</h2>
+
+		<div class="image">
+
+<img src="3%20Column%20Layout%20Lesson_files/media_1302991504612.png" alt="" height="207" width="369">
+
+</div> <p>We have to update our CSS file to create room for our third 
+column.  Review the linked lab4_3col.css file and find the container 
+div. What is the width of your container? This is the total amount of 
+space that will be available for your three columns.In our two column 
+layout, the container div was 960 pixels wide. </p>
+
+
+<p>Remember, you have to include the divs padding, margin, border width,
+ and element width in figuring out how much space each div will need.</p>
+
+
+<p>In order to make space for the sidebar, we are going to remove 200 
+pixels from the width of the content div. Find the content div and 
+change the width rule to 520 px.</p>
+
+
+<p>Update the padding and margin in your nav style declaration.</p>
+
+
+<p>#nav {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #A6AD00;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width: 180px; /*Change width to a set pixel width */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float: left; /*Float left to form the first collmn */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;display: block;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-left: 20px;<br>
+}</p>
+
+
+<p>With these changes the nav div  is now taking up 200 pixels of space 
+while the content div is taking up 560 pixels of space. If you subtract 
+these 760 pixels from 960 pixesl we are left with 200 pixels for the 
+sidebar.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Code the Sidebar in CSS</h2>
+
+		<div class="image">
+
+<img src="3%20Column%20Layout%20Lesson_files/media_1303132086987.png" alt="" height="200" width="560">
+
+</div> <p>Our next step is to code the sidebar div in CSS. We want the 
+sidebar to float to the right. We have 200 pixels of space to work with 
+so I set the width to 160px, the right right margin to 20px ,and the 
+left and right padding to 10 pixels (160 + 20 + 10 +10 = 200). You can 
+customize the rest of the styles to your preferences.</p>
+
+
+<p>#sidebar {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float: right;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width: 160px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;background-color: #A54931;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #FFF;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-top: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;margin-right: 20px;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;font-size: 79%;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;padding: 10px;<br>
+}</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Final 3 Column Layout: The rest of the stylesheet should be them same</h2>
+
+		<div class="image">
+
+<img src="3%20Column%20Layout%20Lesson_files/media_1303132417644.png" alt="" height="508" width="560">
+
+</div> <p>The rest of the stylesheet should be the same from last week. I
+ didn't want the backgrounds to continue all the way to the footer so I 
+removed any background images from the container div that were used to 
+create the illusion of columns. During another session we will add 
+rounded corners to these divs using JavaScript or CSS 3.</p>
+
+
+<p>As a reminder make sure your footer has the declaration <br>
+#footer {<br>
+         clear: both;<br>
+}</p>
+
+
+<p>that is the key to make sure the footer is below all three columns.</p>
+
+
+<p>The final layout should look like the above image.</p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

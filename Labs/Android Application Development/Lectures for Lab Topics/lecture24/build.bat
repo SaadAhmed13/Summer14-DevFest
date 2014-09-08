@@ -1,0 +1,1 @@
+pandoc -o lecture24.html -c db-simple.css -B header.html lecture24.txt

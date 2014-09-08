@@ -1,0 +1,261 @@
+﻿## AsyncTask
+
+In this lecture, we discuss threads and in particular the use if
+[AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html). 
+
+Your UI runs on a single thread to interact with the user -- this is
+the main thread. Therefore all code will run in this thread which
+might result in poor performance if you have a computationally
+intensive operation that could be run in another thread; for example,
+if your code is loading a file over the Internet you UI is completely
+blocked. This is not smart design. 
+
+The solution to this is simple: If you have computationally demanding
+functions or slow running operations the best solution if to run those
+*tasks* asynchronously from the UI threads.
+
+# What this lecture will teach you
+
+- Setting up an AsyncTask
+- MyRuns4 AsyncTask and BroadcastReceiver 
+- AsyncTask callbacks
+
+## Demo projects
+
+The demo code used in this lecture include:
+
+* We will use the [asynctaskdemo.zip](../code/asynctaskdemo.zip) app to
+demonstrate how to create an AsyncTask.
+
+## Resources
+
+Some excellent references.
+
+* Course book section on [AsyncTask](http://commonsware.com/Android/) page 361
+* Android Background Processing with Threads, Handlers and AsyncTask - [Tutorial](ww.vogella.com/articles/AndroidBackgroundProcessing/article.html)
+* [BroadcastReceiver](http://developer.android.com/reference/android/content/BroadcastReceiver.html)
+* [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html)
+*
+
+## AsyncTask
+
+In this lecture, we discuss AsyncTask: the AsyncTask class
+encapsulates the creation of Threads and Handlers. An AsyncTask is
+started via the execute() method. AsyncTask is designed to be a helper
+class around Thread and Handler and does not constitute a generic
+threading framework. AsyncTasks should ideally be used for short
+operations (a few seconds at the most.) 
+
+An asynchronous task is defined by a computation that runs on a
+background thread and whose result is published on the UI thread. An
+asynchronous task is defined by 3 generic types, called Params,
+Progress and Result, and 4 steps, called onPreExecute, doInBackground,
+onProgressUpdate and onPostExecute. The method calls the doInBackground() and the onPostExecute()
+method. The doInBackground() method contains the coding instruction
+which should be performed in a background thread. This method runs
+automatically in a separate Thread. The onPostExecute() method synchronize itself again with the user interface thread and allows to update it. This method is called by the framework once the doInBackground() method finishes.
+
+To use AsyncTask you must subclass it. AsyncTask uses generics and
+varargs. The parameters are the following AsyncTask
+<TypeOfVarArgParams , ProgressValue , ResultValue>. TypeOfVarArgParams is passed into the doInBackground() method as
+input, ProgressValue is used for progress information and ResultValue
+must be returned from doInBackground() method and is passed to
+onPostExecute() as parameter.
+
+## AsyncTask Demo App
+
+The demo app include in the lecture includes an activity that starts a
+AsyncTask to first count down from 15, as shown below. Different text
+is rewritten out to the UI in different thread components of the UI
+and background thread, as shown below.
+
+![](images/sync.png) 
+
+## Starting an AsyncTask
+
+A service needs to be defined in the manifest as shown below.
+
+~~~{.java}
+public class MainActivity extends Activity {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        // Starts the CountDownTask
+        new CountDownTask().execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+~~~
+
+     
+## AsyncTask operations
+
+In the code below we first see how the  AsyncTask operates.
+
+AsyncTask's generic types The three types used by an asynchronous task are the following:
+
+- Params, the type of the parameters sent to the task upon execution.
+- Progress, the type of the progress units published during the background computation.
+- Result, the type of the result of the background computation.
+
+Not all types are always used by an asynchronous task. To mark a type as unused, simply use the type Void:
+
+~~~{.java}
+ private class MyTask extends AsyncTask<Void, Void, Void> { ... }
+~~~
+
+When an asynchronous task is executed, the task goes through 4 steps:
+
+- **onPreExecute()** invoked on the UI thread before the task is executed. This step is normally used to setup the task, for instance by showing a progress bar in the user interface.
+- **doInBackground(Params...)** invoked on the background thread immediately after onPreExecute() finishes executing. This step is used to perform background computation that can take a long time. The parameters of the asynchronous task are passed to this step. The result of the computation must be returned by this step and will be passed back to the last step. This step can also use publishProgress(Progress...) to publish one or more units of progress. These values are published on the UI thread, in the onProgressUpdate(Progress...) step.
+- **onProgressUpdate(Progress...)** invoked on the UI thread after a call to publishProgress(Progress...). The timing of the execution is undefined. This method is used to display any form of progress in the user interface while the background computation is still executing. For instance, it can be used to animate a progress bar or show logs in a text field.
+- **onPostExecute(Result)**invoked on the UI thread after the background
+computation finishes. The result of the background computation is
+passed to this step as a parameter.
+
+
+## MyRuns5: AsyncTask and BroadcastReceiver 
+
+We use an AsyncTask in MyRuns do the UI is not blocked when dealing
+with updating maps either when routes are being drawn from real-time
+updates and when coordinates are being read from the database and the
+map updated with the route of the previously saved exercise.
+
+OnLocationUpdateTask class, which is a subclass of AsyncTask and is
+responsible for drawing the GPS traces, re-centering and zooming the
+Google Map if necessary. In addition a [BroadcastReceiver](http://developer.android.com/reference/android/content/BroadcastReceiver.html) is used to receive GPS-update broadcast from the service and
+fire the OnLocationUpdateTask which runs as a separate AsyncTask
+thread that  does not block the UI.
+
+~~~{.java}
+	// A broadcast receiver to receive location update and recenter the map if
+	// necessary in another thread.
+	private IntentFilter mLocationUpdateFilter;
+	private BroadcastReceiver mLocationUpdateReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// Using AsyncTask to re-center the map here. It won't block the UI
+			// thread
+			Log.d(Globals.TAG, "Location update received; ");
+			new OnLocationUpdateTask().execute();
+		}
+	};
+~~~
+
+The OnLocationUpdateTask() is constructed as an AsyncTask with the
+same formulation as the example below in terms of the template.
+
+## AsyncTask code
+
+Now let's look at the code for the AsyncTask demo app example.
+
+### onPreExecute() method
+
+In the first snippet of code text for starting the count down is
+displayed using on preExecute(), which is invoked on the UI thread before the task is
+executed. This step is normally used to setup the task,  by showing  START in the user interface.
+
+~~~{.java}
+private class CountDownTask extends AsyncTask<Void, Integer, Void>{
+    	
+    	// A callback method executed on UI thread on starting the task
+    	@Override
+    	protected void onPreExecute() {
+    		// Getting reference to the TextView tv_counter of the layout activity_main
+    		TextView tvCounter = (TextView) findViewById(R.id.tv_counter);
+    		tvCounter.setText("*START*");
+    	}
+
+~~~
+
+### doInBackground() method
+
+This is the main worker thread of the task. doInBackground() is
+invoked on the **background thread** (which is different from the UI thread) immediately after onPreExecute()
+finishes executing. This step is used to perform background
+computation that can take a long time. The parameters of the
+asynchronous task are passed to this step. Typically the result of the
+computation must be returned by this step and will be passed back to
+the last step. This step can also use publishProgress(Progress...) to
+publish one or more units of progress. These values are published on
+the UI thread, in the onProgressUpdate(Progress...) step. 
+
+In the case of the code example, we do not return anything but we
+publish the count value to the UI thread using publishProgress(i)
+which invokes onProgressUpdate() as shown below in the snippet of code.
+
+~~~{.java}
+    	// A callback method executed on non UI thread, invoked after 
+    	// onPreExecute method if exists
+    	
+    	// Takes a set of parameters of the type defined in your class implementation. This method will be 
+    	// executed on the background thread, so it must not attempt to interact with UI objects.
+		@Override
+		protected Void doInBackground (Void... params) {
+			for(int i=15;i>=0;i--){
+				try {
+					Thread.sleep(1000);
+					publishProgress(i); // Invokes onProgressUpdate()
+				} catch (InterruptedException e) {
+				}
+			}
+			return null;
+		}		
+~~~
+
+### onProgressUpdate() method
+
+As mentioned above onProgressUpdate(Progress...) is invoked on the UI thread after a call
+to publishProgress(Progress...). The timing of the execution is
+undefined. This method is used to display any form of progress in the
+user interface while the background computation is still
+executing. In our case publishProgress(Progress...) displays the
+current count to the UI layout in large font.
+
+~~~{.java}
+		// A callback method executed on UI thread, invoked by the publishProgress() 
+		// from doInBackground() method
+		
+		// Overrider this handler to post interim updates to the UI thread. This handler receives the set of parameters
+		// passed in publishProgress from within doInbackground. 
+		@Override
+		protected void onProgressUpdate (Integer... values) {
+			// Getting reference to the TextView tv_counter of the layout activity_main
+			TextView tvCounter = (TextView) findViewById(R.id.tv_counter);
+			
+			// Updating the TextView 
+			tvCounter.setText( Integer.toString(values[0].intValue()));			
+		}		
+~~~
+
+
+### onPostExecute() method
+
+The final method of the AsyncTask is the  onPostExecute(Result), which
+is invoked on the UI thread after the background
+computation finishes. The result of the background computation is
+passed to this step as a parameter. In our coded example there is no
+result passed back from the doInBackground() method. Here we simple
+display DONE to the UI layout.
+
+~~~{.java}
+		// A callback method executed on UI thread, invoked after the completion of the task
+		
+		// When doInbackground has completed, the return value from that method is passed into this event 
+		// handler. 
+		@Override
+		protected void onPostExecute(Void result) {
+			// Getting reference to the TextView tv_counter of the layout activity_main
+			TextView tvCounter = (TextView) findViewById(R.id.tv_counter);
+			tvCounter.setText("*DONE*");			
+		}		
+    }
+}
+~~~

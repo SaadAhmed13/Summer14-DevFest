@@ -1,0 +1,39 @@
+﻿## Content Providers
+
+Content providers are used to share data between applications -- e.g., your contacts. We use content providers
+in the MyRuns3 app not to share the exercise database between application but to manage data inside a single
+application. We do this because content providers offer hooks that allow sometimes costly access to a database (for example, in terms of the latency cost of reading or writing to the database) to be hidden. This is important. Imagine (extreme example) it takes 1 second to write to the database (you have a lot of data) and that the processing is done inside the UI thread? That would be terrible the user would see a UI that stalls and starts. To get around this content providers allow the user to interact with loaders. In this case a request to insert into the data base happens in a different thread to the UI thread. As a result, control is immediately returned to the UI thread -- the user is happy -- and when the insert in complete, a callback syncs the system up. These threads are hidden from the user and supported in a transparent manner using loaders (the loader manager to be specific) and content providers.
+
+The use of content providers adds another component to our three layer model: content providers -- a wrapper around the database. The cool thing about implementing content providers in MyRuns3 is that we have a new tool in our Android toolkit. And as we will see it is simple to -- if we ever wanted to do this - share data with other distinct applications.
+
+In the following we discuss content providers through a cool little app called [notes](http://www.vogella.com/articles/AndroidSQLite/article.html). Again, we borrow is app from Lars Vogel. Thanks Lars.
+
+Until I add more notes please review: * [Android SQLite Database and ContentProvider Tutorial](http://www.vogella.com/articles/AndroidSQLite/article.html)
+
+I suggest you download the notes app and play with it, look at the code. This servers as a framework to implement [MyRuns3](http://www.cs.dartmouth.edu/~campbell/cs65/lab3/lab3.html).
+
+## What this lecture will teach you
+
+- Content Providers
+- Content Resolvers
+- Cursor Loaders
+- Loaders
+
+## Demo projects
+
+The demo code used in this lecture include:
+
+* Simple use of the camera [tododemo.zip](../code/tododemo.zip).  This demo code is taken from Lars Voglel's tutorial on [SQLite](http://www.vogella.com/articles/AndroidSQLite/article.html) and slightly modified to include the delate all option.
+
+## Resources
+
+Some excellent references.
+
+* [Android SQLite Database and ContentProvider Tutorial](http://www.vogella.com/articles/AndroidSQLite/article.html)
+* Android developers [sqlite](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html). Contains the SQLite database management classes that an application would use to manage its own private database.
+* [SQLiteOpenHelper](http://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper.html) a helper class to manage database creation and version management.
+* Course book section on [SQLite Databases](http://commonsware.com/Android/) page 453
+* [SQLite Tutorial](http://souptonuts.sourceforge.net/readme_sqlite_tutorial.html)
+
+
+

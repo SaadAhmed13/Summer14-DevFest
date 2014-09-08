@@ -1,0 +1,213 @@
+﻿## Lecture 20 - Sensor Manager
+
+In this lecture, we discuss Android's sensors and accessing them via
+the
+[SensorManager](http://developer.android.com/reference/android/hardware/SensorManager.html). 
+
+Nexus-4 as a number of interesting sensors beyond the camera and the
+microphone, specifically:
+
+- Accelerometer
+- GPS
+- Gyroscope
+- Barometer
+- Ambient light
+- Compass
+
+In this lecture we will focus mainly on the accelerometer. 
+The Sensor Manager provides access to the 3-axis accelerometer
+sensor. We use the signals (x, y, and z axis) to infer activity in
+MyRuns5; specifically, we build an accelerometer pipeline that
+extracts "features" from the signals and uses these features to infer
+the activity of the user. More on that in MyRuns5 lab.
+
+We first provide a demo of the accelerometer signals and the Sensor
+Manager.  We will also show you how to access some of the other
+sensors such as light, barometer.
+
+**Note, these notes are incomplete.**
+
+## What this lecture will teach you
+
+- Sensor Manager
+- Accessing the X, Z, Y axis of the accelerometer
+- Barometer, light and temperature sensors
+ 
+## Demo projects
+
+The demo code used in this lecture include:
+
+* [Android Sensor
+  Box](https://play.google.com/store/apps/details?id=imoblife.androidsensorbox&hl=en)
+  is a great app that allows you to quickly check out the sensors on
+  your phone and interact with them. This is a very cool and geeky
+  app. 
+
+* We will use the [shakesensordemo.zip](../code/shakesensordemo.zip) app to
+demonstrate how to read the accelerometer. This demo is an extended
+version of the code found in the [Sensor Manger
+tutorial](http://www.vogella.com/articles/AndroidSensor/article.html).
+
+* We will use the [weatherdemo.zip](../code/weatherdemo.zip) app to
+demonstrate how to access the temperature, barometer and light
+sensors. Note, that the nexus-4 does not have a temperature sensor!
+
+## Resources
+
+Some excellent references.
+
+* Course book does not seem to have much on sensors.
+* Lars Vogel's [SensorManger tutorial](http://www.vogella.com/articles/AndroidSensor/article.html)
+* Developers [Sensor Manager](http://developer.android.com/reference/android/hardware/SensorManager.html). 
+
+## ShakeSensor Demo
+
+This simple demo displays the x, y and z axis accelerometer readings
+in a continuous fashion. If the phone is shaken the background color
+of the text changes and a toast is displayed, as shown in the example below.
+
+![](images/shake.png) 
+
+## Set up Sensor Manager
+
+We first get a sensor service and sensor manager before we can access
+the accelerometer data.
+
+## Set the Sensor Data Type of Interest
+
+We set the sensor manager to get accelerometer data --
+Sensor.TYPE_ACCELEROMETER. But we could have asked for any sensor data
+that the phone produces -- light, proximity, etc. See the list of
+[sensor types here](http://developer.android.com/reference/android/hardware/Sensor.html).
+
+# Phone Coordinate-system orientation
+
+The figure below shows the x, y and z axis of the accelerometer sensor
+with respect to the phone's orientation.
+
+See [developers notes](http://developer.android.com/reference/android/hardware/SensorEvent.htmlhttp://developer.android.com/reference/android/hardware/SensorEvent.html) on the definition of the coordination and the
+SensorEvent object definition which is based to the onSensorChanged()
+callback when new data is available.
+ 
+The X axis is horizontal and points to the right, the Y axis is vertical and points up and the Z axis points towards the outside of the front face of the screen. In this system, coordinates behind the screen have negative Z values.
+
+![](images/accel.png) 
+
+
+~~~{.java}
+public class SensorTestActivity extends Activity implements SensorEventListener {
+	private SensorManager sensorManager;
+	private boolean color = false;
+	private View view;
+	private long lastUpdate;
+	TextView textx, texty, textz;
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		setContentView(R.layout.main);
+		
+		// get textviews
+		textx = (TextView) findViewById(R.id.xval);
+		texty = (TextView) findViewById(R.id.yval);
+		textz = (TextView) findViewById(R.id.zval);
+
+		
+		view = findViewById(R.id.textView);
+		view.setBackgroundColor(Color.BLUE);
+
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_NORMAL);
+		lastUpdate = System.currentTimeMillis();
+	}
+
+	@Override
+	public void onSensorChanged (SensorEvent event) {
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			displayAccelerometer(event);
+			checkShake(event);
+		}
+
+	}
+~~~
+
+## Display accelerometer readings
+
+The two helper functions display the accelerometer and check to see if
+the phone has been shaken using a simple test -- if so change the
+background color of the text.
+
+~~~{.java}
+	private void displayAccelerometer(SensorEvent event) {
+
+		// Many sensors return 3 values, one for each axis.
+		float x = event.values[0];
+		float y = event.values[1];
+		float z = event.values[2];
+
+		// display values using TextView
+		textx.setText("X axis" + "\t\t" + x);
+		texty.setText("Y axis" + "\t\t" + y);
+		textz.setText("Z axis" + "\t\t" + z);
+
+	}
+
+	private void checkShake(SensorEvent event) {
+
+		// Movement
+		float x = event.values[0];
+		float y = event.values[1];
+		float z = event.values[2];
+
+		float accelationSquareRoot = (x * x + y * y + z * z)
+		     / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
+		long actualTime = System.currentTimeMillis();
+		if (accelationSquareRoot >= 2) //
+		{
+			if (actualTime - lastUpdate < 200) {
+				return;
+			}
+			lastUpdate = actualTime;
+			Toast.makeText(this, "Don't shake me!", Toast.LENGTH_SHORT).show();
+			if (color) {
+				view.setBackgroundColor(Color.BLUE);
+
+			} else {
+				view.setBackgroundColor(Color.RED);
+			}
+			color = !color;
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// register this class as a listener for the orientation and
+		// accelerometer sensors
+		sensorManager.registerListener(this,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_NORMAL);
+	}
+
+	@Override
+	protected void onPause() {
+		// unregister listener
+		super.onPause();
+		sensorManager.unregisterListener(this);
+	}
+}
+~~~
+
+	

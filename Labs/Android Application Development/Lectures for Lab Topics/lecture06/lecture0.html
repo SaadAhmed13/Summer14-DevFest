@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h1 id="user-inferface-ui">User Inferface (UI)</h1>
+<h2 id="views-widgets-view-groups-layouts-containers">Views, widgets, view groups, layouts, containers</h2>
+<p>The user interface is implemented as collection of view ojects (e.g., a date widget, or editable text) -- a view is a class and a widget (e.g., a button) which is drawn on some part of the screen and is responsible for event handling such as when the user interacts with the UI (e.e., clicks on a button, enters the date). User's can construct sophisticated UIs by bundling views together using layouts (or ViewGroups) which can be considered as invisible containers. These containers can hold child containers. Each container defines its views (or other ViewGroups) and their layout properties.</p>
+<div class="figure">
+<img src="images\views.png">
+</div>
+<p>Take a look at the simple UI below -- it's not very exciting but demonstrates a number of common layouts and views. It consists of a simple linear vertical layout of widgers including TextViews, EditTexts, a couple of RadioButtons, a Spinner (currently indicating Happy) and a button with the text <em>go back</em>. We will discuss how to create a common set of layouts using XML.</p>
+<div class="figure">
+<img src="images\simpleview.png">
+</div>
+<p>The Andriod UI framework is flexible and easily extended. As you would imagine from all the apps you have used on smartphones the UI is a hugely important area to an app. It is also a huge topic that we will not have time to cover in any great depth -- we will take a slice through it. The book covers the UI in great detail so if you wantt to know more start there.</p>
+<h2 id="sample-project-layout">Sample project: Layout</h2>
+<p>Try out the layout sample project, which includes a number of activities with their associated layouts- we will use it to illustrate a number or important UIs, how to handle user input (e.g., email address or the time). If you install the layouts app you will see its main screen represents a simple linear layout of a bunch of buttons. The first four button render different layouts, specifically: linear layout, relative layout, scrollview and listview. Following this there is a data and time screen and then a button that says SharedPreferences. Date and time use special widgets that the user can interact with to set, yes, the date and time. SharedPreferences is an object that can be used to store small amounts of user data so that when the app is killed and restarted the user's data is restored. Over the course of this lecture we will discuss how to design each of these views and discuss user data more.</p>
+<div class="figure">
+<img src="images\layouts.png">
+</div>
+<h2 id="writing-xml-layouts-andor-using-the-graphical-layout-tool">Writing XML layouts and/or using the graphical layout tool</h2>
+<p>You can build UIs using XML and/or using the the graphical layout tool. The graphical representation is shown below. My preference is to use XML once I have done some basic layout with the tool. On the left of the figure you can see a list of wdigets that you can select, drag, drop and arrange on the screen. <strong>Note, that the XML/graphical views can be toggled as shown in the figure</strong>. The figure shows the type of layout and highlights the first button -- on the right side you can see the properties of the button, for example, the button id <code>@+id/btn_linear_layout</code>, the width and height are <code>match_parent</code> and <code>match_content</code> respectively.</p>
+<div class="figure">
+<img src="images\uidesign.png">
+</div>
+<p>Let's look at the xml view of the same screen -- we only show the first two buttons in this linear layout because they are almost identical. You can look at the complete layout in the file <code>activity_main_layout.xml</code> in the project's layout folder.</p>
+<p>In fact you can define your UI with XML or the graphical tool and programmatically in your code in you wish. I recommend specifying your UI not in your program but using the xml presentation. Why? Because it is a good idea to seperate the specification of UI from your code. It is more extensible (for example, having different layouts for different devices) rather than littering your program with lots of unnecessary UI code. By keeping things seperate you can completely change your UI without changing your code -- that's cool.</p>
+<p>It is worth noting in the xml below that the UI elements for example Button closely resemble the name of the class and the methods; for example, Button is the class and the <code>onLinearLayoutClicked</code> is the call back set up to handle user interaction with this button. Other elements are properties of the object. We will discus those shortly.</p>
+<h2 id="linearlayout">LinearLayout</h2>
+<p>The file below is the <code>activity_main_layout.xml</code> that is associated with the MainActivityLayout activity. This is a simple linear layout with a root or parent element and a vertical layout -- that is, LinearLayout object. In the layout below this represents a container for all the buttons -- so this is a viewgroup with a number of views/widgets (child elements).</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    xmlns:tools=<span class="st">&quot;http://schemas.android.com/tools&quot;</span>
+    android:layout_width=<span class="st">&quot;fill_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;fill_parent&quot;</span>
+    android:orientation=<span class="st">&quot;vertical&quot;</span>
+    tools:context=<span class="st">&quot;.MainLayoutActivity&quot;</span> &gt;
+
+    &lt;Button
+        android:id=<span class="st">&quot;@+id/btn_linear_layout&quot;</span>
+        android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_margin=<span class="st">&quot;10dp&quot;</span>
+        android:onClick=<span class="st">&quot;onLinearLayoutClicked&quot;</span>
+        android:text=<span class="st">&quot;@string/ui_button_linear_layout_title&quot;</span> /&gt;
+
+    &lt;Button
+        android:id=<span class="st">&quot;@+id/btn_relative_layout&quot;</span>
+        android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_margin=<span class="st">&quot;10dp&quot;</span>
+        android:onClick=<span class="st">&quot;onRelativeLayoutClicked&quot;</span>
+        android:text=<span class="st">&quot;@string/ui_button_relative_layout_title&quot;</span> /&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+<h2 id="relativelayout">RelativeLayout</h2>
+<div class="figure">
+<img src="images\relative.png">
+</div>
+<pre class="sourceCode java"><code class="sourceCode java"> &lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;RelativeLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:paddingLeft=<span class="st">&quot;16dp&quot;</span>
+    android:paddingRight=<span class="st">&quot;16dp&quot;</span> &gt;
+
+    &lt;AnalogClock
+        android:id=<span class="st">&quot;@+id/analogClock1&quot;</span>
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_alignParentBottom=<span class="st">&quot;true&quot;</span>
+        android:layout_centerHorizontal=<span class="st">&quot;true&quot;</span> /&gt;
+
+    &lt;ImageView
+        android:id=<span class="st">&quot;@+id/imageViewOfGirl&quot;</span>
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_alignParentTop=<span class="st">&quot;true&quot;</span>
+        android:layout_centerHorizontal=<span class="st">&quot;true&quot;</span>
+        android:layout_marginTop=<span class="st">&quot;24dp&quot;</span>
+        android:adjustViewBounds=<span class="st">&quot;true&quot;</span>
+        android:clickable=<span class="st">&quot;true&quot;</span>
+        android:contentDescription=<span class="st">&quot;@string/ui_picture&quot;</span>
+        android:maxHeight=<span class="st">&quot;250dp&quot;</span>
+        android:maxWidth=<span class="st">&quot;250dp&quot;</span>
+        android:minHeight=<span class="st">&quot;50dp&quot;</span>
+        android:minWidth=<span class="st">&quot;50dp&quot;</span>
+        android:onClick=<span class="st">&quot;onClickConan&quot;</span>
+        android:scaleType=<span class="st">&quot;fitXY&quot;</span>
+        android:src=<span class="st">&quot;@drawable/conan&quot;</span> /&gt;
+
+    &lt;RatingBar
+        android:id=<span class="st">&quot;@+id/ratingBar1&quot;</span>
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_above=<span class="st">&quot;@+id/analogClock1&quot;</span>
+        android:layout_centerHorizontal=<span class="st">&quot;true&quot;</span>
+        android:layout_marginBottom=<span class="st">&quot;18dp&quot;</span> /&gt;
+
+&lt;/RelativeLayout&gt;</code></pre>
+<h2 id="scrowlview">ScrowlView</h2>
+<div class="figure">
+<img src="images\scrowl.png">
+</div>
+<pre class="sourceCode java"><code class="sourceCode java">
+&lt;ScrollView xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    android:id=<span class="st">&quot;@+id/mainLayout&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:descendantFocusability=<span class="st">&quot;beforeDescendants&quot;</span>
+    android:focusableInTouchMode=<span class="st">&quot;false&quot;</span> &gt;
+
+    &lt;LinearLayout
+        android:layout_width=<span class="st">&quot;fill_parent&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:orientation=<span class="st">&quot;vertical&quot;</span> &gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_name_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;EditText
+            android:id=<span class="st">&quot;@+id/editName&quot;</span>
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:hint=<span class="st">&quot;@string/ui_profile_name_hint&quot;</span>
+            android:inputType=<span class="st">&quot;textCapWords&quot;</span>
+            android:singleLine=<span class="st">&quot;true&quot;</span> &gt;
+        &lt;/EditText&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_email_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;EditText
+            android:id=<span class="st">&quot;@+id/editEmail&quot;</span>
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:hint=<span class="st">&quot;@string/ui_profile_email_hint&quot;</span>
+            android:inputType=<span class="st">&quot;textEmailAddress&quot;</span>
+            android:singleLine=<span class="st">&quot;true&quot;</span> &gt;
+
+            &lt;requestFocus /&gt;
+        &lt;/EditText&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_phone_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;EditText
+            android:id=<span class="st">&quot;@+id/editPhone&quot;</span>
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:hint=<span class="st">&quot;@string/ui_profile_phone_hint&quot;</span>
+            android:inputType=<span class="st">&quot;phone&quot;</span>
+            android:singleLine=<span class="st">&quot;true&quot;</span> &gt;
+        &lt;/EditText&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_gender_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;RadioGroup
+            android:id=<span class="st">&quot;@+id/radioGender&quot;</span>
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:orientation=<span class="st">&quot;horizontal&quot;</span> &gt;
+
+            &lt;RadioButton
+                android:id=<span class="st">&quot;@+id/radioGenderF&quot;</span>
+                android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_weight=<span class="st">&quot;1&quot;</span>
+                android:text=<span class="st">&quot;@string/ui_profile_gender_female&quot;</span> /&gt;
+
+            &lt;RadioButton
+                android:id=<span class="st">&quot;@+id/radioGenderM&quot;</span>
+                android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_weight=<span class="st">&quot;1&quot;</span>
+                android:text=<span class="st">&quot;@string/ui_profile_gender_male&quot;</span> /&gt;
+        &lt;/RadioGroup&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_date_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;EditText
+            android:id=<span class="st">&quot;@+id/editText1&quot;</span>
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:hint=<span class="st">&quot;@string/ui_profile_date_hint&quot;</span>
+            android:inputType=<span class="st">&quot;date&quot;</span> &gt;
+        &lt;/EditText&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_department_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;RatingBar
+            android:id=<span class="st">&quot;@+id/ratingBar1&quot;</span>
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span> /&gt;
+
+        &lt;TextView
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>
+           android:text=<span class="st">&quot;@string/ui_profile_device_title&quot;</span> &gt;
+        &lt;/TextView&gt;
+
+        &lt;ToggleButton
+            android:id=<span class="st">&quot;@+id/toggleButton1&quot;</span>
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span>/&gt;
+
+        &lt;CheckBox
+            android:id=<span class="st">&quot;@+id/checkBox1&quot;</span>
+            android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:text=<span class="st">&quot;@string/ui_profile_demand_title&quot;</span> /&gt;
+
+        &lt;LinearLayout
+            android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+            android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+            android:layout_margin=<span class="st">&quot;5dp&quot;</span> &gt;
+
+            &lt;Button
+                android:id=<span class="st">&quot;@+id/btnSave&quot;</span>
+                android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_marginLeft=<span class="st">&quot;40dp&quot;</span>
+                android:layout_weight=<span class="st">&quot;1&quot;</span>
+                android:onClick=<span class="st">&quot;onSaveClicked&quot;</span>
+                android:text=<span class="st">&quot;@string/ui_button_save_title&quot;</span> &gt;
+            &lt;/Button&gt;
+
+            &lt;Button
+                android:id=<span class="st">&quot;@+id/btnCancel&quot;</span>
+                android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+                android:layout_marginRight=<span class="st">&quot;40dp&quot;</span>
+                android:layout_weight=<span class="st">&quot;1&quot;</span>
+                android:onClick=<span class="st">&quot;onCancelClicked&quot;</span>
+                android:text=<span class="st">&quot;@string/ui_button_cancel_title&quot;</span> &gt;
+            &lt;/Button&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/LinearLayout&gt;
+
+&lt;/ScrollView&gt;</code></pre>
+<h2 id="listview-layout">ListView Layout</h2>
+<pre class="sourceCode java"><code class="sourceCode java"> &lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    xmlns:tools=<span class="st">&quot;http://schemas.android.com/tools&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:orientation=<span class="st">&quot;horizontal&quot;</span> &gt;
+&lt;/LinearLayout&gt;</code></pre>
+<h2 id="higher-level-ui-components">Higher level UI components</h2>
+<p>You don't always have to build your UI from low level views and widgets. App designers can use higher level pre-made UI components to build there UIs. We will discuss these later -- examples of these components include ActioBar, Dialogs and Status Notification. We will use all of these components in this course.</p>
+</body>
+</html>

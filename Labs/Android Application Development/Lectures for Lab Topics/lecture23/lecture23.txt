@@ -1,0 +1,916 @@
+﻿## Lecture 23 - The Cloud: Google App Engine (GAE)
+
+Before we can run a simple Google App Engine (GAE) application, we
+need to setup local GAE development environment. We will run GAE
+applications locally. You can also deploy your applications to GAE to provide services to users all over
+the world. GAE provides a general platform for cloud sides services
+where native Android apps such as MyRuns can build out the app
+framework to, for example, store runs in the cloud and allow other
+users to share data or allow the user to view the data through the
+web; for example, using a laptop based browser for better viewing and
+visualization. Getting to know how to use, GAE or App Engine for
+short, is the final tool for your Android toolkit -- note, there are
+many other components to Android that we have not have time to cover
+in detail. What we have done in the class is to focus on a core set of
+components and skill development that makes your new skills very
+marketable, or your money back.
+
+## What this lecture will teach you
+
+* Resources
+* Two demos 
+* What is the App Engine?
+* App Engine features
+* Setting up the Google App Engine development environment
+* Creating a new web app
+* First App Engine project demo
+* App engine datastore
+
+## Resources - not much available
+
+The problem with Google App Engine for teaching is that it's
+fluid. The course book has no information on the App Engine. The best
+up to date information is [Google App Engine](https://developers.google.com/appengine/?csw=1) on the developers
+site. Much of the information we have gathered for these notes comes
+from the developers site and other related documentation -- cited by
+links in our notes. 
+
+A short tutorial on [App Engine](http://www.vogella.com/tutorials/GoogleAppEngineJava/article.html).
+
+## Demo code
+
+Two demo projects are given out:
+
+The first demo code: [first App Engine project](../code/AppEngServlet.zip) allows you to submit a string to web
+server; the server echo's the string back.
+
+In the second demo code: [google app
+engine project](../code/gae_sample_code.zip), ancestor queries are
+used for strong consistency. 
+Data operations are defined in
+edu.dartmouth.cs.gae_sample.data.ContactDatastore.query_result.jsp is
+used for displaying query results. 
+QueryServlet put query result list in request object's attribute,
+query_result.jsp use get the result list from the request object, then
+generate the result Web page. 
+Data operation servlets(add, delete, update) will redirect browser to QueryServlet so that user can see the operation result immediately.
+
+Don't worry that you don't understand the technical text in the demo
+description -- come back to it once you have read the notes and
+thought about the lecture.
+
+## What is Google App Engine
+
+Mobile apps require cloud services for many different things: maintain
+a social network, gaming services, storage services, etc. Many mobile
+clients interact with these backend services (aka the cloud) through a
+set of APIs. Whenever you write server code and deploy a server there
+are a number of infrastructure and configuration issues that you need
+to take care of such as scaling, access, deploying server side code,
+protocol interaction between the clients and server. 
+
+Google App Engine is a Platform as a Service (PaaS) that manages many
+of these server side issues. It provides a number of APIs to allow you
+to deploy servers on the Google cloud and not worry about scaling and
+other server side issues. It offers different types of storage (e.g.,
+Data Store -- which we will use in MyRuns6) and task management.
+
+The App Engine allows you to interact with services via a web browser
+(as the demo code in these notes do) or via a native Android app such
+as MyRuns.  
+
+![](images/gae.png)
+
+So the App Engine takes away many of the problems of hosting servers
+on the Internet and provides a set of tools to build scalable
+services. While the PR is that you just upload your application and
+your are ready to go -- it is not as simple as that. In these notes we
+discuss how to set up your ADT environment and set up a simple web
+application that uses a http based servlet that the client
+interacts. 
+
+ Google App Engine also includes a simulation environment where you
+ can deploy your application to a local cloud (that looks and feels
+ like you have actually deployed to Google infrastructure). The local
+ deployment is a good place to start to debug your client and server
+ side of the application.
+
+We will discuss how all the parts of a service are captured in the
+project folder in ADT and how they are deployed. 
+
+While the notes below are targeted to a thin slice through the App
+Engine you can find more out from the [Google App Engine](https://developers.google.com/appengine/docs/whatisgoogleappengine) developers
+site.  
+
+There is little of no information in the course book. This is
+because the App Engine environment is still fluid. We have updated
+these notes from last year and we have checked they are current and
+work.
+
+## App Engine features
+
+Take a look through the key [features](https://developers.google.com/appengine/features/) of the App Engine APIs
+and environment. We will use a limited set of these features in the class:
+
+* [Data storage, retrieval, and search](https://developers.google.com/appengine/features/#data_storage_retrieval_and_search) -- we will use the data store
+* [Communications](https://developers.google.com/appengine/features/#communications) -- we will use HTTP
+
+Others not included but important if you wanted to manage a scalable
+service are:
+
+* [Process management](https://developers.google.com/appengine/features/#process_management)
+* [Computation](https://developers.google.com/appengine/features/#computation)
+* [App configuration and management](https://developers.google.com/appengine/features/#computation)
+
+## Setting up the Google App Engine Development Environment
+
+To set up the GAE development environment, you need to firstly install the GAE Java SDK, then install Google Plugin for eclipse. Also, you also need to make sure your eclipse is using JDK instead of JRE if you want to develop JSP in your project.
+
+### Install the JDK
+
+Google Plugin for eclipse, which is used to develop GAE project in eclipse, requires **JDK 1.7**. If your version of JDK is not 1.7, you can go to [Java SE download site](http://www.oracle.com/technetwork/java/javase/downloads/index.html) to download and install the latest version of JDK 1.7.
+
+After you installed the JDK, you need to set it up in your eclipse. In eclipse, go to "ADT"->"Preferences", in the left column, find "Java" -> "Installed JREs", check if you have selected the latest JDK you installed. 
+
+![](images/setup_sdk_3.jpg)
+
+If not, you need to add JDK to eclipse. To do this, click "Add..." button, select "Standard VM" in the following window and click "Next". Input the path to your JDK in "JRE Home" in the following window, as shown below. Click "Finish" when you are done, and remember to select the jdk you just added in the previous window. 
+
+![](images/setup_sdk_4.jpg)
+
+### Install the GAE Java SDK
+
+1. Go to [GAE SDK download site](https://developers.google.com/appengine/downloads), click "Google App Engine SDK for Java", download the package to your computer.
+
+![](images/setup_sdk_0.jpg)
+
+2. Uncompress the file
+3. Remember the path to the uncompressed GAE SDK
+
+### Setup eclipse
+
+Before setting up your eclipse (or ADT), you need to know the version of your install eclipse. Then use corresponding eclipse update site URL to install Google Plugin for Eclipse.
+
+1. Open eclipse, go to "ADT->About ADT" and then click on the Eclipse
+icon as shown below and you can see the version of Eclipse (4.3.1 in
+the example below)
+
+![](images/eclipse_ver_0.png) 
+
+the version is shown like the screenshot below.
+
+![](images/eclipse_ver_1.png) 
+
+2. Go to [GAE plugin installation instruction]([GAE SDK download
+site](https://developers.google.com/eclipse/docs/download), you can
+find the eclipse update site URL list under "Update sites" section. In
+our example, since our eclipse's version is 4.3.1, we should "Google Plugin for Eclipse 4.3 (Kepler)". Yours could be different if you
+have a different version of Eclipse for example 4.2 you would use "Google Plugin for Eclipse 3.8/4.2 (Juno)".
+
+So the Google Plugging version for 4.3 would be:
+
+https://dl.google.com/eclipse/plugin/4.3
+
+![](images/setup_sdk_2.jpg)
+
+3. Following [this instruction](https://developers.google.com/eclipse/docs/install-eclipse-4.3) to install the plugin.
+
+4. Go to "ADT"->"Preferences", in the left column, find "Google" -> "App Engine", click "Add..." as shown below
+
+![](images/plugin_setup.png)
+
+Input the path where you install the GAE SDK. Click OK to close the window. 
+
+![](images/plugin_setup_add.png)
+
+## Creating a new web app
+
+To create a new web app, you need to make sure your eclipse's Java compiler compliance level is 1.7. Open eclipse preference by clicking "ADT"->"Preferences", go to "Java"->"Compiler", select "1.7" in "Compiler compliance level" as shown below.
+
+![](images/create_prj_0.jpg)
+
+In what follows, we show you how to create a web app project in eclipse called firstgaeprj.
+
+1. Click "File"->"New"->"Other...", find "Web Application Project" under "Google", click "Next >"
+
+![](images/create_prj_1.jpg)
+
+2. Input "Project name" and "Package" in the following windows. In our example, the project name is firstgaeprj and the package is edu.dartmouth.cs.firstgaeprj. We don't need Google Web Toolkit, so we can uncheck "Use Google Web Toolkit". Click "Finish" when you are done.
+
+![](images/create_prj_2.jpg)
+
+3. The project structure is shown below. It creates index.html in war, which is web page which users open when they visit the website. It is defined in <firstgaeprj> segment in web.xml. A servlet is created in edu.dartmouth.cs.firstgaeprj called FirstgaeprjServlet. It is defined in web.xml and mapped to "/firstgaeprj".
+
+![](images/create_prj_3.jpg)
+
+The content of web.xml is shown below.
+
+~~~{.java}
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+        <servlet>
+                <servlet-name>Firstgaeprj</servlet-name>
+                <servlet-class>edu.dartmouth.cs.firstgaeprj.FirstgaeprjServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>Firstgaeprj</servlet-name>
+                <url-pattern>Firstgaeprj</url-pattern>
+        </servlet-mapping>
+        <welcome-file-list>
+                <welcome-file>index.html</welcome-file>
+        </welcome-file-list>
+</web-app>
+~~~
+
+It is important that the servlet-mapping servlet name *Firstgaeprj* is
+embedded correctly in the index.html (or 
+
+
+4. Create a Servlet
+
+To create a servlet, you need to create a subclass of
+javax.servlet.http.HttpServlet, then define the servlet in
+web.xml. 
+
+*Note, when you a Web Application Project it will create a
+Servlet for you. However, in MyRuns you will have to create a number
+of other servlets so we show you how to create a new servlet here*. If
+you chose to write all the code for the first demo project you could
+just use the servlet created when the project is created. Anyway, back
+to creating a new servlet:
+
+ * Create servlet class
+You can specify the super class in "New Java Class" as follows.
+
+![](images/create_prj_4.jpg)
+
+Once you have created the servlet class the template will be in the
+*src* folder and look like the following:
+
+~~~{.java}
+
+package edu.dartmouth.cs.myfirstgae;
+
+import javax.servlet.http.HttpServlet;
+
+public class DemoServlet extends HttpServlet {
+
+}
+
+~~~
+
+You need to implement doGet() method and doPost() method to handle
+both GET and POST requests (the demo code already has this done).
+
+~~~{.java}
+package edu.dartmouth.cs.firstgaeprj;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class DemoServlet extends HttpServlet {
+        private static final long serialVersionUID = 1L;
+
+        public void doGet(HttpServletRequest req, HttpServletResponse resp)
+                        throws IOException {
+                resp.setContentType("text/plain");
+                resp.getWriter().println("Hello, world");
+        }
+
+        public void doPost(HttpServletRequest req, HttpServletResponse resp)
+                        throws IOException {
+                resp.setContentType("text/plain");
+                resp.getWriter().println("Hello, world");
+        }
+}
+~~~
+
+ Then you have to define the servlet in web.xml. Open web.xml, define the servlet and its mapping as follows:
+
+~~~{.java}
+.....
+        <servlet>
+                <servlet-name>DemoServlet</servlet-name>
+                <servlet-class>edu.dartmouth.cs.firstgaeprj.DemoServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>DemoServlet</servlet-name>
+                <url-pattern>DemoServlet</url-pattern>
+        </servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+.....
+~~~
+
+To complete the project you would need to write the html file --
+index.html is created by default. You can look at the html code in the
+first demo code below to see an example; it's in
+AppEngineServlet.html. In the demo code there is also a CCS file which
+we don't really need in the demo but it's there if you fancy being
+stylistic.
+
+Note, after you started the server on your machine, you can access this servlet from **URL: http://127.0.0.1:8888/demoservlet**
+
+
+### Project structure
+
+The project structure is shown as follows:
+ 
+![](images/project_struct.png)
+
+The *src* folder holds the source code. 
+
+The *META-INF* is an internal Java meta directory that you will
+typically not update. See [META-INF](http://stackoverflow.com/questions/70216/whats-the-purpose-of-meta-inf) for more information.
+
+There are a number of libraries folders in the project: *App Engine SDK*
+(not shown in the figure above) and the *JRE (Java Runtime
+Environment)*.
+
+There are a number of important files under the *war*  (Web
+application ARchive) directory. The
+[war](http://en.wikipedia.org/wiki/WAR_(file_format): "is a JAR file used to distribute a collection of JavaServer Pages, Java Servlets, Java
+classes, XML files, tag libraries, static web pages (HTML and related
+files) and other resources that together constitute a web
+application". This is a bundle that contains all the files to run your
+web application. 
+
+There a couple of important files and in the war directory, in
+particular the WEB-INF directory includes: *appengine-web.xml* and *web.xml*
+
+The web.xml defines the structure of the web application for example
+declares servlets and servlet mappings (URLs to servlet), filters,  
+As [stated](http://en.wikipedia.org/wiki/WAR_(file_format) "If the web
+application is only serving JSP ( JavaServer Pages) files, the web.xml file is not
+strictly necessary. If the web application uses servlets (ours does), then the
+servlet container uses web.xml to ascertain to which servlet a URL
+request will be routed". This is the case in our simple demo. "The web.xml is also used to define context
+variables which can be referenced within the servlets and it is used
+to define environmental dependencies which the deployer is expected to
+set up".
+
+The appengine-web.xml "includes the registered ID of your application (Eclipse creates this with an empty ID for you to fill in later), the version number of your application, and lists of files that ought to be treated as static files (such as images and CSS) and resource files (such as JSPs and other application data).” (GAE document)
+
+web.xml declares servlets, servlet mappings(URLs to servlet), filters, etc.
+
+
+## First App Engine project demo
+
+Download the code for a simple demo called [first App Engine project](code/AppEngServlet.zip)
+
+### Import and run the app
+
+Import the project into eclipse just like importing a *general
+project*, as shown below. 
+
+![](images/general.png) 
+
+To start the server, right click the project, click "Run As" -> "Web Application". 
+
+![](images/run_server.jpg) 
+
+You will see a lot of log showing in the console window. When it says
+"INFO: Dev App Server is now running", you can open "127.0.0.1:8888"
+from your web browser to view the web application. If you want to stop
+the server, click the stop button shown in the screenshot
+below. *Note, "http://localhost:8888" is the same as
+"http://127.0.0.1:8888" -- either will work to start your
+service*. Also, make sure that you stop the executing servlet when done.
+
+![](images/run_server_console.jpg)
+
+In this a simple web app that allows you to submit a string to web
+server; the server echo's the string back, as shown below.
+
+![](images/prj_0_interface.png)
+
+After you type 'Hello!' into the text box (below) and clicked button
+"GET" you will see:
+
+![](images/prj_0_result_get.png)
+
+### GET and POST
+
+When you click the "GET" and "POST" buttons your browser will submit
+the text in the text box (to the left of the button) to the web server
+in either "GET" method or "POST" method. GET and POST 
+are two commonly used methods for a request-response between a client
+and server. GET requests data from a specified resource -- read server. POST submits
+data to be processed to a specified resource -- read server. GET and
+POST are part of the HTTP protocol that make the web tick -- HTTP was
+invented, yes!, by and English man -- see [HTTP Methods: GET
+vs. POST](http://www.w3schools.com/tags/ref_httpmethods.asp) for more info.
+
+### Forms
+
+The AppEngServlet.html file uses [forms](http://www.w3.org/TR/html401/interact/forms.html) to set up
+the input buttons in the webpage, get user input and submit the form
+for processing by the servlet -- the server side form handler  (i.e., AppEngServletDemo) as shown
+below. We look at the html and resulting URL below.
+
+~~~{.java}
+<!doctype html>
+
+<html>
+  <head>
+    <title>Google App Engine Servlet Example</title>
+  </head>
+  <body>
+
+    <h1>Google App Engine Servlet Example</h1>
+
+    <form name="input" action="AppEngServletDemo" method="get">
+        User Input: <input type="text" name="user_input">
+        <input type="submit" value="GET">
+    </form>
+  
+    <form name="input" action="AppEngServletDemo" method="post">
+        User Input: <input type="text" name="user_input">
+        <input type="submit" value="POST">
+    </form>
+    
+  </body>
+</html>
+~~~
+
+So for example, the first form corresponds to the GET button. It
+displays *User Input:* and expects text input associated with the
+variable name "user_input". 
+
+![](images/prj_0_interface.png)
+
+Once submitted when the user enters some
+text and clicks GET then the *action* is taken to do a HTTP GET on the
+servlet defined in the action (i.e., AppEngServletDemo). The “action” field of the form defines where to issue the POST/GET request:
+ 
+<form name="input" action=""AppEngServletDemo" method="get">
+ 
+This code tells the browser when the form is submitted, it should
+issue a GET request, defined by the method="get", to "AppEngServletDemo". It uses relative path in this case. If the web page locates at http://127.0.0.1/index.html, then it issues the request to http://127.0.0.1/AppEngServletDemo
+
+If you enter the text "Hello" and click GET then the URL captures the complete
+user input and the servlet name that services the GET as shown below
+in the URL.
+
+![](images/prj_0_result_get.png)
+
+### Java Servlet
+
+Java Servlet technology provides Web developers with a simple,
+consistent mechanism for extending the functionality of a Web
+server. A servlet can almost be thought of as an applet that runs on
+the server side. A servlet is a Java class in Java EE that conforms to
+the Java servlet API, a protocol by which a Java class may respond to
+requests. Servlets could in principle communicate over any
+client–server protocol, but more often they are used with the HTTP
+protocol. Checkout [Java Servlet Technology
+Overview](http://www.oracle.com/technetwork/java/overview-137084.html)
+and [Java Servlet](http://en.wikipedia.org/wiki/Java_Servlet) for more
+information on servlets.
+
+A servlet needs to extend javax.servlet.http.HttpServlet, and override doGet() and doPost() methods which will handle GET requests and POST requests, respectively.
+
+User requests can be retrieved from HttpServletRequest object. It
+contains anything that comes from the (user) client (i.e., browser,
+applications). You can add an intermediate result to it, then redirect
+the request to other servlets or JSPs. You can use the 
+getParameter(String paramName) method to get parameters, and use
+setAttribute(String attrName, Object val) and getAttribute(String
+attrName) to set and get attributes from request object, respectively. 
+
+### First App Engine project demo work flow
+
+This project contains a static web page AppEngServlet.html and a servlet mapped to url /AppEngServletDemo. When the user visits the website, the server sends back AppEngServlet.html because it is the default welcome file defined in web.xml. The user can issue POST or GET request to /AppEngServletDemo through the webpage. The work flow is shown below.
+
+![](images/appengservlet.png)
+
+To summarize the workflow:
+
+* the user loads the URL localhost:8888  into the browser and a static
+  page (i.e., AppEngServlet.html) is loaded into the browser using HTTP from the localhost:8888 server 
+  page; 
+* the user inputs some data (e.g., Hello) and clicks GET or POST; 
+* the form's action invokes the servlet at AppEngServletDemo at
+  localhost:8888;  
+* the servlet builds a HTML in response which is the response to the original GET command; and finally,
+* the HTML is rendered inside the user's browser and displayed.
+
+### Java servlet implementation
+
+Let's look at the implementation of a simple servlet:
+
+~~~{.java}
+public class AppEngServletDemo extends HttpServlet {
+    private static final long serialVersionUID = 7224390555085474606L;
+
+    //GET method
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+        String str = req.getParameter("user_input");
+        
+        PrintWriter writer = resp.getWriter();
+        writer.write("<html>\n");
+        writer.write("<b>");
+        writer.write("doGet(): " + str + ", Time: " + Calendar.getInstance().getTime().toString());
+        writer.write("</b>");
+        writer.write("</html>");
+    }
+    
+    //POST method
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+        String str = req.getParameter("user_input");
+        
+        PrintWriter writer = resp.getWriter();
+        writer.write("<html>\n");
+        writer.write("<b>");
+        writer.write("doPost(): " + str + ", Time: " + Calendar.getInstance().getTime().toString());
+        writer.write("</b>");
+        writer.write("</html>");
+    }
+}
+~~~
+
+If you want to forward the request to another servlet:
+
+~~~{.java}
+//url is the dest servlet's url
+getServletContext().getRequestDispatcher(url).forward(req, resp);
+~~~
+
+If you want to tell the browser to redirect to another url:
+
+~~~{.java}
+resp.sendRedirect(url);
+~~~
+
+### Servlet configuration
+
+Servlets need to be declared in web.xml, as follows:
+
+~~~{.xml}
+<!-- declare servlet -->
+  <servlet>
+    <servlet-name>AppEngServletDemo</servlet-name>
+    <servlet-class>edu.dartmouth.cs.appengine.server.AppEngServletDemo</servlet-class>
+  </servlet>
+<!-- map servlet to urls-->  
+  <servlet-mapping>
+    <servlet-name>AppEngServletDemo</servlet-name>
+    <url-pattern>/AppEngServletDemo</url-pattern>
+  </servlet-mapping>
+~~~
+
+## Second demo:  using App Engine datastore
+
+The demo code: [google app engine
+project](../code/gae_sample_code.zip) allows the client to store data
+using the App Engine datastore services. The [App Engine
+Datastore](https://developers.google.com/appengine/docs/java/datastore/)
+provides a NoSQL schemaless object Datastore, with a query engine and
+atomic transactions. In the demo code, data operations are defined in
+edu.dartmouth.cs.gae_sample.data.ContactDatastore.query_result.jsp is
+used for displaying query results. 
+QueryServlet put query result list in request object's attribute,
+query_result.jsp use get the result list from the request object, then
+generate the result Web page. 
+Data operation servlets (add, delete, update) will redirect browser to QueryServlet so that user can see the operation result immediately.
+
+Data objects in the App Engine Datastore are known as *entities*. An entity has one or more named properties, each of which can have one or more values. Entities of the same kind need not have the same properties, and an entity's values for a given property need not all be of the same data type. Each entity in the Datastore has a key that uniquely identifies it. The key consists of the following components:
+
+ * The kind of entity, which categorizes it for the purpose of Datastore queries
+ * An identifier for the individual entity, which can be either a key name string or an integer numeric ID
+ * An optional ancestor path locating the entity within the Datastore hierarchy
+
+When you import the project you will see the following files and
+directories:
+
+![](images/gae_files.png)
+
+Consider the following example:
+
+~~~{.java}
+//get datastore object from DatastoreServiceFactory
+DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+//declare an entity with Kind "Employee" and KeyName "asalieri"
+Entity employee = new Entity("Employee", "asalieri");
+
+//set entity's properties
+employee.setProperty("firstName", "Antonio");
+employee.setProperty("lastName", "Salieri");
+Date hireDate = new Date();
+employee.setProperty("hireDate", hireDate);
+employee.setProperty("attendedHrTraining", true);
+
+//put this entity to datastore
+datastore.put(employee);
+~~~
+
+### Browser UI
+
+The webpage allows the user to add, delete, update and query
+entities. If the user clicks on Query Result OK without entering a
+name then all records will be returned. The user can update an entry
+already saved in the datastore or delete it, as shown in the example
+below.
+
+![](images/gae_ui.png)
+
+### Workflow
+
+Let's think about the workflow of the browser and the servlets --
+recall there are 4 servlets, one for each query type. If you inspect the code then the query workflow is as follows:
+
+* the user loads the URL localhost:8888 into the browser. The browser sends a GET request to the servlet /query.do because it is defined as the welcome file in web.xml;
+* the request invokes the servlet on the server;
+* the servlet parses the request, gets a parameter called “name”, which is the query condition;
+* the servlet retrieves data from the Datastore with the condition. 
+* if the condition is empty, it retrieves all the records from the  Datastore, otherwise it only retrieves the record whose name is the same as the condition. The results are stored in an ArrayList;
+* the servlet adds the ArrayList to the request object then redirect to the query_result.jsp;
+* the query_result.jsp gets the ArrayList from the request object, then generates the html with all the data in ArrayList; and finally,
+* the server sends the generated html back to user’s browser which displays the html
+
+### Welcome file
+
+Note, that the* welcome file* (web.xml) in the first demo is a html
+file and in the second demo is a servlet. When a user visits the
+website without specifying which type of file (html or servlet), the
+server uses the welcome file to fulfill the request. So in the second
+demo, when a user visits localhost:8888, the server knows it should
+use query.do to respond the request.
+ 
+~~~{.java}
+<welcome-file-list>
+       <welcome-file>query.do</welcome-file>
+</welcome-file-list>
+~~~
+
+### Servlets and JavaServer Pages
+
+The design uses a number of servlets that handle each function. The
+basic mechanism is that each servlet updates the datastore and sets
+the results in the request (req.setAttribute("result", result)) before
+forwarding the request to the "query_result.jsp" as shown in the code
+from query().
+
+~~~{.java}
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
+		String name = req.getParameter("name");
+		ArrayList<Contact> result = ContactDatastore.query(name);
+		req.setAttribute("result", result);
+		getServletContext().getRequestDispatcher("/query_result.jsp").forward(
+				req, resp);
+	}
+
+~~~
+
+The query_result.jsp executes taking the request and response as input
+and generates dynamic html which is returned to the user. A snippet of
+the query_result.jsp is shown below:
+
+~~~{.java}
+
+	<b>
+		---------------------------------------------------------------------<br>
+		<%
+			ArrayList<Contact> resultList = (ArrayList<Contact>) request
+					.getAttribute("result");
+			if (resultList != null) {
+				for (Contact contact : resultList) {
+		%> Name:<%=contact.mName%>&nbsp; Address:<%=contact.mAddress%>&nbsp;
+		PhoneNumber:<%=contact.mPhoneNumber%>&nbsp; &nbsp;&nbsp; <a
+		href="/delete.do?name=<%=contact.mName%>">delete</a> <br> <%
+ 	}
+ 	}
+ %>
+		---------------------------------------------------------------------<br>
+	</b> Add new contact:
+	<br>
+	<form name="input" action="/add.do" method="post">
+		Name: <input type="text" name="name"> Address: <input
+			type="text" name="addr"> Phone: <input type="text"
+			name="phone"> <input type="submit" value="Add">
+	</form>
+	----------
+~~~
+
+See [How JSP Works: Servlets and JavaServer Pages](http://people.apache.org/~jim/NewArchitect/webrevu/2001/02_02/developers/index03.html) for more
+information if these concepts are new to you.
+
+Note, the first time the welcome file will invoke query with null
+entered in the query. This will get all previously saved entries in
+the datastore and create the dynamic html using the method above. The
+html page will be returned to the user who will see something like as
+follows:
+
+![](images/gae_ui.png)
+
+The user can then select any of the forms that were presented (add,
+update, query -- and delete, which is a special case because it is
+presented as a hyperlink in the page.
+
+### Workflow revisited
+
+When the user visit the website first: since query.do is the welcome file, query.do is invoked. It redirects to query_result.jsp, where HTML is generated and returned to the user. So the main interface is generated by query_result.jsp.
+ 
+When the user is viewing the dynamic html created by query_result.jsp:
+query_result.jsp defines three forms to handle add, update and
+query. Each form submits the form to the corresponding servlet; that
+is, when user clicks the *add* form, it issues a POST request to the servlet *add.do*. It’s the same with update and query.
+ 
+Delete is different. When  query_result.jsp is generating html, it
+generates a delete hyperlink for each record. 
+When the user click such hyperlink, it issues a GET request to the delete servlet.
+ 
+All servlet eventually redirect to query_result.jsp to show the same
+interface as a result.
+
+### The admin console is running at http://localhost:8888/_ah/admin
+
+The App Engine environment supports an admin console where you can
+inspect what is happening when your web app is running in the
+cloud. To get access to the console simply set the URL of your browser
+to  http://localhost:8888/_ah/admin (i.e., open a different tab to
+your running app  http://localhost:8888 and enter
+http://localhost:8888/_ah/admin). An example of the console for this
+demo code is shown below.
+
+![](images/console.png)
+ 
+### Using mlogger to display debug messages to the console.
+
+Like log.d() you can use logging to write various status messages to
+the console (not the CatLog) for code running on the cloud as shown in
+the snippet of code. Look for the printed lined log statement in the
+console:
+
+~~~{.java}
+
+May 05, 2014 8:57:37 AM edu.dartmouth.cs.gae_sample.data.ContactDatastore add
+INFO: contact exists
+
+~~~
+
+![](images/log.png)
+
+The relevant code snippet found in the ContactDatastore java file is
+shown below:
+
+~~~{.java}
+
+	\\ get the logger
+        private static final Logger mLogger = Logger
+			.getLogger(ContactDatastore.class.getName());
+
+        .......
+	public static boolean add(Contact contact) {
+		if (getContactByName(contact.mName, null) != null) {
+  
+                       \\ write to the log file
+			mLogger.log(Level.INFO, "contact exists");
+			return false;
+		}
+
+~~~
+
+
+
+### Basic operations
+
+The following are the basic operations:
+
+ * Add an entity
+ 
+~~~{.java}
+  //declare an entity with Kind "Employee" and KeyName "asalieri"
+  Entity employee = new Entity("Employee", "asalieri");
+  //set a property
+  employee.setProperty("lastName", "Salieri");
+  //put this entity to datastore
+  datastore.put(employee);
+~~~
+ 
+ * Retrieving an entity
+ 
+~~~{.java}
+  //declare the key for the entity you are trying to retrieve
+  Key employeeKey = KeyFactory.createKey(“Employee”, “asalieri”);
+  //get the entity using the key
+  Entity employee = datastore.get(employeeKey);
+~~~
+ 
+ * Updating an entity
+ 
+~~~{.java}
+  //declare the key for the entity you are trying to modify
+  Key employeeKey = KeyFactory.createKey(“Employee”, “asalieri”);
+  //modify employee’s properties in here
+  employee.setProperty("lastName", "Sal");
+  //if employeeKey exits in the datastore, put() will update that entity 
+  datastore.put(employee);
+~~~
+ 
+ * Deleting an entity
+ 
+~~~{.java}
+  //declare the key for the entity you are trying to modify
+  Key employeeKey = KeyFactory.createKey(“Employee”, “asalieri”);
+  datastore.delete(employee);
+~~~
+
+### Entity Ancestor Paths
+
+Entities in the Datastore form a hierarchically structured space similar to the directory structure of a file system. When you create an entity, you can optionally designate another entity as its parent; the new entity is a child of the parent entity. An entity without a parent is a root entity. The association between an entity and its parent is permanent and cannot be changed once the entity is created. The Datastore will never assign the same numeric ID to two entities with the same parent, or to two root entities (those without a parent).
+
+~~~{.java}
+  //parent entity
+  Entity employee = new Entity("Employee");
+  datastore.put(employee);
+  
+  //use employee.getKey() as address' parent key
+  Entity address = new Entity("Address", "addr1", employee.getKey());
+  datastore.put(address);
+~~~
+
+### Datastore queries
+
+A Datastore query retrieves entities from the App Engine Datastore that meet a specified set of conditions:
+
+ * An entity kind to which the query applies
+ * Zero or more filters based on the entities' property values, keys, and ancestors
+ * Zero or more sort orders to sequence the results
+ * A query retrieves all entities of the given kind that satisfy all of the given filters, sorted in the specified order.
+
+Consider the following example:
+
+~~~{.java}
+  //declare a query for kind "Person"
+  Query q = new Query("Person");
+  //set filter for property "height"
+  q.setFilter("height",
+    Query.FilterOperator.GREATER_THAN_OR_EQUAL,
+    minHeight);
+  //use PreparedQuery to execute query
+  PreparedQuery pq = mDatastore.prepare(q);
+  //get query results as a list of entity
+  List<Entity> results = 
+	pq.asList(FetchOptions.Builder.withDefaults());
+~~~
+
+A query with an ancestor filter limits its results to the specified entity and its descendants:
+
+~~~{.java} 
+  //set employeeKey as addrQuery's ancestor
+  Query addrQuery = new Query(“Address").setAncestor(employeeKey);
+~~~
+
+Datastore queries have the following limitations:
+
+ * Entities lacking a property name in the query are ignored.
+ * Filtering on unindexed properties returns no results.  
+ * Inequality filters are limited to at most one property. 
+ * Ordering of query results is undefined when no sort order is specified. 
+ * Properties used in inequality filters must be sorted first. 
+ * Queries inside transactions must include ancestor filters. 
+ * JOIN is not supported
+ * And more…
+
+### Structuring Data for Strong Consistency
+
+Datastore queries can deliver results at two consistency levels:
+
+ * Strongly consistent queries guarantee the freshest results; but may take longer to complete. Ancestor queries (those within an entity group) are strongly consistent by default.
+ * Eventually consistent queries generally run faster; but may occasionally return stale results. Non-ancestor queries are always eventually consistent.
+
+### Second App Engine project demo work flow
+
+The following flow charts shows how different servlet and JSP coordinate to fulfill user's query, add, delete and update requests.
+
+ * Query
+
+![](images/gae_query.png)
+
+ * Add a record
+
+![](images/gae_add.png)
+
+ * Delete a record
+
+![](images/gae_delete.png)
+
+ * Update a record
+
+![](images/gae_update.png)

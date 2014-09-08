@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 2: JavaScript Variables</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%202%20%20JavaScript%20Variables_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%202%20%20JavaScript%20Variables_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%202%20%20JavaScript%20Variables_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%202%20%20JavaScript%20Variables_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 2: JavaScript Variables</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this tutorial you will learn about two methods of the window object and how to define variables in JavaScript.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open the lab1.js file from last week </h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab2/images/Lab_2_JavaScript_Variables/media_1301773647996_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%202%20%20JavaScript%20Variables_files/media_1301773647996.png" alt="Open the lab1.js file from last week " height="64" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab2/images/Lab_2_JavaScript_Variables/media_1301773647996_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>In this tutorial, you are going to learn how to define variables in JavaScript. </p>
+
+
+<p>Open the lab1.js file from last week and save it as lab2.js in the js sub folder.</p>
+
+
+<p>In this file we are going to define two variables using the var 
+command. A variable is used to hold values or expressions (just like 
+Algebra). There are some rules for naming javascript variables. The 
+variable names are case sensitive and variables must  begin with a 
+letter or underscore character.</p>
+
+
+<p>In this example, I have declared two variable for your name and 
+email. Each variable is storing a text string. A text string is 
+represented by quotes (" ").</p>
+
+
+<p>var name = "John C. McGarvey Design" ;<br>
+var email = "john@mcgarvey.com";</p>
+
+
+<p>You can enter in your own name and email for your variables.</p>
+
+
+<p>Reference: <a href="http://www.w3schools.com/js/js_variables.asp">w3schools - Javascript Variables</a></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Change the script to print your variables to the screen</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20JavaScript%20Variables_files/media_1301773806081.png" alt="" height="66" width="539">
+
+</div> <p>Next, I am going to write two window.document.write statements to print the variables to the screen.</p>
+
+
+<p>The most common error in your code will probably be the use of single
+ and double quotes. Remember all your text strings need to be wrapped in
+ double quotes, so I have used single quotes around the mailto: href 
+attribute of my a link.</p>
+
+
+<p>window.document.write("&lt;p&gt;" +name+ " &amp;copy; 2011 | ");<br>
+window.document.write(" Contact: &lt;a href='mailto:" +email+ "'&gt;" +email+ "&lt;/a&gt;&lt;/p&gt;");</p>
+
+
+<p>Save this file as lab2.js</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open your lab2_fixed.html file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20JavaScript%20Variables_files/media_1301774089333.png" alt="" height="88" width="308">
+
+</div> <p>Open the lab2_fixed.html file that you created in the previous
+ Lab2: CSS Layout 1 Column lesson. Go to the code view and between the 
+footer, link to the new external JS file.</p>
+
+
+<p>Preview the file in your browser and you should now have the dynamic 
+text in your footer. This should look the same as it did last week.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open a new HTML file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20JavaScript%20Variables_files/media_1301782704907.png" alt="" height="328" width="560">
+
+</div> <p>Open a new HTML file in Dreamweaver, since this page is going 
+to have internal JavaScript  it is best to set its  DOC Type to HTML 
+Transitional (reference the image above). </p>
+
+
+<p>You are going to learn about two methods of the window object that display dialogues.</p>
+
+
+<p>Save this file as lab2_window.html.</p>
+
+
+<p>The root object in the JavaScript Document Object Model (DOM) is the 
+window object. You can act upon the window object with these two 
+different methods.<br>
+1.  alert("Type Message Here");    The alert produces a dialogue box with text message and an OK button.<br>
+2.  prompt("Ask question here","Place default answer here");   A prompt 
+has two parameters. The first will produce the text in the dialogue box 
+and the second will produce the default text in a textbox. It will also 
+produce an OK and Cancel button.</p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Javascript Alert</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20JavaScript%20Variables_files/media_1301783594546.png" alt="" height="209" width="459">
+
+</div> <p>By calling a javascript alert, you can add a pop up dialogue 
+box to your web page. All internal JavaScript must be placed within 
+script tags.</p>
+
+
+<p>Between the head section of this web page type the following in code view:</p>
+
+
+<p>&lt;script type="text/javascript"&gt;<br>
+alert("Many users find alerts obnoxious");<br>
+&lt;/script&gt;</p>
+
+
+<p>This alert will print the text string "Many users find alerts obnoxious" in a popup box.</p>
+
+
+<p>You can also print the contents of a variable into your popup box.</p>
+
+
+<p>Add the following code between the script tags above the previous alert script (reference the image above):</p>
+
+
+<p>var message = "Welcome to 513!";<br>
+alert(message);</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Adding an External Prompt Script</h2>
+
+		<div class="image">
+
+<img src="Lab%202%20%20JavaScript%20Variables_files/media_1301784817699.png" alt="" height="48" width="439">
+
+</div> <p>For our next script, we are going to add an external 
+javascript file that will produce a prompt. The prompt will ask the user
+ a question and provide a textbox for them to enter their response. 
+Their response will be stored in a variable and printed to the page.</p>
+
+
+<p>Create a new external JavaScript file. Save the file as lab2_greeting.js in the js sub folder.</p>
+
+
+<p>First you are going to declare a variable with the var command and store the users input from the prompt into the variable.</p>
+
+
+<p>                    var greeting = prompt("What is your name?", " ");  </p>
+
+
+<p>Next, you will add a window.document.write statement that will print the variable to the page.</p>
+
+
+<p>                    window.document.write("Hello " +greeting+ ", welcome to my web site. ");</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Link the external script to your web page</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab2/images/Lab_2_JavaScript_Variables/media_1301785041729_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%202%20%20JavaScript%20Variables_files/media_1301785041729.png" alt="Link the external script to your web page" height="337" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab2/images/Lab_2_JavaScript_Variables/media_1301785041729_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>The final step is to link your external script to the lab2_window.html page.</p>
+
+
+<p>                  &lt;script src="js/lab2_greeting.js" language="javascript" type="text/javascript"&gt;&lt;/script&gt;</p>
+
+
+<p>Preview the page in the browser and respond to your prompt. It should print your name to the page.</p>
+
+
+<p>Save and upload your files to the server.<br>
+ </p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

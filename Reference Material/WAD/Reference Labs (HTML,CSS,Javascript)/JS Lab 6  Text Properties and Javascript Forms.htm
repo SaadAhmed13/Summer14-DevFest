@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>JS Lab 6: Text Properties and Javascript Forms</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">JS Lab 6: Text Properties and Javascript Forms</h1>
+
+      </div>
+
+      
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a new file in Dreamweaver named lab6_js_properties.html</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304395587604.png" alt="" height="48" width="248">
+
+</div> <p>1. Create a new file in Dreamweaver called lab6_js_properties.html<br>
+2. Add script tags between the body tags of the web page.<br>
+3. Declare a text string to the variable txt.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Use JavaScript Text Properties to Manipulate the Text</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304395636316.png" alt="" height="92" width="388">
+
+</div> <p>By using the .big() and .small() properties on the txt 
+variable, you can change the size of the text string. This txt string is
+ then printed to the screen using document.write statements.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Experiment with the following additional properties</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304395697641.png" alt="" height="233" width="524">
+
+</div> <p>Review the image above and experiment with the different ways to manipulate the text string with JavaScript.</p>
+
+
+<p>One of the common uses for this is take a user's input, and convert to lower case and then check it against a certain value.</p>
+
+
+<p>Save the file and upload to your server.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a new file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304311231110.png" alt="" height="116" width="230">
+
+</div> <p>1.  Create a new file in Dreamweaver called lab6_js_menu.html.<br>
+2.  Type the following code between the body tags to create a html form and an empty results div:</p>
+
+
+<p><i>&lt;form&gt;</i><br>
+<i>Select your favorite music:</i><br>
+<i>&lt;select &gt;</i><br>
+<i>  &lt;option&gt;Jazz&lt;/option&gt;</i><br>
+<i>  &lt;option&gt;Classical&lt;/option&gt;</i><br>
+<i>  &lt;option&gt;Rock&lt;/option&gt;</i><br>
+<i>  &lt;option&gt;Hip Hop&lt;/option&gt;</i><br>
+<i>&lt;/select&gt;</i><br>
+<i>&lt;/form&gt;</i><br>
+<i>&lt;div id="results"&gt;&lt;/div&gt;</i></p>
+
+
+<p>This creates an HTML form with a single form element, a select menu. 
+In this tutorial, you are going to create an script that will print a 
+text string within the results div based on the item selected in the 
+menu.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a custom function</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304304514979.png" alt="" height="111" width="362">
+
+</div> <p>1. First step is to add script tags between your head tags so 
+you can create a custom function. I called this function displayResult()
+ and gave it the selTag parameter. The selTag parameter will contain the
+ "this" keyword which will be used to select the current menu.</p>
+
+
+<p><i>     &lt;script type="text/javascript"&gt;</i><br>
+<i>         function displayResult(selTag)</i><br>
+<i>          {</i><br>
+<i>              var x=selTag.options[selTag.selectedIndex].text;</i><br>
+<i>          }</i><br>
+<i>      &lt;/script&gt;</i></p>
+
+
+<p>2. Between the curly brackets, a variable x was declared. When the 
+"this" keyword is passed through to the selTag parameter, the statement 
+will be interpreted by the browser as follows:</p>
+
+
+<p><i>          this.options[this.seletedIndex].text;</i></p>
+
+
+<p>This statement is saying in the current options form element return the text of the selected item.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Display the results of the variable within the results div</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304305054832.png" alt="" height="86" width="507">
+
+</div> <p>The next step is to take variable x and display it within a 
+text string within the results div. To achieve this first you need to 
+select the results div using document.getElementById method. Then use 
+the innerHTML property to add the text string to the div.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Finally, add an event handler to call the function.</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304307061839.png" alt="" height="164" width="278">
+
+</div> <p>An onChange event handler is used to call the function and pass the this keyword.</p>
+
+
+<p><i>           &lt;select onchange="displayResult(this)"&gt;</i></p>
+
+
+<p>Save the file and upload to your server.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Open the guestbook template file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304314399200.png" alt="" height="336" width="560">
+
+</div> <p>The template file contains an embedded stylesheet that defines
+ the background color of the page and the width, border, and background 
+color of the form with the id guestbook.<br>
+The template also contains an html form with text boxes, radio buttons, a
+ text area box and two buttons. Review the html code within the template
+ on how to create an html form.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Review XHTML code of a form</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304314689297.png" alt="" height="498" width="482">
+
+</div> <p>Look at the code view of the guestbook template file. Notice 
+that the form has the unique Id, guestbook while each form element has 
+it's own unique id. For example, id=name or id=comments.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add a JavaScript function to thank your users for their comments</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304317045802.png" alt="" height="278" width="258">
+
+</div> <p>Add the thankyou() function and review the CSS code</p>
+
+
+<p><i>&lt;script&gt;</i><br>
+<i>function thankyou() {</i></p>
+
+
+<p><i>}</i><br>
+<i>&lt;/script&gt;</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Store the Users Input into variables</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304317682399.png" alt="" height="76" width="404">
+
+</div> <p>In the first part of the thankyou function, several variables 
+are created that store the contents of the users input from the form. 
+There are two common ways to achieve this in JavaScript. The most 
+popular way is to use the getElementbyId<br>
+1) In the first example, the value of the text book names first, in the 
+form named guestbook with the html document displayed in the browser 
+window is stored in the variable fname.<br>
+2) In the second example, the form element with the Id of name is stored in the lname variable.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_12" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a new Popup Window in JavaScript</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304318628509.png" alt="" height="27" width="408">
+
+</div> <p>A new variable is created called OpenWindow. This variable 
+contains the window.open() statement. The open() method contains three 
+parameters separated by comas. First is the name of the file or URL of 
+the new window.In this example, it is blank because the new window will 
+display dynamic content not a static page. The second parameter is the 
+name of the window, "newwin" and finally the third parameter applies the
+ attributes of the window.</p>
+
+
+<p><i>var OpenWindow = window.open("","newwin","height=400,width=600");</i></p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_13" class="lessonStep top">
+
+	    <h2 class="StepTitle">Use JavaScript to dynamically build the pop up window from the users input</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab6/images/JS_Lab_6_Text_Properties_and_Javascript_Forms/media_1304318672746_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304318672746.png" alt="Use JavaScript to dynamically build the pop up window from the users input" height="95" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab6/images/JS_Lab_6_Text_Properties_and_Javascript_Forms/media_1304318672746_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Several document.write statements are used to build the html 
+necessary to display the dynamic code into the OpenWindow browser 
+window.</p>
+
+
+<p><i>OpenWindow.document.write("&lt;html&gt;&lt;head&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;title&gt;Thanks for Writing&lt;/title&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;/head&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;body bgcolor='#900'&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;div id='guestbook''&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;p&gt;Thank you &lt;b&gt;" +fname+ " " 
++lname+ "&lt;/b&gt; from " +usermail+ " for filling out my 
+guestbook.&lt;/p&gt;");</i><br>
+<i>OpenWindow.document.write("&lt;p&gt;Your message: &lt;br&gt;" +usercomments);</i><br>
+<i>OpenWindow.document.write("&lt;/p&gt;&lt;form&gt;&lt;input 
+type='button' value='Close Window' 
+onClick='self.close()'&gt;&lt;/form&gt;");</i><br>
+<i>OpenWindow.document("&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;");</i></p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_14" class="lessonStep top">
+
+	    <h2 class="StepTitle">Call the function with an event handler</h2>
+
+		<div class="image">
+
+<img src="JS%20Lab%206%20%20Text%20Properties%20and%20Javascript%20Forms_files/media_1304318808820.png" alt="" height="136" width="479">
+
+</div> <p>Add the onClick event handler to the send button to call the thankyou() function.</p>
+
+
+<p>Save the file as lab6_guestbook.html</p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

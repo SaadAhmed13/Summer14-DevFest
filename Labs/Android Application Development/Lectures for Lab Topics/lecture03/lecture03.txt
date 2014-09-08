@@ -1,0 +1,399 @@
+﻿% Activity Lifecycle
+
+Application comprise one or more activities. Because of the mobile and UI experience the operation of an activity is governed by a set of states (like a finite state machine) called the lifecycle. In this lecture, we discuss this blueprint and the types of operations that can take place as activities transition through the lifecycle because of user and system events. I think this is a very cool part of Android design. 
+
+## What this lecture will teach you
+ 
+- The birth, operation and death of activities
+- App usage
+- App design
+- Capturing the lifecycle of an activity
+- Declaring the app's launcher activity in the manifest
+- Implementing the activity lifecycle callbacks
+
+## Demo projects
+ 
+The demo code used in this lecture include:
+ 
+* Activity lifecycle demonstrator [activita.zip](../code/activitya.zip)
+
+This code is taken form android developers [demo](http://developer.android.com/training/basics/activity-lifecycle/index.html). You can download it from our webpage or [Google's Android developers](http://developer.android.com/training/basics/activity-lifecycle/index.html).
+
+## Resources
+ 
+* Android developers: [Managing the activity lifecycle](http://developer.android.com/training/basics/activity-lifecycle/index.html)
+* Course book section on [Activities and Their Lifecycles](http://commonsware.com/Android/)
+ 
+## Birth, operation and death of an activity
+
+Android apps run in a different mode than typical apps run on laptops -- resources are limited (e.g., battery), the form factor and real estate of the screen size is small and can't easily display more than one app at a time -- that is, only one app is in *focus* in the foreground at a time. That makes sense because the user can only focus on one thing at a time while on the go. However, other apps can be started pushing the current app in focus into the background. Once the user has completed their interaction with the new app they might want to bring into focus the app that was previously running in the foreground.
+ 
+These various events (plus others) are captured in the blue print for each application -- the set of possible states that the app can go through is called the activity lifecycle. BTW, app == activity in the example above but in reality an application (just like MyFirstProgram) comprises one or more activities. Each activity has its own state machine and the user can define what actions to take when certain activity events fire -- for example, before the activity is killed by the system, perhaps because the system needs to reclaim resources then the user might care to safe any ethereal data to more persistent storage so that the next time the app/activity runs it starts from where it left off.
+
+##  App usage
+ 
+We all have our core apps that we use most of the time -- Facebook, Skype, Gmail, maps, music, games - and then we have a set we churn through -- download, try a few times and remove or leave as installed but unused apps. We have a regular behavior of using apps; for example, we launch an app (e.g., Facebook) use it and then hit the *home button* and launch another app ( e.g., Google maps) and then hit the *back button* to go back to the previous app (Facebook); hit the home button and launch another app (e.g., Skype); hit the home button again launch the super cool activity lifecycle app; then hit the *recent apps* button and select the Facebook app because it is paused like all the apps on the recent app list -- so I select it and I'm back to my Facebook app at the exact place I left it.
+ 
+This app usage pattern by the user as described above is fairly representative. Importantly, the user's behavior drives the lifecycle of the apps -- the system can also drive the lifecycle independent of the user, for example, the system can destroy a paused or stopped app if it needs to reclaim system resources (e.g., memory) because the current foreground app needs more resources. Note, the Android OS is optimized to focus on the user experience of the current foreground process/app at all costs. It will find resources to keep the foreground app in good shape and if that means killing other paused or stopped apps then it will do that -- in brief, the foreground app is king.
+ 
+The figure shown below shows:
+ 
+* the *back button*, which if clicked now it would destroy the lifecycle app;
+* the *home button*, which bring you to the home page where other apps can be launched; and
+* the *recent app button*, which presents a list of all stopped but not destroyed apps which can be clicked to bring to the foreground, or swiped which would destroy them -- in a similar manner to using the back button.
+ 
+Couple of addition comments: You can cycle through launching apps, home button, back button, recent apps any which way you like -- you can have a large stack of recent apps in memory ready to be brought to the foreground and into user focus. Also these buttons do different things to apps (or activities); for example, we mentioned the back button kills the current activity in focus while the home button pushes the app on to the recent app list and therefore the app is not destroyed and remains in memory -- and should the user select it from the recent apps list it will be brought back into the foreground where you left off -- the system remains the state information -the UI and data associated with the app. Tip: because apps that are on paused or stopped can be killed by the system because it needs resources you as a programmer have to take care to store or save any important data to persistent storage (more on that soon). If you do this you then the next time your app fires up it will start with the app's UI and data intact and the user can start where it left off. If you do not do this and the system kills your app then you have lost your data forever. More on how we save data later.
+ 
+![](images/button.png)
+ 
+The figure below shows the stack of recent apps if I click on the recent apps button.
+ 
+![](images/button.png)
+ 
+## App design
+ 
+Apps support various features. Take Skype. It has a home page UI view once you sign in which has various options such as contacts, recent, call phones and profile. If you navigate into contacts view UI you can select someone to call which brings you to another view where you can make a call or sms the person. Because a phone has a small sized display the app designer can't present all of these views at once in the UI but has to overlay one with another as the user navigates through the app. These different features are represented by multiple activities (or fragments, more on fragments later) where each activity supports a different view of the overall UI experience -- so one activity supports a view in my example. We will talk about UI design and *views* later. But imagine you start Skype, sign in, hit contacts, hit call Andrew, hit voice call -- if at this point you hit the back button you would move back through the receding features/views each represents in my example by an activity -- as you moved back through the activities the one in the foreground is killed where you hit back button until you come to the first view presented when you signed in -- if you back button on that activity the complete app (which comprises a bunch of activities and their associated views) is killed.
+ 
+The app progress through Skype is illustrated by the sequence of view/activities as the user navigates through the screens/features presented the app. Note, there are 7 activities supporting 7 views -- consider the last one when the call is going through, at this point, there is one foreground activity (the call activity and its associated view) and a 5 stopped activities that you could use the back button to sequence back through as discussed above. The sequence starts from my home screen, which is simply the current foreground activity.
+ 
+The home screen were the user launches the Skype app
+ 
+![](images/s2.png)
+ 
+The user selects contacts.
+ 
+![](images/s3.png)
+ 
+Then Andrew Campbell
+ 
+![](images/s4.png)
+ 
+Let's call him
+ 
+![](images/s6.png)
+ 
+And now the call is going through -- but Campbell is not answering, darn it!
+ 
+![](images/s7.png)
+ 
+Note, that if I click on the recent apps button from the call activity then all the 7 stopped activities are presented as one app (as shown in the figure below)  -- make sense right. You might think that all 7 activities should be shown but this is not a recent activity’s button it is a recent apps button. So only apps are listed here in the order in which they were started.
+ 
+![](images/s5.png)
+ 
+## Capturing the lifecycle of an activity
+ 
+The figure below illustrates the life cycle. The figure captures the states and call back methods that get called as the app transitions. From the first moment an activity is created at the bottom of the pyramid each call back method (e.g., `onCreate()`, `onStart(), `onResume()`) moves the activity state up toward the top. At this point the activity is said to be in the *foreground* and the user freely interacts with it; for example, the activity transitions through _Created_, _Started_ to _Resumed_ state where it is *visible* and can be interacted with by the user.
+ 
+Once the user is finished interacting with the app say Foursquare, Skype, Google Now they loose interest in the current foreground app and may kill it -- in which case the activity moves to the background and then is destroyed. Here again a sequence of lifecycle methods is called to handle this transition in an orderly manner.
+ 
+In each case that a call back method is invoked the user call provide application specific code to deal with the event, for example, saving variable to persistence storage, on in contrast, when an activity is restated restoring data from storage. As the user looses interest in the foreground application it the control flow moves down the pyramid. Consider the case were the user simply wants to start another application without destroying the current app (e.g., a navigation app). In this case the app is not destroyed but pushed to the background by traversing down the pyramid from _Resumed_ to _Paused_ to _Stopped_ -- at this point the application is *hidden* (not visible) from the user. The user can use the back key to navigate back to a background app and bring it back into focus, thereby moving back up the pyramid to the _Resumed_ state via callback methods such as `onRestart()` and `onResumed()` -- in the case the code in the call back methods might restore the app so it could pick up where it left off.
+ 
+![](images/lifecyclediagram.png)
+ 
+As you can see from the lifecycle figure there are a number of states and in many cases the types of applications we will write will not need to take any actions is many of these states so we will just ignore then if not needed.
+ 
+We want to use a necessary subset of these states so that our apps behave well when user and system driven events occur; for example, the app should not
+ 
+* crash when a user suddenly receives a phone call;
+* crash when the user switches app (e.g., from Facebook to Google maps);
+* use valuable system resources (e.g., cores) when the user is not working it;
+* loose the user's context (data) or progress if the user leaves and then later returns to the app; and finally,
+* crash or loose the user's progress when the screen flips between landscape and portrait orientation.
+ 
+Most states transition quickly for example `Started` but others for example `Resumed`, `Paused` and `Stopped` allow the application to remain in these states for extended periods of time; more specifically:
+ 
+* *resumed*: The activity is in the foreground and the user can interact with it.
+ 
+* *paused*: In this state, the activity is partially obscured by another activity—the other activity that's in the foreground is semi-transparent or doesn't cover the entire screen. The paused activity does not receive user input and cannot execute any code. Need to explain these terms and relevance to phones, typically apps cover other apps.
+ 
+* *stopped*: The activity is completely hidden and therefore not visible to the user -- we say that the activity is in the *background* In the Stopped state the activity instance and all its state information such as member variable are stored but no code can execute in this state.
+ 
+* *brown bread* (cockney rhyming slang for dead): The activity was destroyed by the user for example by using the back button or by the systems that reclaimed resources when the activity was either in paused or stopped states.
+ 
+In contrast to these extended states, after the system calls onCreate(), it transitions quickly to the next states by calling onStart(), which is quickly followed by onResume(). These are thought as transient states. Again short pieces of code can be executed in the callback methods.
+ 
+The activity lifecycle comes across as being abstract if you have not used finite state machines (FSMs) in the design of software -- again, because lots of events can occur with a mobile device -- you get a call, arrive at a destination, get a notification of some application specific event, system is running out of resources. the orientation is flip to view a photo better in landscape -- when events like these occur a mobile app has to react in an orderly way.
+ 
+We will code up a simple application and watch as the activities associated with the app transition from state to state. In this way we will come to understand the life cycle and through further use we will become comfortable with the idea and the need for lifecycle states and methods.
+ 
+## Declaring the app's launcher activity in the manifest
+ 
+Note: can you use the idea of persistence data storage in the example? That way its covered and you don't need a special lecture on it.
+ 
+~~~{.java}
+ 
+   	<activity android:name=".MyActivity"
+        	android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+ 
+~~~
+ 
+## Implementing the activity lifecycle callbacks
+ 
+~~~{.java}
+ 
+public class MyActivity extends Activity {
+ 
+  // Called at the start of the full lifetime.
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+	// Initialize Activity and inflate the UI.
+  }
+ 
+  // Called after onCreate has finished, use to restore UI state
+  @Override
+  public void onRestoreInstanceState(Bundle savedInstanceState) {
+	super.onRestoreInstanceState(savedInstanceState);
+	// Restore UI state from the savedInstanceState.
+	// This bundle has also been passed to onCreate.
+	// Will only be called if the Activity has been
+	// killed by the system since it was last visible.
+  }
+ 
+  // Called before subsequent visible lifetimes
+  // for an activity process.
+  @Override
+  public void onRestart(){
+	super.onRestart();
+	// Load changes knowing that the Activity has already
+	// been visible within this process.
+  }
+ 
+  // Called at the start of the visible lifetime.
+  @Override
+  public void onStart(){
+	super.onStart();
+	// Apply any required UI change now that the Activity is visible.
+  }
+ 
+  // Called at the start of the active lifetime.
+  @Override
+  public void onResume(){
+	super.onResume();
+	// Resume any paused UI updates, threads, or processes required
+	// by the Activity but suspended when it was inactive.
+  }
+ 
+  // Called to save UI state changes at the
+  // end of the active lifecycle.
+  @Override
+  public void onSaveInstanceState(Bundle savedInstanceState) {
+	// Save UI state changes to the savedInstanceState.
+	// This bundle will be passed to onCreate and
+	// onRestoreInstanceState if the process is
+	// killed and restarted by the run time.
+	super.onSaveInstanceState(savedInstanceState);
+  }
+ 
+  // Called at the end of the active lifetime.
+  @Override
+  public void onPause(){
+	// Suspend UI updates, threads, or CPU intensive processes
+	// that don't need to be updated when the Activity isn't
+	// the active foreground Activity.
+	super.onPause();
+  }
+ 
+  // Called at the end of the visible lifetime.
+  @Override
+  public void onStop(){
+	// Suspend remaining UI updates, threads, or processing
+	// that aren't required when the Activity isn't visible.
+	// Persist all edits or state changes
+	// as after this call the process is likely to be killed.
+	super.onStop();
+  }
+ 
+  // Sometimes called at the end of the full lifetime.
+  @Override
+  public void onDestroy(){
+	// Clean up any resources including ending threads,
+	// closing database connections etc.
+	super.onDestroy();
+  }
+ 
+}
+~~~
+ 
+The above callback methods capture the complete activity lifecycle. There are three main nested loops in the lifecycle figure associated with an activity; theses are:
+ 
+1. *entire lifetime*, which is the time duration between the calls to onCreate() and onDestroy(). Your activity should setup of all resources (e.g., UI) in onCreate() and release them in  onDestroy().
+ 
+2. *visible lifetime*, which is the time duration between calls to onStart() and onStop(). During this period the activity is visible to the user on the phone's screen and the user can interact with it. If a new activity needs to started then onStop() would be called in the life cycle making the current visible activity no longer visible. During the *entire lifetime* of the activity,  onStart() and onStop() are typically called multiple times resulting in the activity changing between being visible and hidden to the user. Typically, the visible state only relates to tablets with larger form factors where an activity is visible but not in the foreground.
+ 
+3. *foreground lifetime*,  which is the period between onResume() and onPause(). During this time, the activity is in front of all other activities on screen and has user input focus. An activity can frequently transition in and out of the foreground—for example, onPause() is called when the device goes to sleep or when a dialog appears. Because this state can transition often, the code in these two methods should be fairly lightweight in order to avoid slow transitions that make the user wait.
+ 
+## Create an activity
+ 
+~~~{.java}
+        	@Override
+        	public void onCreate(Bundle savedInstanceState) {
+                    	super.onCreate(savedInstanceState);
+ 
+                    	// Initialize activity and inflate UI
+  	              	 setContentView(R.layout.activity_a);
+ 
+                    	// Open database for operations.
+                    	mDb = new DatabaseAdapter(getActivity());
+                    	mDb.open();
+                    	mActivityEntryCursor = mDb.fetchEntries();
+        	}
+~~~
+ 
+## Destroy an activity
+ 
+ Clean up any resources including ending threads, closing database connections etc.
+ 
+~~~{.java}
+        	@Override
+        	public void onDestroy() {
+                    	// Close the database
+                    	mActivityEntryCursor.close();
+                    	mDb.close();
+                    	super.onDestroy();
+        	}
+~~~
+ 
+## onPause(): pause an activity
+ 
+If the foreground activity is obstructed or made partially visible it will be paused. An example of this is when a dialog activity is started and comes into *focus*. An example of this is shown below where activity A is paused as the dialog activity comes into view. Activity A will remains partially visible because its view is obscured by the dialog -- as long as its partially visible it remains paused as shown. 
+![](images/activitya.png)
+ 
+Notice that as the user clicks on the Dialog button to start the dialog activity which renders the dialog (simple dialog) the Activity A lifecycle status changes from Resumed to Paused as shown in the Activity Status.
+ 
+![](images/dialog.png)
+ 
+Typically onPause callback will for example suspend UI updates, threads, or CPU intensive processes that do not
+need to be updated when the activity is not the active foreground activity -- as in the case of Activity A.
+ 
+`onPause()` is called at the end of the active lifetime; more specifically it is called as part of the activity lifecycle when an activity is going into
+the background, but has not (yet) been killed. The counterpart to onResume(). When activity B is launched in front of activity A, this callback will
+be invoked on A. B will not be created until A's onPause() returns, so be sure to not do anything lengthy here.
+ 
+The code snippet from MyRuns app that you will develop as part of this course. The code unregisters receivers for location updates and sensor updates from the motion sensors. Don't worry if you do not grasp the meaning of the code now -- it is hard to decode with the other code. It is just an example of what an onPause() callback might do.
+ 
+~~~{.java}
+        	@Override
+        	protected void onPause() {
+                    	// unregister the receiver when the activity is about to go inactive
+                    	// Reverse to what happened in onResume()
+                    	if ( mTaskType == Globals.TASK_TYPE_NEW ){
+                                	if (mEntry.getInputType() == Globals.INPUT_TYPE_AUTOMATIC) {
+                                            	unregisterReceiver(mMotionUpdateReceiver);
+                                	}
+                                	unregisterReceiver(mLocationUpdateReceiver);
+                    	}
+ 
+                    	Log.d(Globals.TAG, "Activity paused");
+                    	super.onPause();
+        	}
+~~~
+ 
+## onResume(): Resume an activity
+ 
+`onResume()` is called at the start of the active lifetime; more specifically, it is called at the start of the active lifetime; more specifically it is called after onRestoreInstanceState(Bundle), onRestart(), or onPause() for your activity to start interacting with the user. This is a good place to begin animations, open exclusive-access devices (such as the camera), etc. Keep in mind that onResume is not the best indicator that your activity  is visible to the user; a system window such as the keyboard may be in  front. Use onWindowFocusChanged(boolean) to know for certain that your activity is visible to the user (for example, to resume a game).
+ 
+In the Activity Lifecycle app if we the user now clicks on the OK in the dialog box the partially visible Activity A is brought back into focus as the foreground activity as shown in the figure -- the activity status has changed from paused to resumed.
+ 
+![](images/resume.png)
+ 
+Typically, the onResume() callback restarts any paused UI updates, threads, or processes required by the activity but suspended when it was inactive. In the code snippet below from MyRuns the code registers receivers to receive location updates from the GPS location manager and the motion sensor.
+ 
+~~~{.java}
+        	@Override
+        	protected void onResume() {
+                    	// register the receiver for receiving the location update broadcast
+                    	// from the service. Logic is the same as in onCreate()
+                    	
+                    	// If "new" task, need to read sensor data.
+                    	if ( mTaskType == Globals.TASK_TYPE_NEW ){
+                                	
+                                	// Register gps location update receiver
+                                	registerReceiver(mLocationUpdateReceiver, mLocationUpdateFilter);
+                                	
+                                	// If it's "automatic" mode, also need motion sensor for classification
+                                	if (mEntry.getInputType() == Globals.INPUT_TYPE_AUTOMATIC) {
+                                            	registerReceiver(mMotionUpdateReceiver, mMotionUpdateIntentFilter);
+                                	}
+                    	}
+ 
+                    	Log.d(Globals.TAG, "Activity resumed");
+                    	super.onResume();
+        	}
+~~~
+## Stop an activity
+~~~{.java}
+        	@Override
+        	public void onStop() {
+        	   	super.onStop();  // Always call the superclass method first
+ 
+                    	// Getting the shared preferences editor
+                    	key = getString(R.string.preference_name);
+                    	SharedPreferences prefs = getSharedPreferences(key, MODE_PRIVATE);
+                    	SharedPreferences.Editor editor = prefs.edit();
+                    	editor.clear();
+                    	
+        	   	// Please save major information
+                    	key = getString(R.string.preference_key_profile_major);
+                    	value = (String) ((EditText) findViewById(R.id.editMajor)).getText()
+                                            	.toString();
+                    	editor.putString(key, value);
+ 
+                    	// Commit all the changes into the shared preference
+                    	editor.commit();
+        	}                  	
+~~~
+## Restart an activity
+~~~{.java}
+        	@Override
+        	public void onDestroy() {
+                    	// Close the database
+                    	mActivityEntryCursor.close();
+                    	mDb.close();
+                    	super.onDestroy();
+        	}
+~~~
+ 
+## Save your activity state
+ 
+        	
+~~~{.java}
+        	@Override
+        	protected void onSaveInstanceState(Bundle outState) {
+                    	super.onSaveInstanceState(outState);
+                    	// Save the tab index before the activity goes into background.
+                    	// Referred by string key TAB_INDEX_KEY
+                    	outState.putInt(TAB_INDEX_KEY, getActionBar().getSelectedNavigationIndex());
+        	}
+~~~
+ 
+## Restore activity state
+ 
+~~~{.java}
+        	@Override
+        	public void onCreate(Bundle savedInstanceState) {
+                    	super.onCreate(savedInstanceState);
+ 
+                    	// Load the previously saved tab index before the activity goes into background
+                    	if (savedInstanceState != null) {
+                                	actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+                                                        	TAB_INDEX_KEY, 0));
+        	}
+~~~
+ 
+~~~{.java}
+        	@Override
+	    	public void onRestoreInstanceState(Bundle savedInstanceState) {
+	    	       super.onRestoreInstanceState(savedInstanceState);
+ 
+        	   	actionBar.setSelectedNavigationItem(savedInstanceState.getInt(
+                                                        	TAB_INDEX_KEY, 0));
+ 
+	    	}
+~~~
+ 

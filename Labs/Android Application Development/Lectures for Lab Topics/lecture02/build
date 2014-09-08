@@ -1,0 +1,4 @@
+#!/bin/bash
+pandoc -o lecture02.html -c db-simple.css -B header.html --title-prefix="Getting Started" lecture02.txt
+#scp lecture01.html  campbell@bear.cs.dartmouth.edu:public_html/cs65/lecture01/.
+scp -r .  campbell@bear.cs.dartmouth.edu:public_html/cs65/lecture02/

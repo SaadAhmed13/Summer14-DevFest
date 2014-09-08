@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h2 id="content-providers">Content Providers</h2>
+<p>Content providers are used to share data between applications -- e.g., your contacts. We use content providers in the MyRuns3 app not to share the exercise database between application but to manage data inside a single application. We do this because content providers offer hooks that allow sometimes costly access to a database (for example, in terms of the latency cost of reading or writing to the database) to be hidden. This is important. Imagine (extreme example) it takes 1 second to write to the database (you have a lot of data) and that the processing is done inside the UI thread? That would be terrible the user would see a UI that stalls and starts. To get around this content providers allow the user to interact with loaders. In this case a request to insert into the data base happens in a different thread to the UI thread. As a result, control is immediately returned to the UI thread -- the user is happy -- and when the insert in complete, a callback syncs the system up. These threads are hidden from the user and supported in a transparent manner using loaders (the loader manager to be specific) and content providers.</p>
+<p>The use of content providers adds another component to our three layer model: content providers -- a wrapper around the database. The cool thing about implementing content providers in MyRuns3 is that we have a new tool in our Android toolkit. And as we will see it is simple to -- if we ever wanted to do this - share data with other distinct applications.</p>
+<p>In the following we discuss content providers through a cool little app called <a href="http://www.vogella.com/articles/AndroidSQLite/article.html">notes</a>. Again, we borrow is app from Lars Vogel. Thanks Lars.</p>
+<p>Until I add more notes please review: * <a href="http://www.vogella.com/articles/AndroidSQLite/article.html">Android SQLite Database and ContentProvider Tutorial</a></p>
+<p>I suggest you download the notes app and play with it, look at the code. This servers as a framework to implement <a href="http://www.cs.dartmouth.edu/~campbell/cs65/lab3/lab3.html">MyRuns3</a>.</p>
+<h2 id="what-this-lecture-will-teach-you">What this lecture will teach you</h2>
+<ul>
+<li>Content Providers</li>
+<li>Content Resolvers</li>
+<li>Cursor Loaders</li>
+<li>Loaders</li>
+</ul>
+<h2 id="demo-projects">Demo projects</h2>
+<p>The demo code used in this lecture include:</p>
+<ul>
+<li>Simple use of the camera <a href="..\code\tododemo.zip">tododemo.zip</a>. This demo code is taken from Lars Voglel's tutorial on <a href="http://www.vogella.com/articles/AndroidSQLite/article.html">SQLite</a> and slightly modified to include the delate all option.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<p>Some excellent references.</p>
+<ul>
+<li><a href="http://www.vogella.com/articles/AndroidSQLite/article.html">Android SQLite Database and ContentProvider Tutorial</a></li>
+<li>Android developers <a href="http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html">sqlite</a>. Contains the SQLite database management classes that an application would use to manage its own private database.</li>
+<li><a href="http://developer.android.com/reference/android/database/sqlite/SQLiteOpenHelper.html">SQLiteOpenHelper</a> a helper class to manage database creation and version management.</li>
+<li>Course book section on <a href="http://commonsware.com/Android/">SQLite Databases</a> page 453</li>
+<li><a href="http://souptonuts.sourceforge.net/readme_sqlite_tutorial.html">SQLite Tutorial</a></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,197 @@
+﻿# Getting Started with Android
+
+Before we can run a simple Hello World App we need to install the programming environment. We will run Hello World on the Android Emulator (which runs very slowly) and on the phone (which is super fast). The best resource for developing Android apps is [Android Developers](http://developer.android.com/index.html). We will use developers as a source for material for parts of this course. 
+
+## Get the Android SDK
+
+The Android SDK provides you the API libraries and developer tools necessary to build, test, and debug apps for Android. 
+You need to download the **ADT (Android Development Tools)** 
+Bundle to develop, run and debug apps. The bundle includes the essential 
+Android SDK components and a version of the Eclipse IDE with built-in ADT. *The ADT  product includes Eclipse Platform.*
+
+The ADT Bundle includes everything you need:
+
+* Eclipse + ADT plugin
+* Android SDK Tools
+* Android Platform-tools
+* Android platform
+* Android emulator
+
+Click on [Get Android SDK ADT Bundle](http://developer.android.com/sdk/index.html#download) to get started.
+
+The default download is for Mac OS X but you will find ADT Bundles for Windows and Linux under 
+[download for other platforms](http://developer.android.com/index.html). If you have an existing version of Eclipse you can 
+add the Android app development to it: check out [use an existing IDE](http://developer.android.com/index.html). I would recommend installing the 
+complete bundle even if that means you have multiple Eclipse IDEs installed.
+
+##Install the SDK and Eclipse IDE
+
+Unzip the file `adt-bundle-mac-86_64.zip` (assuming Mac OS X is the target) and save it to a new directory (e.g., *development*). 
+Go to `android_developmemt/adt-bundle-mac-86_64/eclipse/` 
+directory 
+and launch eclipse. 
+You are ready to build and run the Hello World app.
+
+### Select a workspace
+
+The ADT stores your projects in a folder called  workspace. 
+I have selected my `development` directory for the workspace, as shown the below.
+Also click *use this as a default and never ask me again*.
+
+![](images/workspace.png) 
+
+You will get a welcome page once you have selected your workspace as shown below. Feel
+to read through the pages or not at this stage -- we will cover this material in the notes.
+
+### What is in the Android SDK?
+
+There are several packages associated with the Android SDK.  If you look in the directory *android_developmemt/adt-bundle-mac-86_64/sdk/* you will see a number of sub directories associated with these packages. For more information of what's in these directories checkout [exploring the SDK](http://developer.android.com/sdk/exploring.html)
+
+This is not important right now but you can use the Android SDK Manager to get 
+new or update existing packages. 
+
+## Creating a New Android Project
+
+To start a new Android app project for HelloWorld follow the wizard input; that is:
+
+> 1) Click File > New > Android Application Project. 
+
+> 2) Fill in the application name, project name and package name as shown below. For Minimum Required SDK, Target SDK, Compile With and Theme just accept the default and click *next*
+
+![](images/newproject.png) 
+
+>3) Configure project as shown below -- accepting the default settings and click *next*
+
+![](images/configure.png) 
+
+>4) Configure launcher icon -- just click through accepting the default settings and click *next*
+
+>5) Create activity. Here you select an activity template for your app. Select BlankActivity and click Next.
+
+>6) New blank activity. Again, just click through accepting the default settings then click *finish*
+
+>Once you have clicked finished you are presented with the project and all its files as shown below.
+
+![](images/smallcode.png)
+
+## Run Configurations
+
+Once you have created a new project you have to creat a configuration before you run the code. 
+
+## MainActivity.java
+
+Open the `src` folder and look at the `MainActivity.java` code.
+
+~~~{.java}
+/** Called when the user clicks the Send button */
+package edu.dartmouth.cs.helloworld;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+    
+}
+~~~
+
+#Running HelloWorld App
+
+How you run your app depends on two things: whether you have a real Android-powered device and whether you're using Eclipse. This lesson shows you how to install and run your app on a real device and on the Android emulator, and in both cases with either Eclipse or the command line tools.
+
+## Running HelloWorld on your phone
+
+Let's run our program directly on the phone. The big advantage of using the phone to develop is that it is fast to load and run programs. In contrast the emulator discussed next runs slowly in comparison and is irritating to use for a course -- but it is a good back up. Before we get started plug your phone into you laptop using the USB port, as shown below. Eclipse installs the Hello World app on your connected phone and starts it.
+
+![](images/smallphone.png)
+
+Next, go to settings on your phone and select **Developer option** and then select USB debugging -- this will allow the ADT to communicate with the phone to program it. 
+
+![](images/smalldevelopers.png)
+![](images/smallusbdebug.png)
+
+If you do not see developer option (circled on the image above) watch this [video](http://www.androidcentral.com/how-enable-developer-settings-android-42) and it mystery will be revealed.
+
+Basically the vendors and providers don't want that option accesible without enabling it -- for good reason. So as the video shows if you can not see the developer options button, you should tap on the *About phone*  button (under settings) and the click the *Build number'* button  7~8 times and voila -- now you see  developer option. Now go in to developer option and select USB debugging.
+
+* Open Hello World project files (you can open the source file MainActivity if you like or just click on the project name HelloWorld) and click on Run button circled in the toolbar below. 
+
+![](images/smallrun.png) 
+
+* Select Android Application and click OK.
+
+![](images/androidapp.png)
+
+* The app is downloaded, installed and run on the phone -- you'll see the following Hello World on your phone. 
+
+![](images/smallhelloworld.png)
+
+## If you app did not run
+
+If for some reason you do not see the app running on the phone check that you see USB enabled in the status bar as indicated below
+
+![](images/usbenabled.png)
+
+If it is not go make sure you clicked and enabled the USB debugging option, as discussed above.
+
+If you still have problems -- you shouldn't -- but if you do then. On ADT go to the *run->run configurations ..* and:
+
+* launch a new configuration as shown below. The first time you run a new project it should just run. But a sure way is to create new run configuration and then apply it. Because you will have lots of projects over the term you will have to do this anyway to tell ADT which project you want to run if its not the current one.
+
+![](images/newconfig.png)
+
+* next click on browse (shown above) and select the HelloWorld project as shown below. You will see the project name updated. Then manually update the *Name* of the run to the same as the project -- that is HelloWorld. Then click *Run*, as shown below.
+
+![](images/newrun.png)
+
+Now you should see you HellWorld on the phone.
+
+## Running HelloWorld on the Android Emulator
+
+Now let's run the program on the emulator -- that's right it emulates the functionality of the phone as best it can. And for developers without a phone it allows them to run code, test and debug code. Code that runs on the emulator runs unchanged on the real device.
+
+Before you can run Hello World on the emulator you need to set up  an Android Virtual Device (AVD). Because Android runs on everything from phones, watches, tablets you need to configure the AVD to your requirements -- speed, memory, network, etc. -- so it can emulate specific phone system requirements.
+
+To create an AVD:
+
+>1. Launch the Android Virtual Device Manager: from the toolbar *Window >  Android Virtual Device Manager*
+
+![](images/avd.png)
+
+> 2. In the Android *Virtual Device Manager* panel, click *New*.
+> 3. Fill in the details for the AVD. Start by selecting under *Device > Galaxy Nexus*. Once you select the device from the tab down menu it will set all the platform specific details (e.g., memory options) by default.  Set the SD card size to 40 MiB. Next,  give the *AVD Name* a name such as *Galaxy Nexus* . Now click *OK* to create the new AVD, as shown below
+
+![](images/startavd.png)
+
+> 4. Select the new *Galaxy* under *AVD Name* from the Android Virtual Device Manager and click Start as shown above. If you get *Launch Options* click *Launch*.  The emulator will boot up, unlock the emulator screen
+
+To run the app from Eclipse:
+
+> 1. Click on the Hello World project file and click Run from the toolbar.
+> 2. Eclipse will installs the app (the HelloWorld.apk) on your AVD and starts it. **this could take sometime, so go for a coffee ;-)**
+
+![](images/sphone1.png)
+
+> 3. You will see the Galaxy AVD you created with the screen locked - unlock it by dragging the *lock icon* to the right. What you should
+see is the Hello World app running, as shown below
+
+![](images/sphone2.png)
+
+## Running the ADT/Eclipse app
+
+Note, that Eclipse is bundled with ADT. You can find the ADT/Eclipse app under `android_developmemt/adt-bundle-mac-86_64/eclipse/Eclipse.app` Drag the icon (below) from the directory and but it in your dock for easy of launching. 
+
+![](images/sadticon.png)

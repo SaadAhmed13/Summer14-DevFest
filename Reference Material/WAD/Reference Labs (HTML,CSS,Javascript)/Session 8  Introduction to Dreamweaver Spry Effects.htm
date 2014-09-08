@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Session 8: Introduction to Dreamweaver Spry Effects</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Session 8: Introduction to Dreamweaver Spry Effects</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>Spry is Adobe Dreamweaver built in JavaScript library. This 
+tutorial will teach you how to add a Tab panel to your JavaScript 
+Portfolio page.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">Step 1: Open your Scripts Portfolio Page in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/media_1305411691139.png" alt="" height="281" width="560">
+
+</div> <p>The first step is to open your scripts.html portfolio page in 
+Dreamweaver. You are going to add a Spry Tabbed Panel within the content
+ div of your page.</p>
+
+
+<p>Spry is Adobe's built in Javascript library. Whenever you add a spry 
+effect to a web page. Dreaweaver will create a SpryAssests folder in the
+ root of your web site and save two linked two external files to your 
+page. Don't forgot that this folder must be uploaded to your server in 
+order for your spry tabbed panel to work on your server.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Step 2: Add the Spry Tabbed Panel</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/media_1305412041255.png" alt="" height="711" width="560">
+
+</div> <p>Click inside the content div after your introductory 
+paragraph. Go under the insert menu select Spry and then Spry Tabbed 
+Panels. Next, go under the File menu and select Save. Dreamweaver will 
+ask you if you want to Copy Dependent Files and remind you to upload 
+these files when you FTP your site to your server. View your web 
+directory and you will now see the SpryAssests folder. Inside this 
+folder will be the files SpryTabbedPanels.js and SpryTabbedPanel.css. 
+Make sure you upload these files to your server.</p>
+
+
+<p>Note: Make sure the tabs are nested within your content div. You might have to look at the code view to verify it.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Step 3:  Name Your Tabs</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/media_1305443125664.png" alt="" height="393" width="560">
+
+</div> <p>By default, this Spry Tabbed Panel effect creates two panels 
+named Tab 1 and Tab 2. Select the text, Tab 1, and rename it "Class 
+Labs". Click on Tab 2 and rename it "Book Projects". Click on either one
+ of the tabs to select it, (you might have to click on the border). Look
+ down at the property bar and name the Tabbed panels, scripts_tab. You 
+can now click on either of your Tab names in the property bar in the 
+Panels section to move between your tabs.</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Step 4: Customize the Tabbed CSS</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/media_1305444076478.png" alt="" height="62" width="560">
+
+</div> <p>Look in the CSS Panel in Dreamweaver and notice that there is a
+ new external stylesheet. There is no right or wrong way to do this. 
+Experiment with changing the background and text colors of the various 
+class rules to fit your design.</p>
+<p>&nbsp;</p>
+<p>.TabbedPanelTab - Change the background color to the color of the sidebar. (#B0B0F)<br>
+.TabbedPanelHover - Change the background color to the color of the 
+.TabbedPanelsContentGroupbody (#777C00) and the text color to white.<br>
+.TabbedPanelsTabSelected - Change the background color to the color of the footer (#A3CE3E).<br>
+.TabbedPanelsContentGroup - Change the background color to the color of the footer (#A3CE3E).</p>
+
+
+<p>If you don't want to have blue links in your tab, you will have to create custom psuedo element rule:</p>
+
+
+<p>.TabbedPanelsContent.TabbedPanelsContentVisible p a {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;color: #FFF;<br>
+}</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Step 5: Add your Content</h2>
+
+		<div class="image">
+
+<img src="Session%208%20%20Introduction%20to%20Dreamweaver%20Spry%20Effects_files/media_1305444434145.png" alt="" height="320" width="560">
+
+</div> <p>Start linking your Javascript Labs in the Class Labs tab and 
+the JavaScript book projects in the Book Projects tab. Save and upload 
+your scripts.html page and link to this weeks lab.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

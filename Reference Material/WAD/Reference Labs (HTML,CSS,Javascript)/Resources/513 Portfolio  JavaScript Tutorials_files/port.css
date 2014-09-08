@@ -1,0 +1,68 @@
+@charset "UTF-8";
+* {
+	margin: 0px;
+	padding: 0px;
+}
+html {
+	font-size: 100%;
+	line-height: 1.125em;
+}
+body {
+	background-color: #660;
+	text-align: center;
+	font-family: Verdana, Geneva, sans-serif;
+}
+#container {
+	text-align: left;
+	background-color: #FFF;
+	width: 960px;
+	margin-right: auto;
+	margin-left: auto;
+}
+#header {
+	background-image: url(../images/mendo_coast.jpg);
+	background-repeat: no-repeat;
+	height: 190px;
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	color: #000;
+}
+#footer {
+	font-size: 80%;
+	color: #FFFFFF;
+	text-align: right;
+	clear: both;
+	height: 75px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	background-image: url(../images/moss.jpg);
+}
+#nav {
+	background-color: #A6AD00;
+	width: 170px;
+	float:left;
+	display:block;
+}
+#content {
+	padding-top: 20px;
+	padding-right: 20px;
+	margin-left: 220px; /*20 pixels of white space and 200 pixels for the width of the nav div */
+	width: 720px;	
+}
+p {padding-bottom: 1.5em; }
+
+h1,h2,h3,h4,h5,h6 {
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#B0BF00;
+	margin-bottom: .5em;
+	}
+	
+#content a:link, #content a:visited {color:#990000;}
+#content a:hover, #content a:active {color:#B0BF00;}
+#footer a:link, #footer a:visited {color:#FFF;}
+#footer a:hover, #footer a:active {color:#990000;}
+	

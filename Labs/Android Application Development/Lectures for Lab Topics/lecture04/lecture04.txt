@@ -1,0 +1,254 @@
+﻿# A very cool activity lifecycle app to play with
+ 
+The app we have been using to illustrate the lifecycle is written by Google and available here or on the Android development pages. I would like to delve into the code because it nicely illustrates a bunch of interesting things:
+ 
+* you can see the lifecycle in action
+* an app with multiple activities -- 4 in this case
+* the use of intents to start activities
+ 
+ ## What this lecture will teach you
+ 
+- Can you workout what happened here?
+- The manifest for multiple activities
+- Activity A: Launcher activity
+- Dialog activity
+- UI: The graphical mode
+- UI: Snippet of the xml
+ 
+## Demo projects
+ 
+The demo code used in this lecture include:
+ 
+* Activity lifecycle demonstrator [activita.zip](../code/activitya.zip)
+ 
+This code is taken form android developers [demo](http://developer.android.com/training/basics/activity-lifecycle/index.html). You can download it from our webpage or [Google's Android developers](http://developer.android.com/training/basics/activity-lifecycle/index.html).
+ 
+Please import the project into your environment and study the code. Then load it on to your phone and play with it. Isn't it a cool app. A bit geeky granted but cool. It illustrates the theory we discussed in the last lecture beautifully.
+ 
+## Resources
+ 
+* Android developers: [Managing the activity lifecycle](http://developer.android.com/training/basics/activity-lifecycle/index.html)
+* Course book section on [Activities and Their Lifecycles](http://commonsware.com/Android/)
+ 
+ 
+## Can you workout what happened here?
+ 
+Activity A is the launcher activity. After which point any activity can start another one. The code activities A, B and C are identical. The dialog activity is different. The project also includes a utility that prints the activity status to the *lifecycle method list*, which captures the various activity states in terms of transitions for example from
+ 
+        	 * onCreate() -> onStart() -> onResume() -> onStop()
+ 
+Take a look at the figure below. You can see that activity B is in focus and activity C was stopped to resume activity B. Can you work out the sequence of buttons the user clicked to get to this output for the activity lifecycle method list and activity status shown below? Mail me your answer.
+ 
+![](images/guess.png)
+ 
+## The manifest for multiple activities
+ 
+~~~{.java}
+    	<activity android:name=".ActivityA"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+ 
+    	<activity android:name=".ActivityB" />
+ 
+    	<activity android:name=".ActivityC" />
+ 
+    	<activity android:name=".DialogActivity"
+                  android:theme="@android:style/Theme.Dialog">
+        </activity>
+~~~
+ 
+## Activity A: Launcher activity
+ 
+~~~{.java}
+package com.example.android.lifecycle;
+ 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+ 
+import com.example.android.lifecycle.util.StatusTracker;
+import com.example.android.lifecycle.util.Utils;
+ 
+/**
+ * Example Activity to demonstrate the lifecycle callback methods.
+ */
+public class ActivityA extends Activity {
+ 
+	private String mActivityName;
+	private TextView mStatusView;
+	private TextView mStatusAllView;
+	private StatusTracker mStatusTracker = StatusTracker.getInstance();
+ 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_a);
+    	mActivityName = getString(R.string.activity_a);
+    	mStatusView = (TextView)findViewById(R.id.status_view_a);
+    	mStatusAllView = (TextView)findViewById(R.id.status_view_all_a);
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_create));
+        Utils.printStatus(mStatusView, mStatusAllView);
+	}
+ 
+	@Override
+	protected void onStart() {
+        super.onStart();
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_start));
+        Utils.printStatus(mStatusView, mStatusAllView);
+	}
+ 
+	@Override
+	protected void onRestart() {
+        super.onRestart();
+    	mStatusTracker.setStatus(mActivityName, getString(R.string.on_restart));
+        Utils.printStatus(mStatusView, mStatusAllView);
+	}
+ 
+	@Override
+	protected void onResume() {
+        super.onResume();
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_resume));
+        Utils.printStatus(mStatusView, mStatusAllView);
+	}
+ 
+	@Override
+	protected void onPause() {
+        super.onPause();
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_pause));
+        Utils.printStatus(mStatusView, mStatusAllView);
+	}
+ 
+	@Override
+	protected void onStop() {
+        super.onStop();
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_stop));
+	}
+ 
+	@Override
+	protected void onDestroy() {
+        super.onDestroy();
+        mStatusTracker.setStatus(mActivityName, getString(R.string.on_destroy));
+        mStatusTracker.clear();
+	}
+ 
+	public void startDialog(View v) {
+    	Intent intent = new Intent(ActivityA.this, DialogActivity.class);
+        startActivity(intent);
+	}
+ 
+	public void startActivityB(View v) {
+    	Intent intent = new Intent(ActivityA.this, ActivityB.class);
+        startActivity(intent);
+	}
+ 
+	public void startActivityC(View v) {
+    	Intent intent = new Intent(ActivityA.this, ActivityC.class);
+        startActivity(intent);
+	}
+ 
+	public void finishActivityA(View v) {
+        ActivityA.this.finish();
+	}
+ 
+}
+~~~
+ 
+For most callbacks the the StatusTracker keeps track of the current status and the calls `Utils.printStatus(mStatusView, mStatusAllView)` to update the method list and activity status. We do not explain or highlight the code in the `com.example.android.lifecycle.util` package. Feel free to look at it. As java programmers you might make sense of it. But don't worry if you don't.
+ 
+## Dialog activity
+ 
+~~~{.java}
+package com.example.android.lifecycle;
+ 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+ 
+public class DialogActivity extends Activity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_dialog);
+	}
+ 
+	/**
+ 	* Callback method defined by the View
+ 	* @param v
+ 	*/
+	public void finishDialog(View v) {
+        DialogActivity.this.finish();
+	}
+}
+~~~
+ 
+If you open the layout folder and click on activity_a.xml you will see the layout for the activity UI. You can look at the UI in graphical or xml mode. The graphical mode is drag and drop widgets but once you get use to designing UIs you start to feel more comfortable editing the xml source directly.
+ 
+## UI: The graphical mode
+ 
+You can toggle between the graphical and xml layouts by clicking on the respective buttons, as shown in the figure.
+ 
+![](images/layout.png)
+ 
+## UI: Snippet of the xml
+ 
+~~~{.java}
+	<RelativeLayout
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical" >
+ 
+    	<Button
+            android:id="@+id/btn_start_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startActivityB"
+            android:text="@string/btn_start_b_label" />
+ 
+    	<Button
+            android:id="@+id/btn_start_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_start_b"
+            android:onClick="startActivityC"
+        	android:text="@string/btn_start_c_label" />
+ 
+    	<Button
+            android:id="@+id/btn_finish_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_start_c"
+	        android:onClick="finishActivityA"
+            android:text="@string/btn_finish_a_label" />
+ 
+    	<Button
+            android:id="@+id/btn_start_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_finish_a"
+            android:onClick="startDialog"
+            android:text="@string/btn_start_dialog_label" />
+    </RelativeLayout>
+~~~
+ 
+The definition of a button in xml is as follows:
+ 
+* android:id="@+id/btn_start_dialog" This is an id for the button to you can reference it in the code
+* android:layout_width="wrap_content" The width of the button
+* android:layout_height="wrap_content" The height of the button
+* android:layout_toRightOf="@id/btn_finish_a"
+* android:onClick="startDialog" If the user clicks on this button then this callback is invoked
+* android:text="@string/btn_start_dialog_label" This is the name defined in values/strings.xml
+ 
+ 
+
+

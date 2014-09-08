@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+body {color:#333333}
+#header, #footer, #sidebar {padding: 0 20px;}
+#header {
+	background-color: #D7EDEE; 
+	border-bottom: 3px #115B77 solid; 
+	margin-bottom: 20px; padding-top: 10px;
+	height:150px;}
+#footer {
+	background-color: #D7EDEE; 
+	border-top: 3px #115B77 solid; 
+	color: #666666; margin-top: 10px; 
+	padding-top: 10px}
+a:link {color: #115B77; text-decoration: none;}
+a:visited {color:#332745; text-decoration: none;}
+a:hover {text-decoration: underline}
+strong {color:#222222}
+#sidebar {
+	color:#FFFFFF;
+	background-color:#115B77;
+}
+.story p, .story h4 {padding:10px}

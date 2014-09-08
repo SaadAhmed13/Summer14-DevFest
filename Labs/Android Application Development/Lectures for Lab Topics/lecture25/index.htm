@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+  <div id="header">
+  
+  <div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+  <div id="container">
+  <div id="sitesubtitle"><b>Smartphone Programming</b></div>
+  <div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+  </div>
+  
+  <div class="clearer"><!-- --></div>
+  
+  
+  <hr>
+  </div>
+</head>
+<body>
+<h1 id="lab-3-myruns3-database">Lab 3: MyRuns3: Database</h1>
+<p>This is the third in a set of thematic labs to build a continuous sensing app that can automatically determine human activity such as walking and running. In the this lab, we will start using Database in our application. Android system uses ContentProvider as the supporting database. Android provides API to access database directly, but in most of the case, you will write a wrapper class for all database operations, which fits to the idea of Object Oriented design.</p>
+<h2 id="demo-apk-and-code-skeleton">Demo apk and code skeleton</h2>
+<ul>
+<li><p>Install <a href="../code/MyRuns3.apk">MyRuns3.apk</a> to quickly checkout what your app needs to do. To install this apk read this webpage on your phone using the phone's browser and then click on MyRuns3.apk and the app will install. That simple.</p></li>
+<li><p>Import the following <a href="../code/myruns3skeleton.zip">myruns3skeleton.zip</a> project skeleton. I recommend that you follow the general structure of the skeleton code because we will give out skeletons for each of the labs just to guide your overall design. But this is only advisory you can do as you wish.</p></li>
+</ul>
+<p>We have given out the following code in this lab:</p>
+<ul>
+<li>DBHelper - this file encapsulates the database</li>
+<li>Globals - this file has a number of usual global variables</li>
+<li>HistoryTable - this is sets up the database schema, create and update</li>
+<li>ExerciseEntry - this is the application storage object -- an exercise (recall comment in the example in class, here we deal with exercise objects).</li>
+<li>Strings -- useful string definitions</li>
+</ul>
+<p>Note, you are free to use these files and code or follow your own design.</p>
+<h2 id="important-note-on-your-implementation">Important note on your implementation</h2>
+<p>Please note that you should use <strong>your</strong> code for earlier labs and not the solutions we hand out. The goal is that you incrementally add new functionality to your existing app.</p>
+<p>It is completely fine to look at the solution and refactor your code if needed. Please state in your README.txt file that the current lab is your own code and not taken from the solution. Without this statement we cannot grade your assignment.</p>
+<h2 id="start-to-record-starttabfragment-manualinputactivity-and-myrunsdialogfragment">Start to record: StartTabFragment, ManualInputActivity and MyRunsDialogFragment</h2>
+<p>MyRuns enables you to select multiple types (GPS, Automatic, Manual input) as inputs to keep track of the exercise you took everyday. For this lab, we just implement the manual input as a start. The user can take a note of their exercise stats and save it.</p>
+<div class="figure">
+<img src="images/StartTabFragment.png">
+</div>
+<p>As shown in the screenshot above, you need two <strong>Spinner</strong> widgets for the layout in the <strong>StartTabFragment</strong> because we want to create a drop-down list for both the input type option and activity type option. Also you need to implement the <strong>setOnClickListener</strong> for the &quot;Start&quot; button. Once clicked, the app should fire the <strong>ManualInputActivity</strong> which lets you write down your exercise stats.</p>
+<div class="figure">
+<img src="images/DialogExample.png">
+</div>
+<p>The above screenshot shows the pop-up dialog when you clicked the &quot;Comment&quot; option to write down your comments about this exercise. You need to implement all the related dialogs in the <strong>MyRunsDialogFragment</strong>. After the user is done with the input in dialog, the <strong>ManualInputActivity</strong> will store the inputs temporarily in the private <strong>ExerciseEntry</strong>. When you click the &quot;Save&quot; button, you need to save the temporary data of the exercise stats into the database.</p>
+<h2 id="myrunss-data-storage-dbhelper-historyprovider-exerciseentryhelper-and-exerciseentry">MyRuns's Data Storage: DBHelper, HistoryProvider, ExerciseEntryHelper and ExerciseEntry</h2>
+<p>I mentioned my three-layer theory in the <a href="..\lecture15\lecture15.html">lecture 15</a>. For this lab, we code in this style. The database therefore contains a single table that stores all the exercises. We store the user's exercise entries into the table, where each row is a entry. Each column is one property of the entry (e.g., KEY_DISTANCE, KEY_CALORIES). Below is a diagram that I made to illustrate the design architecture of this lab. You can better learn the data storage structure from it.</p>
+<div class="figure">
+<img src="images/Diagram.png">
+</div>
+<p>Let's start from bottom to the top.</p>
+<p><strong>Checkpoint</strong>: The lowest level of code is <strong>DBHelper</strong>. This class extends SQLiteOpenHelper to create and upgrade a database in your app. The <strong>DBHelper</strong> calls the static methods of the <strong>HistoryTable</strong> helper class.</p>
+<pre class="sourceCode java"><code class="sourceCode java">        <span class="fu">@Override</span>
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onCreate</span>(SQLiteDatabase db) {
+
+            HistoryTable.<span class="fu">onCreate</span>(db);
+
+        }
+
+    
+        <span class="fu">@Override</span>
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onUpgrade</span>(SQLiteDatabase db, <span class="dt">int</span> oldVersion, <span class="dt">int</span> newVersion) {
+
+            HistoryTable.<span class="fu">onUpgrade</span>(db, oldVersion, newVersion);
+        }</code></pre>
+<p>The <strong>HistoryProvider</strong> class extends <strong>ContentProvider</strong> to store data. Your <strong>HistoryProvider</strong> needs to implement four standard database operations: update(), insert(), delete(), and query() method. These methods map more or less directly to the <strong>SQLiteDatabase</strong> interface. I give out the code of query() and update() for you to get a sense of how to implement delete() and insert(). Let's take a look at the update() function:</p>
+<pre class="sourceCode java"><code class="sourceCode java">    <span class="co">//Update row(s) in a content URI.</span>
+
+    <span class="fu">@Override</span>
+    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">update</span>(Uri uri, ContentValues values, String selection,
+        String[] selectionArgs) {
+    
+        <span class="dt">int</span> uriType = sURIMatcher.<span class="fu">match</span>(uri);
+        SQLiteDatabase sqlDB = database.<span class="fu">getWritableDatabase</span>();
+        <span class="dt">int</span> rowsUpdated = <span class="dv">0</span>;
+        
+        <span class="kw">switch</span> (uriType) {
+        
+        <span class="kw">case</span> ENTRIES_DIR:
+        
+        rowsUpdated = sqlDB.<span class="fu">update</span>(HistoryTable.<span class="fu">TABLE_NAME_ENTRIES</span>, 
+        values, 
+        selection,
+        selectionArgs);
+          
+        <span class="kw">break</span>;
+
+        <span class="kw">case</span> ENTRIES_ID:
+        
+        String id = uri.<span class="fu">getLastPathSegment</span>();
+        
+        <span class="kw">if</span> (TextUtils.<span class="fu">isEmpty</span>(selection)) {
+            rowsUpdated = sqlDB.<span class="fu">update</span>(HistoryTable.<span class="fu">TABLE_NAME_ENTRIES</span>,
+            values,
+            HistoryTable.<span class="fu">KEY_ROWID</span> + <span class="st">&quot;=&quot;</span> + id,
+            <span class="kw">null</span>);
+        } <span class="kw">else</span> {
+                rowsUpdated = sqlDB.<span class="fu">update</span>(HistoryTable.<span class="fu">TABLE_NAME_ENTRIES</span>, 
+                values,
+                HistoryTable.<span class="fu">KEY_ROWID</span> + <span class="st">&quot;=&quot;</span> + id 
+                + <span class="st">&quot; and &quot;</span> 
+                + selection,
+                selectionArgs);
+          }
+          
+          <span class="kw">break</span>;
+
+        <span class="kw">default</span>:
+
+          <span class="kw">throw</span> <span class="kw">new</span> IllegalArgumentException(<span class="st">&quot;Unknown URI: &quot;</span> + uri);
+        }
+
+        <span class="fu">getContext</span>().<span class="fu">getContentResolver</span>().<span class="fu">notifyChange</span>(uri, <span class="kw">null</span>);
+        <span class="kw">return</span> rowsUpdated;
+      }</code></pre>
+<p>The <strong>HistoryProvider</strong> implements its database operation functions by calling the standard SQLite functions. In this particular case, <strong>HistoryProvider</strong> update the entries by calling sqlDB.update(). After the SQLite update it calls notifyChange(uri, null) to notify the change to the whole application.</p>
+<p>Once you create a <strong>ContentProvider</strong> class in java code, you need to declare it publicly. So don't forget to register your ContentProvider in you AndroidManifest.xml file.</p>
+<pre class="sourceCode java"><code class="sourceCode java">    &lt;provider
+        android:name=<span class="st">&quot;.HistoryProvider&quot;</span>
+        android:authorities=<span class="st">&quot;edu.dartmouth.cs.myruns3.historyprovider&quot;</span> &gt;
+    &lt;/provider&gt;</code></pre>
+<p><strong>Checkpoint</strong>: The <strong>ExerciseEntryHelper</strong> is in the data storage layer. It deals with the database but it saves data to the database in a higher level. Only two functions are defined here: <strong>insertToDB()</strong> and <strong>deleteEntryInDB()</strong>. Take <strong>insertToDB()</strong> for an example, it converts the private <strong>ExerciseEntry</strong> to the <strong>ContentValues</strong>, and save the <strong>ContentValues</strong> into <strong>ContentProvider</strong>. To interact with <strong>ContentProvider</strong>, we use the previous database operation insert(). It is defined in the <strong>HistoryProvider</strong>. To get the <strong>ContentProvider</strong> resource in the application, you use the <a href="http://developer.android.com/guide/topics/providers/content-providers.html">ContentResolver</a> object in your application's Context to communicate with the provider as a client.</p>
+<pre class="sourceCode java"><code class="sourceCode java">        
+        Uri uri = context.<span class="fu">getContentResolver</span>().<span class="fu">insert</span>(HistoryProvider.<span class="fu">CONTENT_URI</span>,value);
+        mData.<span class="fu">setId</span>(Long.<span class="fu">valueOf</span>(uri.<span class="fu">getLastPathSegment</span>()));
+        
+        <span class="kw">return</span> Long.<span class="fu">valueOf</span>(uri.<span class="fu">getLastPathSegment</span>());</code></pre>
+<h2 id="historytabfragment-loadermanager-and-mactivityentrycursor">HistoryTabFragment: LoaderManager and mActivityEntryCursor</h2>
+<p><strong>Checkpoint</strong>: <strong>HistoryTabFragment</strong> is in the Application layer. It uses <strong>ActivityEntryCursorAdapter</strong> that we customized to visualize the data in a format of list. To initialize the mActivityEntryCursor, simply call:</p>
+<pre class="sourceCode java"><code class="sourceCode java">        mActivityEntryCursor = <span class="fu">getActivity</span>().<span class="fu">getContentResolver</span>().<span class="fu">query</span>(
+                    HistoryProvider.<span class="fu">CONTENT_URI</span>,
+                    <span class="kw">null</span>,
+                    <span class="kw">null</span>,
+                    <span class="kw">null</span>, 
+                    <span class="kw">null</span>);</code></pre>
+<div class="figure">
+<img src="images/HistoryTabFragment.png">
+</div>
+<p><a href="http://www.androiddesignpatterns.com/2012/07/understanding-loadermanager.html">LoaderManager</a> helps the <strong>HistoryTabFragment</strong> to (1) load data on a separate thread, (2) monitor the underlying data source for updates, re-querying when changes are detected, and (3) refresh the cursor and update the cursor adapter more smoothly.</p>
+<p>Your task is to implement three <strong>LoaderManager</strong> callbacks(onCreateLoader(), onLoadFinished() and onLoaderReset()) to guarantee the latest Cursor is loaded to the UI thread. To initialize the loader,</p>
+<pre class="sourceCode java"><code class="sourceCode java">        LoaderManager lm = <span class="fu">getLoaderManager</span>();
+        lm.<span class="fu">initLoader</span>(LOADER_ID, <span class="kw">null</span>, mCallbacks);</code></pre>
+<p>The final step of this lab is to implement the <strong>DisplayEntryActivity</strong> to allow user to view all the data he/she saved for one exercise entry. Also, the user can delete the whole entry by clicking the &quot;Delete&quot; button on the upper right side of the layout (see below). So two jobs for this activity: one is to display all the columns from the exercise entry to the list of TextView, the other is to set a Click Listener for the option menu to call the deleteEntryInDB function of the <strong>ExerciseEntryHelper</strong>.</p>
+<div class="figure">
+<img src="images/DisplayEntryActivity.png">
+</div>
+<h2 id="files-explained">Files explained</h2>
+<p>The source files that you have to code up breakdown into 2 activities, 3 fragments and 2 database helpers.</p>
+<pre><code>-- activities:
+DisplayEntryActivity.java: displays one saved entry in detail, and allows the user delete the whole entry.
+ManualInputActivity.java: lets the user choose one type of activity to start manually record your activity information.
+
+-- fragments:
+HistoryTabFragment.java: displays all the saved entries in abstract.
+StartTabFragment.java: let you choose one type of activity to start recording. 
+MyRunsDialogFragment.java: this fragment configures all the Dialogs that you need to record your activity information.  
+
+-- database helpers:
+HistoryProvider.java: store your manual input in your customized ContentProvider.
+ExerciseEntryHelper.java: Store the ExerciseEntry into ContentProvider.</code></pre>
+<p>The other files that complete the design includes the following -- you need to code up all these files.</p>
+<pre><code>-- layout:
+history.xml: this is the layout file for the HistoryTabFragment.
+display_entry.xml: this is the layout file for the DisplayEntryActivity. display the entry in detail.
+start.xml: this is the layout file for the StartTabFragment, two Spinner widgets here. 
+manual_input.xml: this is the layout file for the ManualInputActivity.
+
+-- values:
+strings.xml: any additional string resources, etc. here
+
+-- manifest:
+AndroidManifest.xml: has to be updated to include new activities and contentprovider</code></pre>
+<h2 id="extra-credit">Extra Credit</h2>
+<p>Find it in the skeleton's comment.</p>
+<h2 id="submission">Submission</h2>
+<p>See webpage for submission information.</p>
+</body>
+</html>

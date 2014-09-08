@@ -1,0 +1,704 @@
+﻿## Lecture 18 - Services, BroadcastReceivers and Notifications
+
+In this lecture, we discuss a number of building blocks for MyRunds
+and any complex Android app:
+
+1. [Services](http://developer.android.com/guide/components/services.html):
+are part of the application and run on a different thread
+in the background and supports some long-running operation, such as,
+handling location updates from the LocationManager as in the case of
+MyRuns. Typically, services operate outside of the user interface.
+2. [Notification](http://developer.android.com/guide/topics/ui/notifiers/notifications.html)
+allows apps or services associated with an app to
+inform the user of an event. 
+3. [Bound Services](http://developer.android.com/guide/components/bound-services.html). A
+bound service is the server in a client-server interface. A bound
+service allows components (such as activities) to bind to the service,
+send requests, receive responses such as data. 
+4. As part of binding [ServiceConnections](http://developer.android.com/reference/android/content/ServiceConnection.html) are established between two components (i.e.,
+the client and server). The connection allows both the client and
+service to exchange messages across the connection.
+5. [BroadcastReceivers](http://developer.android.com/reference/android/content/BroadcastReceiver.html)
+are used to receive events that are announced by other components. For
+example, activities or other Android components can register for a
+specific BroadcastReceivers. Receivers that registers will receive intents when
+other components issue sendBroadcast().
+
+## What this lecture will teach you
+
+- Interacting with the status bar
+- Notify Demo: creates a service that notifies the status bar
+- Bind Demo: starts/stops and bing/unbinds to a service. A [ServiceConnection](http://developer.android.com/reference/android/content/ServiceConnection.html) is set up to exchange messages across the connection.
+
+## Demo projects
+
+The demo code used in this lecture include:
+
+* We will use the [notifydemo.zip](../code/notifydemo.zip) app to
+demonstrate how to interact with the status bar. This demo is a
+slighted modified version from [here](http://android-er.blogspot.com/2011/04/start-service-to-send-notification.html?m=1).
+* We will use the [binddemo.zip](../code/binddemo.zip) app to
+demonstrate how to an activity binds to a service and them interacts
+through a connection. The binding demo comes from
+[here](http://stackoverflow.com/questions/4300291/example-communication-between-activity-and-service-using-messaging). 
+
+## Resources
+
+Some excellent references.
+
+* The course book has sections of all the Android programming components discussed in this lecture for example for [Introducing Notifications](http://commonsware.com/Android/) page 405. 
+* Checkout the Android Developers discussion on:
+* [Notifications](http://developer.android.com/guide/topics/ui/notifiers/notifications.html)
+* [Bound Services](http://developer.android.com/guide/components/bound-services.html).
+* [BroadcastReceivers](http://developer.android.com/reference/android/content/BroadcastReceiver.html)
+
+## Interacting with the status bar
+
+Android supports a number of different
+ways to inform the user including:
+
+1. Staus bar at the top of the UI, owned and managed by the Android
+system but apps can display messages or icon in the notification area.
+2. Play sounds, uses lights and vibrate the phone to inform the user
+of an app related event
+3. Notification tray or drawer which allows the app to present more
+information and certain control elements such as navigating back to
+the main app, that is, bring the app back into focus if its paused.
+
+We will focus on the status bar notification in this lecture. You will
+need to implement this type of notification for MyRuns4.
+
+Typically a programmer develops an app and needs to inform the user of
+an event that is outside of the normal UI. For example if we consider
+MyRuns4 that you are coding right now. When the user starts an
+exercise using the GPS mode (or automatic) the code creates a service
+to process location updates. When this service starts on an
+independent thread in the background it informs the user that it is
+running by display first message (i.e., "MyRuns is recording your
+path" ) and then an icon (i.e.,
+the D icon) in the  **notification area**. We can see this below
+
+![](images/status.png)
+
+To see the details of the MyRuns4 notification, the user needs to wipe
+down on the status bar (i.e., notification area)  to open the
+**notification drawer**. The system controls the notification area and
+drawer and allows the user to view and interact with it at any point.
+For example, in the case of MyRuns4 notification in the drawer the
+user can wipe down the status bar and click on the MyRuns notification
+in the drawer and it bring the app back into focus, as shown in the
+image below.
+
+![](images/drawer.png)
+
+## Notify demo app
+
+The simple notification app used in this lecture uses the status bar
+to inform the user that a service has been started (we will discuss
+services next). When the user starts the service an icon is displayed
+in the status bar. If you wipe down the status bar you will see that
+the notification drawer for the service displays an icon and text
+(i.e., Demo of Notification! course website). If you click on this
+notification the service will launch a browser to display the class
+webpage.
+
+When the app starts up there is no service running and nothing in the
+status bar associated with the notify app, as shown below.
+
+![](images/notify1.png)
+
+When the user starts the service the icon shows up in the status bar
+or notification area, as shown in the image below.
+
+![](images/notify3.png)
+
+The user can wipe down the status bar and click on the notification
+which triggers the service to start the browser with the course page,
+as illustrated in the digram below.
+
+![](images/notify2.png)
+
+In addition, the user could mindlessly ;-) start and stop the service
+and see the icon come and go -- be mindless, just do it.  
+
+This simple application introduces a number of new things. Importantly
+a background service is started to interact with the status bar. In
+MyRuns4 we will implement a service to manage location updated from
+the LocationManager. 
+
+Let's look at the code.
+
+## Notify activity
+
+The activity simply takes input from the user and starts and stops the
+service.
+
+~~~{.java}
+public class NotifyActivity extends Activity {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        Button buttonStartService = (Button)findViewById(R.id.startservice);
+        Button buttonStopService = (Button)findViewById(R.id.stopservice);
+        
+        buttonStartService.setOnClickListener(new Button.OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+			
+				Intent intent = new Intent(NotifyActivity.this, NotifyService.class);
+				NotifyActivity.this.startService(intent);
+			}});
+        
+        buttonStopService.setOnClickListener(new Button.OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+			
+				Intent intent = new Intent();
+				intent.setAction(NotifyService.ACTION);
+				intent.putExtra(NotifyService.STOP_SERVICE_BROADCAST_KEY, 
+							NotifyService.RQS_STOP_SERVICE);
+
+			        // Broadcast the given intent to all interested BroadcastReceivers
+				sendBroadcast(intent);
+
+			}});
+        
+    }
+}
+~~~
+
+## Service Lifecycle
+
+
+Checkout a detailed discussion of servers at the [Android developers
+site.](http://developer.android.com/reference/android/app/Service.html). The
+notes below are taken from that site.
+
+There are two reasons that a service can be run by the system. If someone calls Context.startService() then the system will retrieve the service (creating it and calling its onCreate() method if needed) and then call its onStartCommand(Intent, int, int) method with the arguments supplied by the client. The service will at this point continue running until Context.stopService() or stopSelf() is called. Note that multiple calls to Context.startService() do not nest (though they do result in multiple corresponding calls to onStartCommand()), so no matter how many times it is started a service will be stopped once Context.stopService() or stopSelf() is called; however, services can use their stopSelf(int) method to ensure the service is not stopped until started intents have been processed.
+
+For started services, there are two additional major modes of operation they can decide to run in, depending on the value they return from onStartCommand(): START_STICKY is used for services that are explicitly started and stopped as needed, while START_NOT_STICKY or START_REDELIVER_INTENT are used for services that should only remain running while processing any commands sent to them. See the linked documentation for more detail on the semantics.
+
+Clients can also use Context.bindService() to obtain a persistent
+connection to a service. This likewise creates the service if it is
+not already running (calling onCreate() while doing so), but does not
+call onStartCommand(). The client will receive the IBinder object that
+the service returns from its onBind(Intent) method, allowing the
+client to then make calls back to the service. The service will remain
+running as long as the connection is 
+established (whether or not the client retains a reference on the
+service's IBinder). Usually the IBinder returned is for a complex
+interface that has been written in Android Interface Definition
+Language (AIDL).
+
+A service can be both started and have connections bound to it. In
+such a case, the system will keep the service running as long as
+either it is started or there are one or more connections to it with
+the Context.BIND_AUTO_CREATE flag. Once neither of these situations
+hold, the service's onDestroy() method is called and the service is
+effectively terminated. All cleanup (stopping threads, unregistering
+receivers) should be complete upon returning from onDestroy().
+
+## Notify Service
+
+The activity starts and stops in the service. A broadcast is used to
+stop the service; that is, the activity sends an intent to all
+interested BroadcastReceivers with stop command. In our example, on
+the service is listening on this broadcast and implements a **BroadcastReceiver**
+
+~~~{.java}
+public class NotifyService extends Service {
+	
+	final static String ACTION = "NotifyServiceAction";
+	final static String STOP_SERVICE_BROADCAST_KEY="StopServiceBroadcastKey";
+	final static int RQS_STOP_SERVICE = 1;
+	
+	NotifyServiceReceiver notifyServiceReceiver;
+	
+
+
+	private final String myBlog = "http://www.cs.dartmouth.edu/~campbell/cs65/cs65.html";
+	
+	@Override
+	public void onCreate() {
+		
+		notifyServiceReceiver = new NotifyServiceReceiver();
+		super.onCreate();
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+	
+		
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ACTION);
+		registerReceiver(notifyServiceReceiver, intentFilter);
+		
+		// Send Notification
+		String notificationTitle = "Demo of Notification!";
+		String notificationText = "Course Website";
+		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(myBlog));
+		PendingIntent pendingIntent 
+				= PendingIntent.getActivity(getBaseContext(), 
+						0, myIntent, 
+						Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		
+		
+		
+		Notification notification = new Notification.Builder(this)
+        .setContentTitle(notificationTitle)
+        .setContentText(notificationText).setSmallIcon(R.drawable.icon)
+        .setContentIntent(pendingIntent).build();
+	    NotificationManager notificationManager = 
+	    		  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notification.flags = notification.flags
+				| Notification.FLAG_ONGOING_EVENT;
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		
+		notificationManager.notify(0, notification); 
+		
+		return super.onStartCommand(intent, flags, startId);
+	}
+
+	@Override
+	public void onDestroy() {
+	
+		this.unregisterReceiver(notifyServiceReceiver);
+		super.onDestroy();
+	}
+
+	@Override
+	public IBinder onBind(Intent arg0) {
+		
+		return null;
+	}
+
+	public class NotifyServiceReceiver extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+		
+			int rqs = arg1.getIntExtra(STOP_SERVICE_BROADCAST_KEY, 0);
+			
+			if (rqs == RQS_STOP_SERVICE){
+				stopSelf();
+				((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
+				.cancelAll();
+			}
+		}
+	}
+	
+}
+~~~
+
+## Service defined in Manifest
+
+A service needs to be defined in the manifest as shown below.
+
+~~~{.java}
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="edu.dartmouth.cs.notifydemo"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="17" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name="edu.dartmouth.cs.notifydemo.NotifyActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<service android:name="edu.dartmouth.cs.notifydemo.NotifyService"/>
+    </application>
+</manifest>
+~~~
+
+## BindDemo app: Binding to a client to a service
+
+In this application the activity binds to a service and creates a
+ServiceConnection that is used to exchange messages between the
+activity and service. The activity creates and stops the service based
+on user input as well as binds and unbinds from the service. The user
+can input a increment value which is send to the server and reflected
+in the UI.
+
+## BindDemo Design
+
+In the design diagram shown below shows the key component and
+interactions for the BindDemo app. The key components are the client
+and the service. The UI allows the user to star and stop the service,
+and allow the client to bind and unbind to the service using buttons.
+
+The status on the UI shows the state of the binding: attached,
+unbinding. The count field shows the value of the count sent
+periodically via a
+message from the service to the client, as shown below
+
+![](images/bindui.png)
+
+The client-service communicate via a serviceConnection. Messaging
+flows in both directions. The client can register (MSG_REGISTER_VALUE)
+to receive count values (MSG_SET_INT_VALUE) from the service over the 
+
+![](images/binddemo.png)
+ 
+## Activity side of the binding and service interaction
+
+~~~{.java}
+public class MainActivity extends Activity implements View.OnClickListener, ServiceConnection {
+	private Button btnStart, btnStop, btnBind, btnUnbind, btnUpby1, btnUpby10;
+	private TextView textStatus, textIntValue, textStrValue;
+	private Messenger mServiceMessenger = null;
+	boolean mIsBound;
+
+	private static final String LOGTAG = "MainActivity";
+	private final Messenger mMessenger = new Messenger(new IncomingMessageHandler());
+
+	private ServiceConnection mConnection = this;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		btnStart = (Button)findViewById(R.id.btnStart);
+		btnStop = (Button)findViewById(R.id.btnStop);
+		btnBind = (Button)findViewById(R.id.btnBind);
+		btnUnbind = (Button)findViewById(R.id.btnUnbind);
+		textStatus = (TextView)findViewById(R.id.textStatus);
+		textIntValue = (TextView)findViewById(R.id.textIntValue);
+		textStrValue = (TextView)findViewById(R.id.textStrValue);
+		btnUpby1 = (Button)findViewById(R.id.btnUpby1);
+		btnUpby10 = (Button)findViewById(R.id.btnUpby10);
+
+		btnStart.setOnClickListener(this);
+		btnStop.setOnClickListener(this);
+		btnBind.setOnClickListener(this);
+		btnUnbind.setOnClickListener(this);
+		btnUpby1.setOnClickListener(this);
+		btnUpby10.setOnClickListener(this);
+
+		automaticBind();
+	}
+
+	/**
+	 * Check if the service is running. If the service is running 
+	 * when the activity starts, we want to automatically bind to it.
+	 */
+	private void automaticBind() {
+		if (MyService.isRunning()) {
+			doBindService();
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("textStatus", textStatus.getText().toString());
+		outState.putString("textIntValue", textIntValue.getText().toString());
+		outState.putString("textStrValue", textStrValue.getText().toString());
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			textStatus.setText(savedInstanceState.getString("textStatus"));
+			textIntValue.setText(savedInstanceState.getString("textIntValue"));
+			textStrValue.setText(savedInstanceState.getString("textStrValue"));
+		}
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	/**
+	 * Send data to the service
+	 * @param intvaluetosend The data to send
+	 */
+	private void sendMessageToService(int intvaluetosend) {
+		if (mIsBound) {
+			if (mServiceMessenger != null) {
+				try {
+					Message msg = Message.obtain(null, MyService.MSG_SET_INT_VALUE, intvaluetosend, 0);
+					msg.replyTo = mMessenger;
+					mServiceMessenger.send(msg);
+				} catch (RemoteException e) {
+				}
+			}
+		}
+	}
+
+	/**
+	 * Bind this Activity to TimerService
+	 */
+	private void doBindService() {
+		bindService(new Intent(this, MyService.class), mConnection, Context.BIND_AUTO_CREATE);
+		mIsBound = true;
+		textStatus.setText("Binding.");
+	}
+
+	/**
+	 * Un-bind this Activity to TimerService
+	 */	
+	private void doUnbindService() {
+		if (mIsBound) {
+			// If we have received the service, and hence registered with it, then now is the time to unregister.
+			if (mServiceMessenger != null) {
+				try {
+					Message msg = Message.obtain(null, MyService.MSG_UNREGISTER_CLIENT);
+					msg.replyTo = mMessenger;
+					mServiceMessenger.send(msg);
+				} catch (RemoteException e) {
+					// There is nothing special we need to do if the service has crashed.
+				}
+			}
+			// Detach our existing connection.
+			unbindService(mConnection);
+			mIsBound = false;
+			textStatus.setText("Unbinding.");
+		}
+	}
+
+	/**
+	 * Handle button clicks
+	 */
+	@Override
+	public void onClick(View v) {
+		if(v.equals(btnStart)) {
+			startService(new Intent(MainActivity.this, MyService.class));
+		}
+		else if(v.equals(btnStop)) {
+			doUnbindService();
+			stopService(new Intent(MainActivity.this, MyService.class));
+		}
+		else if(v.equals(btnBind)) {
+			doBindService();
+		}
+		else if(v.equals(btnUnbind)) {
+			doUnbindService();
+		}
+		else if(v.equals(btnUpby1)) {
+			sendMessageToService(1);
+		}
+		else if(v.equals(btnUpby10)) {
+			sendMessageToService(10);
+		}
+	}
+
+~~~
+
+Note, when the client calls bindService() the onBind() method in the
+service returns the IBinder object. The IBinder is returned to the
+client's onServiceConnected(). This interaction is not obvious when
+reading the code. The service is used to send msgs to the service as
+shown in onServiceConnected() below.
+
+~~~{.java}
+
+	@Override
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		mServiceMessenger = new Messenger(service);
+		textStatus.setText("Attached.");
+		try {
+			Message msg = Message.obtain(null, MyService.MSG_REGISTER_CLIENT);
+			msg.replyTo = mMessenger;
+			mServiceMessenger.send(msg);
+		} 
+		catch (RemoteException e) {
+			// In this case the service has crashed before we could even do anything with it
+		} 
+	}
+
+	@Override
+	public void onServiceDisconnected(ComponentName name) {
+		// This is called when the connection with the service has been unexpectedly disconnected - process crashed.
+		mServiceMessenger = null;
+		textStatus.setText("Disconnected.");
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		try {
+			doUnbindService();
+		} catch (Throwable t) {
+			Log.e(LOGTAG, "Failed to unbind from the service", t);
+		}
+	}
+
+	/**
+	 * Handle incoming messages from TimerService
+	 */
+	private class IncomingMessageHandler extends Handler {		
+		@Override
+		public void handleMessage(Message msg) {
+			// Log.d(LOGTAG,"IncomingHandler:handleMessage");
+			switch (msg.what) {
+			case MyService.MSG_SET_INT_VALUE:
+				textIntValue.setText("Int Message: " + msg.arg1);
+				break;
+			case MyService.MSG_SET_STRING_VALUE:
+				String str1 = msg.getData().getString("str1");
+				textStrValue.setText("Str Message: " + str1);
+				break;
+			default:
+				super.handleMessage(msg);
+			}
+		}
+	}	
+}
+~~~
+
+## Service side of the binding and activity interaction
+
+~~~{.java}
+
+public class MyService extends Service {
+	private NotificationManager mNotificationManager;
+	private Timer mTimer = new Timer();
+	private int counter = 0, incrementBy = 1;
+	private static boolean isRunning = false;
+
+	private List<Messenger> mClients = new ArrayList<Messenger>(); // Keeps track of all current registered clients.
+	public static final int MSG_REGISTER_CLIENT = 1;
+	public static final int MSG_UNREGISTER_CLIENT = 2;
+	public static final int MSG_SET_INT_VALUE = 3;
+	public static final int MSG_SET_STRING_VALUE = 4;
+
+	private final Messenger mMessenger = new Messenger(new IncomingMessageHandler()); // Target we publish for clients to send messages to IncomingHandler.
+
+	private static final String LOGTAG = "MyService";
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		Log.i(LOGTAG, "Service Started.");
+		showNotification();
+		mTimer.scheduleAtFixedRate(new MyTask(), 0, 100L);
+		isRunning = true;
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.i(LOGTAG, "Received start id " + startId + ": " + intent);
+		return START_STICKY; // Run until explicitly stopped.
+	}
+
+	/**
+	 * Display a notification in the notification bar.
+	 */
+	private void showNotification() {
+		
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+		Notification notification = new Notification.Builder(this)
+        .setContentTitle(this.getString(R.string.service_label))
+        .setContentText(getResources().getString(R.string.service_started)).setSmallIcon(R.drawable.ic_launcher)
+        .setContentIntent(contentIntent).build();
+		mNotificationManager = 
+	    		  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notification.flags = notification.flags
+				| Notification.FLAG_ONGOING_EVENT;
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		
+		mNotificationManager.notify(0, notification); 
+
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		Log.i(LOGTAG, "onBind");
+		return mMessenger.getBinder();
+	}
+
+	/**
+	 * Send the data to all clients.
+	 * @param intvaluetosend The value to send.
+	 */
+	private void sendMessageToUI(int intvaluetosend) {
+		Iterator<Messenger> messengerIterator = mClients.iterator();		
+		while(messengerIterator.hasNext()) {
+			Messenger messenger = messengerIterator.next();
+			try {
+				// Send data as an Integer				
+				messenger.send(Message.obtain(null, MSG_SET_INT_VALUE, intvaluetosend, 0));
+
+				// Send data as a String
+				Bundle bundle = new Bundle();
+				bundle.putString("str1", "ab" + intvaluetosend + "cd");
+				Message msg = Message.obtain(null, MSG_SET_STRING_VALUE);
+				msg.setData(bundle);
+				messenger.send(msg);
+
+			} catch (RemoteException e) {
+				// The client is dead. Remove it from the list.
+				mClients.remove(messenger);
+			}
+		}
+	}
+
+	public static boolean isRunning()
+	{
+		return isRunning;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mTimer != null) {mTimer.cancel();}
+		counter=0;
+		mNotificationManager.cancelAll(); // Cancel the persistent notification.
+		Log.i(LOGTAG, "Service Stopped.");
+		isRunning = false;
+	}
+
+	//////////////////////////////////////////
+	// Nested classes
+	/////////////////////////////////////////
+
+	/**
+	 * The task to run...
+	 */
+	private class MyTask extends TimerTask {
+		@Override
+		public void run() {
+			Log.i(LOGTAG, "Timer doing work." + counter);
+			try {
+				counter += incrementBy;
+				sendMessageToUI(counter);
+
+			} catch (Throwable t) { //you should always ultimately catch all exceptions in timer tasks.
+				Log.e("TimerTick", "Timer Tick Failed.", t);            
+			}
+		}		
+	}
+
+	/**
+	 * Handle incoming messages from MainActivity
+	 */
+	 private class IncomingMessageHandler extends Handler { // Handler of incoming messages from clients.
+		@Override
+		public void handleMessage(Message msg) {
+			Log.d(LOGTAG,"handleMessage: " + msg.what);
+			switch (msg.what) {
+			case MSG_REGISTER_CLIENT:
+				mClients.add(msg.replyTo);
+				break;
+			case MSG_UNREGISTER_CLIENT:
+				mClients.remove(msg.replyTo);
+				break;
+			case MSG_SET_INT_VALUE:
+				incrementBy = msg.arg1;
+				break;
+			default:
+				super.handleMessage(msg);
+			}
+		}
+	}
+}
+~~~
+
+

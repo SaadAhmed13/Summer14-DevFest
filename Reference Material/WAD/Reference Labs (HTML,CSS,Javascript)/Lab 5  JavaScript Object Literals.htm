@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+	<title>Lab 5: JavaScript Object Literals</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="generator" content="ScreenSteps http://www.screensteps.com">
+
+	<link href="Lab%205%20%20JavaScript%20Object%20Literals_files/modern.css" media="screen" rel="stylesheet" type="text/css">
+
+  <link href="Lab%205%20%20JavaScript%20Object%20Literals_files/prettyPhoto.css" media="screen" rel="stylesheet" type="text/css" charset="utf-8">
+
+	<script src="Lab%205%20%20JavaScript%20Object%20Literals_files/jquery-1.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="Lab%205%20%20JavaScript%20Object%20Literals_files/jquery.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  		$(document).ready(function(){
+
+  			$("a[rel^='prettyPhoto']").prettyPhoto({
+
+  			  show_title: false
+
+  			}); 
+
+  		}); 	
+
+  	</script>
+
+</head>
+
+
+
+<body class="helvetica">
+
+  <div id="wrapper">
+
+    <div id="LessonContent">
+
+      <div class="LessonHeader">
+
+        <h1 class="LessonTitle">Lab 5: JavaScript Object Literals</h1>
+
+      </div>
+
+      	<div class="summary">
+
+		<p>In this lesson, we are going to create a custom object literal in Javascript.</p>	
+
+	</div>
+
+      	<div id="step_1" class="lessonStep top">
+
+	    <h2 class="StepTitle">JavaScript Object Literals</h2>
+
+		 <p>A JavaScript Object literal is a way to contain data in one tidy 
+package. It is often used as a virtual representation of a real-world 
+entitiy. For example, an object literal named "car"  could be created by
+ a developer. Cars have properties such as name, engine and mpg. Instead
+ of defining a separate variable for each of these properties, a 
+developer can create an object literal named "car" that holds these 
+properties and the values associated with them.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_2" class="lessonStep top">
+
+	    <h2 class="StepTitle">Basic Syntax</h2>
+
+		 <p>A JavaScript Object literal is a comma separated list of name value pairs wrapped in curly braces. For example,</p>
+
+
+<p>                           <i>   var myObject = { property1:value1, property2:value2}</i></p>
+
+
+<p>Object literals are formed using the following syntax rules:<br>
+·&nbsp;&nbsp;&nbsp;&nbsp;A colon separates property name from value. <br>
+·&nbsp;&nbsp;&nbsp;&nbsp;A comma separates each name/value pair from the next. <br>
+·&nbsp;&nbsp;&nbsp;&nbsp;There should be no comma after the last 
+name/value pair. Firefox won't object if you add it, but Internet 
+Explorer will trigger an error: 'Expected identifier, string or number'.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_3" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a new XHTML file in Dreamweaver</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303748386491.png" alt="" height="264" width="502">
+
+</div> <p>Save the file as lab5_js_objects.html. Title the page: Object Literals and give it a H1 heading.</p>
+
+
+<p>Add script tags between both the head and body section of your web page.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_4" class="lessonStep top">
+
+	    <h2 class="StepTitle">Declare the Object Literal</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303748494965.png" alt="" height="116" width="242">
+
+</div> <p>In this tutorial, we are going to create an object literal to store information about the state of California. </p>
+
+
+<p>Add this code after the first &lt;script&gt; tag:</p>
+
+
+<p>  <i>    var myState = {</i><br>
+<i>      };</i></p>
+
+
+<p>This creates a JavaScript literal object. This object will hold 
+information about a state. The object definition begins with a left 
+bracket and ends with a right bracket.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_5" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add Properties to your Object Literal</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303748975522.png" alt="" height="326" width="503">
+
+</div> <p>Add this line of code below the first bracket so that the object definition looks like this:</p>
+
+
+<p>    var myState = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: "California",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capital: "Sacramento",<br>
+     };                                                                 
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                     </p>
+
+
+<p>This creates a property for "myState." The name of the property is 
+"stateName." It has a value of "California." Create a property by 
+separating a name and value with a colon. Surround non-numeric values, 
+such as California, with quotation marks, defining it as a text string.</p>
+
+
+<p>Add a second property named "capital" to the object. It has a value 
+of "Sacromento." Separate properties with a comma as shown above.<br>
+A third property named population is added and it is storing a numeric value. Notice that it is not bounded by quotation marks.</p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_6" class="lessonStep top">
+
+	    <h2 class="StepTitle">Store an Array in an Object Literal</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303749078157.png" alt="" height="133" width="490">
+
+</div> <p>Object literal can also store arrays as properties. I will 
+explain arrays in more detail during another session. For now, just know
+ that an array is an index ordered list of information. In this example,
+ the array is going to store a list of big cities in California.</p>
+
+
+<p>Notice the syntax, an array is stored within brackets. Each element 
+of the array is within quotes. To access a single item in an array, you 
+would write the </p>
+
+
+<p>           <i>   array_name[index_number]. </i></p>
+
+
+<p>To return the value Los Angeles above, you would write: <br>
+            <i>   big_cities[0]</i></p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_7" class="lessonStep top">
+
+	    <h2 class="StepTitle">Store an Object Literal within Another Object Literal</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303749480910.png" alt="" height="146" width="472">
+
+</div> <p>Object literals can contain other object literals. This is an 
+object literal named "climate" that contains two properties: "northern" 
+and "southern." The northern object literal stores the value wet while 
+the southern object literal stores the value dry.</p>
+
+
+<p>Again, notice the syntax. The object literal is stored within curly brackets. </p>
+<p>&nbsp;</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_8" class="lessonStep top">
+
+	    <h2 class="StepTitle">Create a Function to Print your Object Literal to the Page</h2>
+
+		<div class="image">
+
+<img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303750129503.png" alt="" height="113" width="263">
+
+</div> <p>The window.onload statement tells JavaScript to call the 
+function named "showObject" after the page loads. This function prints 
+out some of the values of the object. </p>
+
+
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_9" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add the Object Literal Properties to your Function</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750270001_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303750270001.png" alt="Add the Object Literal Properties to your Function" height="57" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750270001_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Type the above document.write statement to print your object literal to the page.</p>
+
+
+<p>To access the value of an object's property, use dot notation. Do 
+this by typing the name of the property followed by a period. For 
+example, to access the capital of California, type "myState.capital". To
+ access the second element of the "cities" array, type 
+"myState.big_cities[1]."</p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_10" class="lessonStep top">
+
+	    <h2 class="StepTitle">Add the Second Document.Write Statement to your Object Literal</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750519678_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303750519678.png" alt="Add the Second Document.Write Statement to your Object Literal" height="51" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750519678_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Add the second document.write statement to the object literal:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>document.write(myState.name+
+ "has a population of " +myState.population+ ". The climate in Northern "
+ +myState.name+ " is " +myState.climate.northern+ "."); </i></p>
+<p>&nbsp;</p>
+<p>This will display the climate in the northern part of the state.To 
+access a property that is inside a child object literal, type the name 
+of the parent object literal, append a period, append the name of the 
+child object literal, append a period and finally append type the the 
+name of the property that you want to examine. In this example, 
+"climate" is a child object literal inside a parent object literal named
+ "myState." Reference the climate in the northern part of the state by 
+typing the following:</p>
+<p>&nbsp;</p>
+<p><i>        myState.climate.northern</i><br>
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                         </p>
+
+	</div>
+
+	<div class="clear"></div>
+	<div id="step_11" class="lessonStep top">
+
+	    <h2 class="StepTitle">Save the File</h2>
+
+		<div class="image">
+
+<a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750720258_lg.png" rel="prettyPhoto" class="image" target="_blank"><img src="Lab%205%20%20JavaScript%20Object%20Literals_files/media_1303750720258.png" alt="Save the File" height="69" width="580"></a>
+
+<div class="caption"><a href="http://www.csupomona.edu/%7Ejcmcgarvey/513_2012/labs/lab5/images/Lab_5_JavaScript_Object_Literals/media_1303750720258_lg.png" rel="prettyPhoto" target="_blank">Zoom</a></div>
+
+</div> <p>Test and preview the file in a browswer. Compare with the results above. Save the file and upload to the server.</p>
+
+	</div>
+
+	<div class="clear"></div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+</body></html>

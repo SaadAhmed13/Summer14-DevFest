@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>Our First Android Application - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h1 id="lecture-3---our-first-android-application">Lecture 3 - Our First Android Application</h1>
+<p>Even though the HelloWorld program is trivial it introduces a wealth of new ideas -- the framework, activities, manifest, intents, UI, resources such as layouts, strings, etc. I know all just to print Hello World! There is a lot to take in regarding the Android program plumbing but an important separation principal presented in the single HelloWord is the separation between UI design in XML and the program.</p>
+<p>Next, we consider a more complex program with multiple UIs, activities and intents -- it's called MyFirstApp and the code is linked in so you can download and run it.</p>
+<p>What this lecture covers:</p>
+<ul>
+<li>The MainActivity UI and code</li>
+<li>Intents and starting another activity, namely, the DisplayMessageActivity</li>
+<li>The DisplayMessageActivity UI and code</li>
+<li>Application logging</li>
+</ul>
+<h2 id="checkout-the-demo-project">Checkout the demo project</h2>
+<p>Download the demo the <a href="..\code\myfirstapp.zip">myfirstapp.zip</a> app to go with these notes.</p>
+<p>I recommend that you code this project up from the notes rather than just import the project to Eclipse/ADT and run it -- but feel free to do that if you really want. As a rule I will include all source code examples and projects used in course when I can.</p>
+<h2 id="importing-an-existing-android-project-into-your-workspace">Importing an existing Android project into your workspace</h2>
+<p>For each of the demo projects we give out you will need to import the project to ADT. Here is how you do this:</p>
+<ul>
+<li>Click on the myfirstapp.zip file and download and save the file on your desktop or download folder</li>
+<li>Unzip the myfirstapp.zip and you have MyFirstApp directory/ project</li>
+<li>Import the project to your workspace by doing the following:</li>
+<li>In ADT select File-&gt;import-&gt;Existing Android code in workspace, as shown below, click <em>next</em></li>
+</ul>
+<div class="figure">
+<img src="images\import1.png">
+</div>
+<p>-- Click on browse and do to the directory the unzipped myfirstapp is stored and select</p>
+<div class="figure">
+<img src="images\import2.png">
+</div>
+<p>-- Once the myfirstapp is selected click finish. The project should be imported and ready to run.</p>
+<div class="figure">
+<img src="images\import3.png">
+</div>
+<h2 id="clean-a-project">Clean a project</h2>
+<p>If for some reason there are errors try a clean. This is always a good thing to do if there are spurious errors in a project you know is clean.</p>
+<ul>
+<li>Goto <strong>project-&gt;clean</strong></li>
+<li>Select the project Layouts and update <em>clean projects selected below</em> and click OK</li>
+</ul>
+<div class="figure">
+<img src="images\clean.png">
+</div>
+<p>Hope that helped.</p>
+<h2 id="myfirstapp">MyFirstApp</h2>
+<p>This application moves things forward. First it includes two activities. The main activity starts the second activity using an intent. When the user inputs a message on the UI of the first activity and clicks send the message is bundled up in an intent and the display activity started -- which displays the message on its own UI. Take a look at the screen dumps below: the first one is the UI rendered by the MainActivity UI, next the user enters a message and clicks the Send button -- and wham -- the DisplayMessageActivity is started to display the message in a larger -- sort of uncool -- font. There is a lot more to this simple program. Note, the menus for each UI is different. You can navigate back using the Up button instead of the back button from the DisplayMessageActivity UI. More on this later.</p>
+<div class="figure">
+<img src="images\myfirstapp.png">
+</div>
+<p>This program -- <a href="http://developer.android.com/training/basics/firstapp/building-ui.html">myFirstApp</a> -- is taken from the Android developers with minor modifications.</p>
+<h2 id="the-mainactivitys-ui">The MainActivity's UI</h2>
+<p>Open the <code>src</code> folder and look at the <code>MainActivity.java</code> code.</p>
+<h2 id="create-a-linear-layout">Create a linear layout</h2>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    xmlns:tools=<span class="st">&quot;http://schemas.android.com/tools&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:orientation=<span class="st">&quot;horizontal&quot;</span> &gt;
+&lt;/LinearLayout&gt;</code></pre>
+<h2 id="add-a-text-field">Add a text field</h2>
+<pre class="sourceCode java"><code class="sourceCode java"> &lt;EditText android:id=<span class="st">&quot;@+id/edit_message&quot;</span>
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:hint=<span class="st">&quot;@string/edit_message&quot;</span> /&gt;</code></pre>
+<h2 id="add-string-resources">Add String Resources</h2>
+<p>By default, your Android project includes a string resource file at res/values/strings.xml. Add a new string named &quot;edit_message&quot; and set the value to &quot;Enter a message.&quot; (You can delete the &quot;hello_world&quot; string.)</p>
+<p>While you’re in this file, also add a &quot;Send&quot; string for the button you’ll soon add, called &quot;button_send&quot;.</p>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;resources&gt;
+    &lt;string name=<span class="st">&quot;app_name&quot;</span>&gt;My First App&lt;/string&gt;
+    &lt;string name=<span class="st">&quot;edit_message&quot;</span>&gt;Enter a message&lt;/string&gt;
+    &lt;string name=<span class="st">&quot;button_send&quot;</span>&gt;Send&lt;/string&gt;
+    &lt;string name=<span class="st">&quot;menu_settings&quot;</span>&gt;Settings&lt;/string&gt;
+    &lt;string name=<span class="st">&quot;title_activity_main&quot;</span>&gt;MainActivity&lt;/string&gt;
+&lt;/resources&gt;</code></pre>
+<h2 id="add-a-button">Add a button</h2>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;Button
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:text=<span class="st">&quot;@string/button_send&quot;</span> /&gt;</code></pre>
+<h2 id="format-the-input-box">Format the Input box</h2>
+<pre class="sourceCode java"><code class="sourceCode java">   &lt;EditText
+        android:layout_weight=<span class="st">&quot;1&quot;</span>
+        android:layout_width=<span class="st">&quot;0dp&quot;</span>
+        <span class="kw">... </span>/&gt;</code></pre>
+<h2 id="final-xml">Final XML</h2>
+<p>Open the activity_main.xml file from the res/layout/ directory.</p>
+<pre class="sourceCode java"><code class="sourceCode java">&lt;?xml version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span>?&gt;
+&lt;LinearLayout xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    xmlns:tools=<span class="st">&quot;http://schemas.android.com/tools&quot;</span>
+    android:layout_width=<span class="st">&quot;match_parent&quot;</span>
+    android:layout_height=<span class="st">&quot;match_parent&quot;</span>
+    android:orientation=<span class="st">&quot;horizontal&quot;</span>&gt;
+    &lt;EditText android:id=<span class="st">&quot;@+id/edit_message&quot;</span>
+        android:layout_weight=<span class="st">&quot;1&quot;</span>
+        android:layout_width=<span class="st">&quot;0dp&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:hint=<span class="st">&quot;@string/edit_message&quot;</span> /&gt;
+    &lt;Button
+        android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+        android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+        android:text=<span class="st">&quot;@string/button_send&quot;</span> /&gt;
+&lt;/LinearLayout&gt;</code></pre>
+<h2 id="respond-to-the-send-button">Respond to the Send Button</h2>
+<pre class="sourceCode java"><code class="sourceCode java"> &lt;Button
+    android:layout_width=<span class="st">&quot;wrap_content&quot;</span>
+    android:layout_height=<span class="st">&quot;wrap_content&quot;</span>
+    android:text=<span class="st">&quot;@string/button_send&quot;</span>
+    android:onClick=<span class="st">&quot;sendMessage&quot;</span> /&gt;</code></pre>
+<h2 id="tips">Tips</h2>
+<p>There are a number of useful short cuts.</p>
+<ul>
+<li><p>In Eclipse, press Ctrl + Shift + O to import missing classes (Cmd + Shift + O on Mac).</p></li>
+<li><p>In Eclipse, press Ctrl + Shift + F to correctly format your code once you have entered it (Cmd + Shift + F on Mac).</p></li>
+<li><p>In Eclipse, press Ctrl + Shift + C to correctly format your code once you have entered it (Cmd + Shift + C on Mac). You can also enter plain text comments, highlight your code and the type Cmd + Shift + C to comment it.</p></li>
+<li><p>In Eclipse, present project =&gt; clean to clean the project. Many times there are complication or project changes that cause problems. Cleaning the project before running it clears these problems.</p></li>
+</ul>
+<h2 id="solving-problems">Solving Problems</h2>
+<p>Many times you will run into Android programming or Eclipse environment problems. There is a really nice set of tips for solving a common set of <a href="http://www.vogella.com/tutorials/AndroidDevelopmentProblems/article.html">problems</a>.</p>
+<h2 id="building-an-intent">Building an Intent</h2>
+<p>Open the MainActivity class (located in the project's src/ directory) and add the corresponding method:</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+<span class="kw">package edu.dartmouth.cs.myfirstapp;</span>
+
+<span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.content.Intent;</span>
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.view.Menu;</span>
+<span class="kw">import android.view.View;</span>
+<span class="kw">import android.widget.EditText;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> MainActivity <span class="kw">extends</span> Activity {
+
+    <span class="kw">public</span> <span class="dt">final</span> <span class="dt">static</span> String EXTRA_MESSAGE = <span class="st">&quot;com.example.myfirstapp.MESSAGE&quot;</span>;
+
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_main</span>);
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onCreateOptionsMenu</span>(Menu menu) {
+        <span class="co">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        <span class="fu">getMenuInflater</span>().<span class="fu">inflate</span>(R.<span class="fu">menu</span>.<span class="fu">activity_main</span>, menu);
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    <span class="co">/** Called when the user clicks the Send button */</span>
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sendMessage</span>(View view) {
+
+        <span class="co">// Do something in response to button</span>
+
+        Intent intent = <span class="kw">new</span> <span class="fu">Intent</span>(<span class="kw">this</span>, DisplayMessageActivity.<span class="fu">class</span>);
+        EditText editText = (EditText) <span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">edit_message</span>);
+        String message = editText.<span class="fu">getText</span>().<span class="fu">toString</span>();
+        intent.<span class="fu">putExtra</span>(EXTRA_MESSAGE, message);
+    }
+}</code></pre>
+<p>The EXTRA_MESSAGE, message represents a value/key pair passed in the intent. You need to define the key in the MainActivity</p>
+<p>**TIP Recall from above: press Ctrl + Shift + O to import missing classes (Cmd + Shift + O on Mac).</p>
+<h2 id="starting-another-activity">Starting another activity</h2>
+<p>To start an activity, call startActivity() and pass it your Intent. The system receives this call and starts an instance of the Activity specified by the Intent.</p>
+<p>With this new code, the complete sendMessage() method that's invoked by the Send button now looks like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+.....
+
+        <span class="co">// Send the input string to the DisplayMessageActivity using an intent</span>
+
+        Intent intent = <span class="kw">new</span> <span class="fu">Intent</span>(<span class="kw">this</span>, DisplayMessageActivity.<span class="fu">class</span>);
+        EditText editText = (EditText) <span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">edit_message</span>);
+        String message = editText.<span class="fu">getText</span>().<span class="fu">toString</span>();
+        intent.<span class="fu">putExtra</span>(EXTRA_MESSAGE, message);
+        <span class="fu">startActivity</span>(intent);
+
+}
+
+...</code></pre>
+<p>Now you need to create the DisplayMessageActivity class in order for this to work.</p>
+<h2 id="create-another-activity----displaymessageactivity">Create another activity -- DisplayMessageActivity</h2>
+<p>To create a new activity using Eclipse:</p>
+<div class="figure">
+<img src="images\newproject.png" title="Create a new project">
+</div>
+<p>n the window that appears, open the Android folder and select Android Activity. Click Next.</p>
+<div class="figure">
+<img src="images\activity.png" title="Create a new project">
+</div>
+<p>Select BlankActivity and click Next.</p>
+<div class="figure">
+<img src="images\blank.png" title="Create a new project">
+</div>
+<p>Fill in the activity details:</p>
+<div class="figure">
+<img src="images\newactivity.png" title="Create a new project">
+</div>
+<p>Finally click <em>Finish</em>.</p>
+<p>If you're using a different IDE or the command line tools, create a new file named DisplayMessageActivity.java in the project's src/ directory, next to the original MainActivity.java file.</p>
+<p>The DisplayMessageActivity class should now look like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+<span class="kw">package edu.dartmouth.cs.myfirstapp;</span>
+
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.view.Menu;</span>
+<span class="kw">import android.view.MenuItem;</span>
+<span class="kw">import android.support.v4.app.NavUtils;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_display_message</span>);
+        <span class="co">// Show the Up button in the action bar.</span>
+        <span class="fu">getActionBar</span>().<span class="fu">setDisplayHomeAsUpEnabled</span>(<span class="kw">true</span>);
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onCreateOptionsMenu</span>(Menu menu) {
+        <span class="co">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        <span class="fu">getMenuInflater</span>().<span class="fu">inflate</span>(R.<span class="fu">menu</span>.<span class="fu">activity_display_message</span>, menu);
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onOptionsItemSelected</span>(MenuItem item) {
+        <span class="kw">switch</span> (item.<span class="fu">getItemId</span>()) {
+        <span class="kw">case</span> android.<span class="fu">R</span>.<span class="fu">id</span>.<span class="fu">home</span>:
+            <span class="co">// This ID represents the Home or Up button. In the case of this</span>
+            <span class="co">// activity, the Up button is shown. Use NavUtils to allow users</span>
+            <span class="co">// to navigate up one level in the application structure. For</span>
+            <span class="co">// more details, see the Navigation pattern on Android Design:</span>
+            <span class="co">//</span>
+            <span class="co">// http://developer.android.com/design/patterns/navigation.html#up-vs-back</span>
+            <span class="co">//</span>
+            NavUtils.<span class="fu">navigateUpFromSameTask</span>(<span class="kw">this</span>);
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        <span class="kw">return</span> <span class="kw">super</span>.<span class="fu">onOptionsItemSelected</span>(item);
+    }
+
+}</code></pre>
+<p>When you create an activity it provides a number of default methods which we will not use in this project. Remove:</p>
+<ul>
+<li>onCreateOptionsMenu(Menu menu)</li>
+</ul>
+<p>The DisplayMessageActivity class should now look like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+<span class="kw">package edu.dartmouth.cs.myfirstapp;</span>
+
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.view.Menu;</span>
+<span class="kw">import android.view.MenuItem;</span>
+<span class="kw">import android.support.v4.app.NavUtils;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_display_message</span>);
+        <span class="co">// Show the Up button in the action bar.</span>
+        <span class="fu">getActionBar</span>().<span class="fu">setDisplayHomeAsUpEnabled</span>(<span class="kw">true</span>);
+    }
+
+    @Override
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">onOptionsItemSelected</span>(MenuItem item) {
+        <span class="kw">switch</span> (item.<span class="fu">getItemId</span>()) {
+        <span class="kw">case</span> android.<span class="fu">R</span>.<span class="fu">id</span>.<span class="fu">home</span>:
+            <span class="co">// This ID represents the Home or Up button. In the case of this</span>
+            <span class="co">// activity, the Up button is shown. Use NavUtils to allow users</span>
+            <span class="co">// to navigate up one level in the application structure. For</span>
+            <span class="co">// more details, see the Navigation pattern on Android Design:</span>
+            <span class="co">//</span>
+            <span class="co">// http://developer.android.com/design/patterns/navigation.html#up-vs-back</span>
+            <span class="co">//</span>
+            NavUtils.<span class="fu">navigateUpFromSameTask</span>(<span class="kw">this</span>);
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        <span class="kw">return</span> <span class="kw">super</span>.<span class="fu">onOptionsItemSelected</span>(item);
+    }
+
+}</code></pre>
+<p>If you get an error with <code>getActionBar().setDisplayHomeAsUpEnabled(true)</code> make sure that the minium API to 11 in the manifest as shown below. Because the ActionBar APIs are available only on HONEYCOMB (API level 11) and higher, you must add a condition around the getActionBar() method to check the current platform version</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+&lt;manifest xmlns:android=<span class="st">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="kw">package</span>=&quot;edu.dartmouth.cs.myfirstapp&quot;
+    android:versionCode=<span class="st">&quot;1&quot;</span>
+    android:versionName=<span class="st">&quot;1.0&quot;</span> &gt;
+
+    &lt;uses-sdk
+        android:minSdkVersion=<span class="st">&quot;11&quot;</span>
+        android:targetSdkVersion=<span class="st">&quot;17&quot;</span> /&gt;
+
+.....</code></pre>
+<p>By setting the minimum API to 11 the error is cleared.</p>
+<!---
+
+## Add the title string
+
+~~~{.java}
+
+<resources>
+    ...
+    <string name="title_activity_display_message">My Message</string>
+</resources>
+
+~~~
+
+This is included in the Manifest where the DisplayMessageActivity is specified.
+
+-->
+
+<h2 id="add-it-to-the-manifest">Add it to the manifest</h2>
+<p>Take a look at the XML for the new activity <code>.DisplayMessageActivity</code> in the manifest. The code is self explanatory.</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+&lt;application <span class="kw">... </span>&gt;
+    ...
+    &lt;activity
+        android:name=<span class="st">&quot;edu.dartmouth.cs.myfirstapp.DisplayMessageActivity&quot;</span>
+        android:label=<span class="st">&quot;@string/title_activity_display_message&quot;</span>
+        android:parentActivityName=<span class="st">&quot;edu.dartmouth.cs.myfirstapp.MainActivity&quot;</span> &gt;
+        &lt;meta-data
+            android:name=<span class="st">&quot;android.support.PARENT_ACTIVITY&quot;</span>
+            android:value=<span class="st">&quot;edu.dartmouth.cs.myfirstapp.MainActivity&quot;</span> /&gt;
+    &lt;/activity&gt;
+&lt;/application&gt;</code></pre>
+<h2 id="running-the-app">Running the app</h2>
+<p>You can run the app now, but not much happens. Clicking the Send button starts the second activity but it uses a default &quot;Hello world&quot; layout provided by the template. You'll soon update the activity to instead display a custom text view.</p>
+<div class="figure">
+<img src="images\apprun1.png">
+</div>
+<h2 id="receive-the-intent">Receive the Intent</h2>
+<p>In the DisplayMessageActivity class’s onCreate() method, get the intent and extract the message delivered by MainActivity:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.content.Intent;</span>
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.support.v4.app.NavUtils;</span>
+<span class="kw">import android.view.MenuItem;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_display_message</span>);
+
+        <span class="co">// Show the Up button in the action bar.</span>
+        <span class="fu">getActionBar</span>().<span class="fu">setDisplayHomeAsUpEnabled</span>(<span class="kw">true</span>);
+
+        <span class="co">// Get the message from the intent</span>
+        Intent intent = <span class="fu">getIntent</span>();
+        String message = intent.<span class="fu">getStringExtra</span>(MainActivity.<span class="fu">EXTRA_MESSAGE</span>);
+    }
+ ......</code></pre>
+<h2 id="display-the-message">Display the Message</h2>
+<p>To show the message on the screen, create a TextView widget and set the text using setText(). Then add the TextView as the root view of the activity’s layout by passing it to setContentView().</p>
+<p>The complete onCreate() method for DisplayMessageActivity now looks like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.content.Intent;</span>
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.support.v4.app.NavUtils;</span>
+<span class="kw">import android.view.MenuItem;</span>
+<span class="kw">import android.widget.TextView;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+
+    @Override
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+
+        <span class="co">// Get the message from the intent</span>
+        Intent intent = <span class="fu">getIntent</span>();
+        String message = intent.<span class="fu">getStringExtra</span>(MainActivity.<span class="fu">EXTRA_MESSAGE</span>);
+
+        <span class="co">// Create the text view</span>
+        TextView textView = <span class="kw">new</span> <span class="fu">TextView</span>(<span class="kw">this</span>);
+        textView.<span class="fu">setTextSize</span>(<span class="dv">40</span>);
+        textView.<span class="fu">setText</span>(message);
+
+        <span class="co">// Set the text view as the activity layout</span>
+        <span class="fu">setContentView</span>(textview);
+    }
+ ......</code></pre>
+<h2 id="you-are-done-now-run-your-android-firstapp">You are done, now run your Android firstapp!</h2>
+<p>You should see the following screens on your phone or emulator</p>
+<div class="figure">
+<img src="images\apprun2.png">
+</div>
+<div class="figure">
+<img src="images\apprun3.png">
+</div>
+<h2 id="application-logging-using-log.d">Application Logging using Log.d()</h2>
+<p>You can put print or log statements your code. You might want to confirm for example that an intent fired by one activity is received by another. You can use <code>Log.d()</code> to do this. You have to first create a TAG in your code and then call <code>Log.d()</code> with the tag.</p>
+<p>In the code snippet below that you need to <code>import android.util.Log</code>, set up the <code>TAG</code>, and then call <code>Log.d()</code></p>
+<pre class="sourceCode java"><code class="sourceCode java">
+ <span class="kw">package edu.dartmouth.cs.myfirstapp;</span>
+
+<span class="kw">import android.app.Activity;</span>
+<span class="kw">import android.content.Intent;</span>
+<span class="kw">import android.os.Bundle;</span>
+<span class="kw">import android.support.v4.app.NavUtils;</span>
+<span class="kw">import android.util.Log;</span>
+<span class="kw">import android.view.MenuItem;</span>
+<span class="kw">import android.widget.TextView;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+    
+    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> String TAG = <span class="st">&quot;MyFirstApp&quot;</span>;
+
+    @Override
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        
+        <span class="co">// Get the message from the intent</span>
+        Intent intent = <span class="fu">getIntent</span>();
+        String message = intent.<span class="fu">getStringExtra</span>(MainActivity.<span class="fu">EXTRA_MESSAGE</span>);
+
+        Log.<span class="fu">d</span>(TAG, <span class="st">&quot;Got Intent&quot;</span>);
+        
+        <span class="co">// Create the text view</span>
+        TextView textView = <span class="kw">new</span> <span class="fu">TextView</span>(<span class="kw">this</span>);
+        textView.<span class="fu">setTextSize</span>(<span class="dv">40</span>);
+        textView.<span class="fu">setText</span>(message);
+
+        <span class="co">// Set the text view as the activity layout</span>
+        <span class="fu">setContentView</span>(textView);
+    }
+
+ ......</code></pre>
+<h2 id="using-logcat-to-view-application-output">Using LogCat to view application output</h2>
+<p>An easy way to monitor the output from log.d is to use the LogCat utility. LogCat is integrated into ADT/Eclipse. You’ll find the LogCat panel integrated into the DDMS and Debug perspectives of Eclipse.</p>
+<p>You first need to set up a filter in LogCat and then run the program and then filter on the TAG name (which in our example is <code>MyFirstApp</code>.</p>
+<p>To set up a filter click on the green cross; then set up the filter as shown. Examples of the code for setting up the TAG and calling <code>Log.()</code> are also highlighted on the figure below.</p>
+<div class="figure">
+<img src="images\logging.png">
+</div>
+<h2 id="output-from-logcat">Output from LogCat</h2>
+<p>Once you click on run and enter input you will see to logs printed out from the application: one when the user clicks send at the UI; and one when DisplayMessageActivity receives the <em>Intent</em> and prints the message, as show below.</p>
+<div class="figure">
+<img src="images\logcatoutput.png">
+</div>
+<p>This is a simple example of logging applications. Much more sophisticated logging can be done. More later on this.</p>
+<h2 id="using-toast-for-simple-debug">Using Toast for simple debug</h2>
+<p>Using can use toast which is displayed to the screen for a period of time. This allows you to quickly check simple control flow.</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+<span class="kw">public</span> <span class="kw">class</span> DisplayMessageActivity <span class="kw">extends</span> Activity {
+
+    @Override
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onCreate</span>(Bundle savedInstanceState) {
+        <span class="kw">super</span>.<span class="fu">onCreate</span>(savedInstanceState);
+        <span class="fu">setContentView</span>(R.<span class="fu">layout</span>.<span class="fu">activity_display_message</span>);
+        <span class="co">// Show the Up button in the action bar.</span>
+        <span class="fu">getActionBar</span>().<span class="fu">setDisplayHomeAsUpEnabled</span>(<span class="kw">true</span>);
+
+        Toast.<span class="fu">makeText</span>(<span class="fu">getApplicationContext</span>(), <span class="st">&quot;DisplayMessageActivity&quot;</span>, Toast.<span class="fu">LENGTH_LONG</span>).<span class="fu">show</span>();
+        
+        <span class="co">// Get the message from the intent</span>
+
+        Intent intent = <span class="fu">getIntent</span>();
+        String message = intent.<span class="fu">getStringExtra</span>(MainActivity.<span class="fu">EXTRA_MESSAGE</span>);
+
+.....</code></pre>
+</body>
+</html>

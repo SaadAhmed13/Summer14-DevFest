@@ -1,0 +1,469 @@
+﻿
+**Want** to be the next [Nick D'Aloisio]( http://www.guardian.co.uk/theguardian/shortcuts/2013/mar/26/how-to-become-an-app-millionaire) who at the ripe old age of 17 sold his smartphone app to Yahoo for $27 million?
+
+**Want** to know the ins and outs of rolling your own Android app?
+
+**Want** to participate in the Dartmouth Biorhythm Project?  -- bringing research into the classroom.
+
+Then read on ....
+
+## AndroiD
+
+The coolest technology to emerge over the last decade is the smartphone -- it's had a huge impact on our lives. Today, over half of all Americans own a smartphone and I bet you are reading this webpage on your phone. 
+
+If you've been curious about programming phones and creating great apps then this course is for you. We'll focus on programming Android phones -- sorry iPhone. 
+
+The course has no exams or midterms -- it's all about programming. But there will be a lot of programming. The prerequisite for this course is Computer Science 10 (no exceptions given).
+
+Because we plan to give each student a Google nexus 4 (thanks to the [Neukom Institute](http://www.dartmouth.edu/~neukom/) and Computer Science department) for the duration of the course we have capped the course. However, if we exceed the cap we might be able to accommodate more students -- I'm assuming a good chunk of the class own an Android.
+
+![](images/androidbio.png)
+
+## Lectures
+
+- Location:  Spanos Auditorium in Cummings
+- Monday Wednesday Friday 10:00-11:05 AM 
+- Thursday 12:00-12:50 x-period 
+- Office hours: Sudikoff 260 Monday and Friday 4-5 pm 
+
+## What we'll teach you
+
+The goal of this course is to teach students how to design, implement, test, debug and publish smartphone applications on java based android phones. Students will learn how to take their innovative ideas from conception to the android market through a series of rigorous hands-on programming assignments and group projects. 
+
+This is an introductory course aimed at undergraduate students (but graduate students are most welcome) who have Java programming experience. However, there is a significant amount of programming in this course requiring a commitment on the part of the student. 
+
+Topics covered: the android development environment including eclipse, android SDK and phone emulator; key programming paradigms; UI design including views and activities;  data persistence including SQLite; content providers; messaging and networking;  phone sensors, location based services (e.g., Google Maps), background services; broadcast receivers; cloud programming using App Engine; and publishing applications to the android market. 
+
+Android programming concepts are reinforced through a set of thematic programming exercises that introduce these topics and incrementally allow the student to build a complex application; that is, programming labs form a set of components that collectively implement a continuous sensing application. The resulting  phone app allows user to log their exercises (e.g., walks, runs)  and display them on Google maps.
+
+A key part of this course is group projects where students will work in small teams for joint problem solving.
+
+## Prerequisites
+
+Computer Science 10 (no exceptions). Android is based on Java programming.
+
+## We are using Piazza for information dissemination and Q&A
+
+Sign up to [CS65 Piazza](https://piazza.com/dartmouth/spring2014/cs65165/home) The best way to get answers to programming problems is crowdsourcing -- so the first time someone comes across a problem and we know the answer - everyone sees it. I encourage students to actively use piazza. It's a great system.
+
+## Grading 
+
+There are no exams or mid terms in this class -- it's all about hacking.
+
+**70% - Thematic programming exercises**
+
+There are 6 weekly programming assignments over the first 7 weeks. These labs are designed to help students learn the android programming environment and key programming paradigms. Assignments are done individually. Each lab will receive the same percentage of the grade.
+
+Each student will demonstrate their standalone MyRuns5 (after lab 5 is complete). We will meet on the green to assess your app. You will be asked to demo two activities: walking around the green and running (if you don't feel up to running we will find someone to run with your phone). 
+
+Your MyRuns5 app should correctly capture the activity (walking and
+running) and the details of the exercise. Andrew should be able to see
+the exercised saved in your history tab displayed on Google Maps.
+
+Labs are graded on completeness of the required features, the
+correctness of the functionality, and the robustness: **note, if your
+lab crashes it will not be graded and you will have to resubmit a
+working version with 20% penalty against your lab grade.**
+
+**30% - Group projects**
+
+Students will develop their own app.
+
+Projects are made up of a small (2 people) teams and require strong collaboration and a problem solving mindset.  The goals of this activity are to help you develop the confidence, skills, and habits necessary to write real phone apps while part of a multi-person team.
+
+Each team member will get the same grade assuming all goes well. The grade will breakdown as follows:
+
+## Teaching Team
+
+Lecturer: [Andrew T. Campbell](http://www.cs.dartmouth.edu/~campbell/). Andrew's [research group](http://sensorlab.cs.dartmouth.edu/) has been at the forefront of developing a class of mobile apps called continuous sensing apps -- for example download and checkout the [BeWell app](https://play.google.com/store/apps/details?id=org.bewellapp&hl=en) on Google Play. This class will apply ideas and technologies from research to the classroom. 
+
+
+TAs: 
+
+Fanglin.Chen.GR@dartmouth.edu. Office hours: Thursday 10:00-12:00 at Sudikoff 249
+Rui.Wang.GR@dartmouth.edu. Office hours: Wednesday 11-1 PM  at Sudikoff 249
+
+Both TAs will also cover lab hours Monday 6-10 PM in L002
+
+Section leaders (Androidistas): 
+
+- Betty Huang <Betty.Huang.14@dartmouth.edu>
+- Rui Wang <Rui.Wang.GR@dartmouth.edu>
+- Jordan S. Kunzika <Jordan.S.Kunzika.16@dartmouth.edu>
+- Shuyang Fang <Shuyang.Fang.14@dartmouth.edu>
+- Fanglin Chen <Fanglin.Chen.GR@dartmouth.edu>
+- Robin Wang <Robin.Wang.14@dartmouth.edu>
+- Samuel W. Yoder" <Samuel.W.Yoder.15@dartmouth.edu>
+
+[Section Times](https://docs.google.com/spreadsheets/d/1c3Tco8GAmHQq2RUCq-spSoesGRoV8mMEtX1R3X9EDbc/edit#gid=0)
+
+**Labs**
+
+Sudikoff Lab 002 is the best place for this but the only room
+available.
+ 
+- Friday 5-7 PM (Sudi 002)
+- Saturday 4-6 PM (Sudi 002)
+- Sunday  7-10 PM (Sudi 002)
+- Monday 6-10 PM (Sudi 002)
+
+![](images/nexus.png)
+
+<!---
+
+- Friday 5-8 PM (Sudi 003)
+- Saturday 3-6 PM (Sudi 002)
+- Sunday  7-11 PM (Sudi 002)
+- Monday 6-11 PM (Sudi 003)
+
+## Sections and labs
+
+Sections will go over the forthcoming lab and are on hour slots. Lab hours are unstructured debug sessions.
+
+- Monday - Lab goes out
+- Tuesday - Sections: 12-1, 6-7, 7-8 PM
+- Wednesday - Sections: 12-1, 6-7, 7-8 PM
+- Thursday - rest ;-)
+- Friday -  Lab hours: 5-8 PM
+- Saturday - Lab hours: 3-6 PM 
+- Sunday - Lab hours: 7-11 PM
+- Monday - Lab hours:  6-10 PM Lab due at midnight
+
+## Check the rooms for your section and labs -- they vary
+
+**Sections**
+
+Tuesday: 
+
+- 12-1 PM (Sudi 214)
+- 6-7 PM ( Sudi 115) 
+- 7-8 PM (Sudi 115)
+
+Wednesday: 
+
+- 12-1 PM (Sudi 214)
+- 6-7 PM ( Sudi 115) 
+- 7-8 PM (Sudi 115)
+
+**Labs**
+
+- Friday 5-8 PM (Sudi 003)
+- Saturday 3-6 PM (Sudi 002)
+- Sunday  7-11 PM (Sudi 002)
+- Monday 6-11 PM (Sudi 003)
+
+-->
+
+## Submission of programming assignments
+
+We are using [Subversion Version Control (SVN)](http://www.cs.dartmouth.edu/~campbell/cs50/svn.html) for the submission of programming assignments.  You should read those note before proceeding.
+
+SVN is a tool for source code management.  Your svn repository root is at https://svn.cs.dartmouth.edu/classes/cs65-S13/Your_Name/ so for me: https://svn.cs.dartmouth.edu/classes/cs65-S13/Andrew_Campbell
+
+(Note, for classes after 2013 this is relevant: change cs65-s13 to the correct year and term for example W14 changes the svn commands below to cs65-W14)
+
+How are we going to submit programming labs using SVN? 
+
+* Create a directory for each new lab in your root repository directory (viz. Lab1_submission, Lab2_submission, Lab3_submission, Lab4_submission,  Lab5_submission, Lab6_submission) -- for example, https://svn.cs.dartmouth.edu/classes/cs65-S13/Andrew_Campbell
+
+* [Commit the following files for each lab](submit.html).
+
+## Policy for late assignments
+
+You should always aim to get your lab in on time.
+
+    Penalties: < 8 hours: 10%; < 24 hours: 20%; < 48 hours: 40%; more: no credit.
+
+Under extenuating circumstances, alternative arrangements may be made with the instructor, if possible before the due date.
+
+Our late policy is a bit harsh but here's the reasoning. Each lab builds on the previous lab so falling behind is a taxation unto itself. To balance this late policy I add this sweetner: **you get one free 12 hour pass and 1 free 24 hour pass without penalties**. These are atomic units -- you can't divide them up, before you ask. Take it when you like but put a note in your README.txt file and email the TA.
+
+It is not good to fall behind because it limits the time you can spend on the next lab which comes out as you finish the currenmt one. Therefore, three final pieces of advice from CS1:
+
+      Don't fall behind in this course.
+      Don't fall behind in this course.
+      Don't fall behind in this course.
+
+## Group Project
+
+Group projects are made up of 3 students. 
+
+The project starts in week 5, pitches week 6. The last two weeks of class are held over for working on collaborative project -- there will be no classes during the last two weeks of term.
+
+The grade will breakdown as follows:
+
+- Project webpage, team and project pitch
+- Reviews
+- App demo day. The app/code has to work.
+- Report 
+
+There is a focus on **working code** and a **demoable app**. Rules of demo day. The professor should be able to download the application from Google Play and it should work off the shelf.
+
+The ground rules; the [teams and projects](http://www.cs.dartmouth.edu/~cs65/groups2014.html) will:
+
+- Form their own groups and come up with the theme of their app; 
+- Make a webpage with 1) one page pitch; 2) team names; 3) project name; 4)  slides;
+- Make a 90 sec elevator pitch in front of the complete class;
+- Have a design/code review;
+- Publish it on Google Play Store; and
+- Show their working app on demo or die date.
+- Write a report
+
+**Project Deadlines**
+
+1) Teams and webpage set up no later than Wednesday 23 April
+
+2) 90 seconds project pitches during x-hour Thursday 2nd May
+
+- Each team gets 90 seconds to pitch. 1 slides only linked into your webpage. 
+- Plus a 1 pager project description: What is the idea of the app? 
+
+3) Top Level Design: TBD
+
+- Top Level Design Document (approximately 5 pager). Link the document to your project webpage.
+- Revised project description; project should focus on a single simple idea. They should be Dartmouth specific if possible.
+- UI Design. A mock up of the UI. Either sketches or UI screen dumps from a mock up or an APK that implements a simplified UI.
+- Top level systems/component design digram
+- Brief description of classes 
+
+4) Checking 1: TBD 
+
+- See Fanglin for sign up. Each team gets 20 mins. Campbell's office.
+- Free format discussion. Demo some code.
+
+5) Checking 2: TBD
+
+- See Fanglin for sign up. Each team gets 20 mins Campbell's office
+- Free format discussion. Demo some code.
+
+6) App Demo Day:  TBD. Meet at classroom 
+
+* All students should be able to download each groups app and play with it. 
+* Best project will be voted on by the complete group.
+* App must be available for download from Play or project website. 
+* Bonus points for Play but takes 48 hours to process.
+* App has to work!
+
+7) Project report and code submitted: TBD
+
+<!---
+-->
+
+## MyRuns project document
+
+The [MyRuns document](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html) captures the complete app specification and
+lab assignment information. Please read this a couple of times and
+refer back to it.  
+
+## Week 1 (March 24-28) 
+
+* [Introduction](cs65intro.pdf)
+* [Lecture 1: Getting started](lecture01/lecture01.html)
+* [Lecture 2: The wonderful world of Android](lecture05/lecture05.html)
+* [Lecture 3: Our First Android Application](lecture02/lecture02.html)
+
+## Week 2 (March 31-April 4)
+
+* OUT [MyRuns_Lab_1: User Profile](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html#chap:labs:1)
+* [Lecture 4: User Interface I](lecture06/lecture06.html)
+* [Lecture 5: User Interface II](lecture07/lecture07.html)
+* [Lecture 6: Activity Lifecycle](lecture03/lecture03.html)
+* [Lecture 7: A very cool activity lifecycle app to play with](lecture04/lecture04.html)
+* [Lecture 8: Using the Camera and Data Storage](lecture14/lecture14.html)
+
+## Week 3 (March 31-April 4)
+
+* IN [MyRuns_Lab_1:  User Profile](submit.html) - Monday before midnight
+* OUT [MyRuns_Lab_2: User Interface](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html#chap:labs:2)
+* [Lecture 9: Fragments and ActionBars](lecture08/lecture08.html)
+* [Lecture 10: Debugging](lecture10/lecture10.html)
+* [Lecture 11: Dynamic Layouts using the Fragment Manager](lecture09/lecture09.html)
+* [Lecture 12: Tools](lecture11/lecture11.html)
+* [Lecture 13: Using PreferenceFragment to store user preferences](lecture12/lecture12.html)
+* [Lecture 14: Customizing Dialogs with DialogFragment](lecture13/lecture13.html)
+
+## Week 4 (April 14-18)
+
+* IN: [MyRuns_Lab_2: User Interface](submit.html) - Monday before midnight
+* OUT: [MyRuns_Lab_3: Database](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html#chap:labs:3)
+* [Lecture 15: SQLite Database](lecture15/lecture15.html)
+* [Lecture 16: Location-based Services](lecture17/lecture17.html) 
+* [Lecture 17: Google Maps](lecture18/lecture18.html)
+
+
+## Week 5 (21-25 April)
+
+* IN: [MyRuns_Lab_3: Database](submit.html) - Monday before midnight
+* OUT: [MyRuns_Lab_4: Google Maps](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html#chap:labs:4)
+* [Lecture 18: Services, BroadcastReceivers and Notifications](lecture19/lecture19.html)
+* [Lecture 19: AsyncTask](lecture20/lecture20.html)
+* [Lecture 20: Sensor Manager](lecture21/lecture21.html) 
+
+## Week 6 (April 28- May 2)
+
+* IN: [MyRuns_Lab_4: Google Maps](submit.html) - Monday before midnight
+* OUT: [MyRuns_Lab_5: Activity Recognition](http://www.cs.dartmouth.edu/~campbell/cs65/myruns/myruns_manual.html#chap:labs:5)
+* [Lecture 21: Activity Recognition](lecture22/lecture22.html)
+* [Lecture 22: Project pitches](http://www.cs.dartmouth.edu/~cs65/groups2014.html)
+* [Lecture 23 The Cloud: App Engine](lecture23/lecture23.html)
+<!---
+
+* [Cloud: App Engine](lecture23/lecture23.html)
+
+
+## Week 6 (April 28- May 2)
+
+* OUT: [MyRuns5: Activity Recognition](lab5/lab5.html)
+* IN: [MyRuns4](submit.html) - Monday before midnight
+* [Data collector and WEKA](lecture22/lecture22.html)[Slides](slides.pdf)
+* x-hour:  Data collector and WEKA tutorial
+* [Cloud: App Engine](lecture23/lecture23.html)
+
+## Week 7 (May 5-9)
+
+* OUT: [MyRuns6: AppEngine](lab6/lab6.html)
+* IN: [MyRuns5](submit.html) - Tuesday  before midnight
+* [The Cloud: Google App Engine (GAE)](lecture23/lecture23.html)
+* [The Cloud Continued](lecture24/lecture24.html)
+
+## Week 8 (May 12-16)
+
+* IN: [MyRuns6](submit.html) - Tuesday  before midnight
+* [Publishing apps](lecture25/lecture25.html)
+
+Checkin 1: Friday May 16 9-2 pm. See Fanglin for sign up. Each team gets 20 mins. Campbell's office.
+
+## Week 9 (May 19-23)
+
+Checkin 2: Friday May 23 9-2 pm. See Fanglin for sign up. Each team gets 20 mins Campbell's office. Free format discussion. Demo some code. Partial working app must be presented.
+
+## Week 10 May 26-30)
+
+App DemoDay: Wednesday 28 pm 9-12 pm. Meet ?
+
+- pitch
+- checkin #1
+- checkin #2 
+- app demo day (last day of class)
+- final report
+
+====
+
+* [Content Providers and Loaders](lecture16/lecture16.html) -- incomplete notes, to be updated
+* x-hour: Q&A on projects
+
+
+
+
+
+* OUT: [MyRuns1: User Interface](lab1/lab1.html)
+* IN: Send a screenshot of HelloWorld from your phone to cs65-help@cs.dartmouth.edu Monday before midnight.
+
+
+**Dartmouth Biorhythm trivia**: Note, the professor is [runs](http://farm9.staticflickr.com/8523/8621012581_144686f9f7.jpg) more than any student in class from yesterdays data - he also walks as much as the most active student -- and he sits around as much as the average student. We can also look back over the activity data collected for the last two weeks and Andrew is [looking pretty darn good](http://farm9.staticflickr.com/8542/8622121784_537de34790.jpg) -- come on students?
+
+Actvity data that compares the professor and students activity on April 4, 2013. All data is automatically collected from the Bio app without any user interaction.
+
+![](images/sdata2.png)
+	
+## Week 3 (April 8-12)
+
+
+
+We are handing out 10 [biorhythm t-shirts](http://www.customink.com/lab?BN=true&cid=twf0-000u-bhj9) this week -- this cool t-shirt was designed by our very own Evan  Gelfand (Digital Arts, 13).
+
+We have a huge amount of material to cover this week. The best I can do is get through as much as I can and then you have to read up on material I gloss over. Again, there is a considerable amount of self learning in this course -- you have the notes, code examples, the book, Google, Piazza, Stackoverflow.
+
+* OUT: [MyRuns2: Action bar and fragments](lab2/lab2.html)
+* IN: [MyRuns1](submit.html) - Monday before midnight
+* [Fragments and ActionBars](lecture08/lecture08.html)
+* [Dynamic Layouts using the Fragment Manager](lecture09/lecture09.html)
+* [Tools](lecture11/lecture11.html)
+* [Using PreferenceFragment to store user preferences](lecture12/lecture12.html)
+* [Customizing Dialogs with  DialogFragment](lecture13/lecture13.html)
+* [Using the Camera](lecture14/lecture14.html)
+
+
+## Week 4 (April 15-19)
+
+* OUT: [MyRuns3: SQLite Database](lab3/lab3.html)
+* IN: [MyRuns2](submit.html) - Monday before midnight
+* [SQLite Database](lecture15/lecture15.html)
+* [Content Providers and Loaders](lecture16/lecture16.html) -- incomplete notes, to be updated
+* x-hour: Q&A on projects
+* [Location-based Services](lecture17/lecture17.html) 
+
+## Week 5 (April 22-26)
+
+* IN: Project webpage (project name, team and one pager app pitch)
+* OUT: [MyRuns4: Location and Google Maps](lab4/lab4.html)
+* IN: [MyRuns3](submit.html) - Monday before midnight
+* [Location-based Services](lecture17/lecture17.html) 
+* x-hour:  [Google Maps](lecture18/lecture18.html)
+* xx-hour 2 minute project pitches
+* [Services](lecture19/lecture19.html)
+* [AsyncTask](lecture20/lecture20.html)
+
+## Week 6 (April 29- May 3)
+
+* OUT: [MyRuns5: Activity Recognition](lab5/lab5.html)
+* IN: [MyRuns4](submit.html) - Monday before midnight
+* [Sensor Manager](lecture21/lecture21.html) 
+* [Data collector and WEKA](lecture22/lecture22.html)
+* x-hour:  Data collector and WEKA tutorial
+* [Cloud: App Engine](lecture23/lecture23.html)
+
+## Week 7 (May 6-10)
+
+* OUT: [MyRuns6: AppEngine](lab6/lab6.html)
+* IN: [MyRuns5](submit.html) - Tuesday  before midnight
+* [The Cloud: Google App Engine (GAE)](lecture23/lecture23.html)
+* [The Cloud Continued](lecture24/lecture24.html)
+* No x-hour
+* [Publishing apps](lecture25/lecture25.html)
+
+**Project deadline: Thursday May 9 Top Level Design Document (approximately 5 pager). See project section**
+
+## Week 8 (May 13-17)
+
+* IN: [MyRuns6](submit.html) - Tuesday  before midnight
+
+**All labs completed -- well done!**  You get your Android hackers badge.
+
+**Monday and Wednesday 10-11 AM we meet on the Green for a MyRuns demofeast** 
+
+Your MyRuns5 demo must work to demo. This will be the version you submitted to the svn on the deadline. 
+
+No more classes now in the project phase -- classes end.
+
+## Week 9 (May 20-24)
+
+Checking 1: Monday May 21 9-2 pm. See Fanglin for sign up. Each team gets 20 mins. Campbell's office.
+
+## Week 10 (May 27-29)
+
+Checking 2: Monday May 27 9-2 pm. See Fanglin for sign up. Each team gets 20 mins Campbell's office. Free format discussion. Demo some code. Partial working app must be presented.
+
+Demo or Die Day:  Wednesday 29 pm 9-12 pm. Meet at LSC 201. 
+
+Your are done!
+
+-->
+
+## Online book
+
+[The Busy Coder's Guide to Android Development](http://commonsware.com/Android/)
+
+It is an online book $45.00
+
+![](images/androidbook.png)
+
+I like the online book because you pay once and you get the revised versions for free (sort of). This is important because the APIs are still fluid. Many APIs are being added and depreciated at the same time.  So the book at least quickly tracks major changes.
+
+I really like these other books too. The first one is more introductory -- the second, more depth, more kungfu. But if you want to go deeper after this class buy both. 
+
+![](images/book1.png)
+
+![](images/book2.png)
+
+Having all three books might seem excessive -- call me excessive.

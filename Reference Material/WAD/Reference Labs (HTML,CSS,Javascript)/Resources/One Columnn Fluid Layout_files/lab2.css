@@ -1,0 +1,51 @@
+@charset "UTF-8";
+	*{margin: 0px; padding:0px:}
+	body {
+	background-color: #C3D795;
+	font-size: 1em;
+	color: #000;
+}
+
+	#container{
+	margin-top: 20px;
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-left: auto;
+	min-width: 640px;
+    max-width: 960px;
+	background-color: #FFF;
+	border: thin solid #484E35;
+}
+	#header{
+	background-image: url(../images/poppiesHeader.jpg);
+	height: 200px;
+	background-repeat: repeat;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+	#content{
+	padding-right: 20px;
+	padding-left: 20px;
+}
+	#footer{
+	padding-right: 20px;
+	padding-left: 20px;
+	background-color: #484E35;
+	color: #FFF;
+}
+h1, h2 {
+	color: #E90000;
+	padding-top: 20px;
+	padding-bottom: 0px;
+}
+h1 {
+	font-size: 2em;
+}
+h2 {
+	font-size: 1.5em;
+}
+p {
+	padding-top: 5px;
+	padding-bottom: 20px;
+
+}

@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>Debugging - </title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="db-simple.css" type="text/css">
+</head>
+<body>
+<div id="header">
+
+<div id="sitetitle"><b>Dartmouth CS 65/165</b></div>
+<div id="container">
+<div id="sitesubtitle"><b>Smartphone Programming</b></div>
+<div id="siterightheader"><b>Professor Andrew T. Campbell</b></div>
+</div>
+
+<div class="clearer"><!-- --></div>
+
+
+<hr>
+</div>
+<h1 id="lecture-10---debugging">Lecture 10 - Debugging</h1>
+<p>You can debug code on the emulator or phone. The ADT environment offers the DDMS which represents a sophisticated tool for debugging code. Hopefully, most of the time this will suffice. Android is quite hard to program and debug (for me anyway) because of the large number of new APIs. If you are experienced with Java you will catch many of the obvious bugs from desk checking and looking for the obvious edge issues and API problems.</p>
+<p>We also briefly discuss how to set breakpoints and look at variables in the code and run time.</p>
+<h2 id="what-this-lecture-will-teach-you">What this lecture will teach you</h2>
+<ul>
+<li>Tips</li>
+<li>Logging</li>
+<li>Printing out program data using Log.d()</li>
+<li>Printing out the full stack trace</li>
+<li>Buggy code example</li>
+<li>Setting Breakpoints</li>
+<li>Java Debugging with Eclipse</li>
+<li>Debugging steps</li>
+<li>General debugging tips</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<p>There are a number of good resources for debugging in Android:</p>
+<ul>
+<li><a href="http://developer.android.com/tools/debugging/index.html">Developers debugging</a></li>
+<li>Debugging crashes pg 120 in course book</li>
+<li><a href="http://developer.android.com/tools/debugging/debugging-projects.html">Debugging from Eclipse with ADT</a></li>
+<li><a href="http://www.vogella.com/tutorials/AndroidDebugging/article.html">Tutorial on debugging apps</a></li>
+</ul>
+<h2 id="tips">Tips</h2>
+<p>There are a number of tips when debugging -- here are some relevant to the type of coding we are doing:</p>
+<p><em>Dump the stack trace</em></p>
+<p>We show you how to log the stack trace.</p>
+<p><em>Use debugging helper classes</em></p>
+<p>Android provides debug helper classes such as util.Log and Debug for your convenience.</p>
+<p><em>Display useful info on phone screen</em></p>
+<p>The device can display useful information such as CPU usage or highlights around redrawn areas. Turn these features on and off in the developer settings window as described in Debugging with the Dev Tools App.</p>
+<p><em>Log trace data</em></p>
+<p>You can use the CatLog to log debug data and look at data. You can also log method calls and other tracing data in an activity by calling startMethodTracing(). See Profiling with Traceview and dmtracedump for details.</p>
+<h2 id="logging---a-debug-tool">Logging - a debug tool</h2>
+<p>Before we get started note that the strange looking <em>Log.d(TAG, &quot;loadUserData()&quot;)</em> method. This is associated with debugging. The Android system with keep a log of these Log.d() calls embedded in the code -- if you are C programmer these are like printf() but not to the screen (you would need toast to do that). Log.d printout (which could include data structures and member variable state) is directed to the <em>LogCat</em>. The logging system provides a mechanism for collecting and viewing system debug output. Logcat dumps a log of system messages and potentially much more. We will come back to logging. Right now you should know that you can run LogCat through the <em>Dalvik Debug Monitor Server (DDMS)</em> allowing you to read the messages in real time. Check out the screen dump of DDMS below. To display log messages (and BTW, the <code>d</code> in <code>log.d</code> refers to debug messages) you have to switch to the DDMS view from the default Java view. Then set up a filter in this case for the TAG CS65. This is set up at the start of the activity</p>
+<pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> String TAG = <span class="st">&quot;CS65&quot;</span>;</code></pre>
+<p>Then run the app. For example, start the SharedPreference activity from the main menu and hit the <code>Save</code>. You should see the two log message shown in the screen dump below. Please do this and play with the log system. More on debugging later. We will need debugging tools. Note, this is all from the phone. I did not run this under the emulation mode -- it's too darn slow.</p>
+<div class="figure">
+<img src="images\s-logd.png">
+</div>
+<h2 id="printing-out-program-data-using-log.d">Printing out program data using Log.d()</h2>
+<p>You can print out the value of member variables in your code using Log.d(); for example:</p>
+<pre class="sourceCode java"><code class="sourceCode java"> Log.<span class="fu">d</span>(TAG, <span class="st">&quot;loadUserData() email is &quot;</span> + mValue);
+
+ Log.<span class="fu">d</span>(TAG, <span class="st">&quot;loadUserData(): number of the radioButton is &quot;</span> + mIntValue);</code></pre>
+<p>The equivalent using toast is for the radio button is:</p>
+<pre class="sourceCode java"><code class="sourceCode java">    Toast.<span class="fu">makeText</span>(<span class="fu">getApplicationContext</span>(),
+                    <span class="st">&quot;number of the radioButton is : &quot;</span> + mIntValue,
+                    Toast.<span class="fu">LENGTH_SHORT</span>).<span class="fu">show</span>();</code></pre>
+<p>But remember Toast is not for debugging -- the toast is fleeting, pops up and disappears but the log.d is always there afterwards to study.</p>
+<p>If I run the layouts code and click on <em>SharedPreferences</em> I get this in LogCat.</p>
+<div class="figure">
+<img src="images\debug3.png">
+</div>
+<p>This relates to this code in <em>SharedPreferencesActivity.java</em> in the layouts project:</p>
+<pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">loadUserData</span>() {
+
+        <span class="co">// We can also use log.d to print to the LogCat</span>
+
+        Log.<span class="fu">d</span>(TAG, <span class="st">&quot;loadUserData()&quot;</span>);
+
+        <span class="co">// Load and update all profile views</span>
+
+        <span class="co">// Get the shared preferences - create or retrieve the activity</span>
+        <span class="co">// preference object</span>
+
+        String mKey = <span class="fu">getString</span>(R.<span class="fu">string</span>.<span class="fu">preference_name</span>);
+        SharedPreferences mPrefs = <span class="fu">getSharedPreferences</span>(mKey, MODE_PRIVATE);
+
+        <span class="co">// Load the user email</span>
+
+        mKey = <span class="fu">getString</span>(R.<span class="fu">string</span>.<span class="fu">preference_key_profile_email</span>);
+        String mValue = mPrefs.<span class="fu">getString</span>(mKey, <span class="st">&quot; &quot;</span>);
+        ((EditText) <span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">editEmail</span>)).<span class="fu">setText</span>(mValue);
+        
+        Log.<span class="fu">d</span>(TAG, <span class="st">&quot;loadUserData() email is &quot;</span> + mValue);
+
+
+        <span class="co">// Please Load gender info and set radio box</span>
+
+        mKey = <span class="fu">getString</span>(R.<span class="fu">string</span>.<span class="fu">preference_key_profile_gender</span>);
+
+        <span class="dt">int</span> mIntValue = mPrefs.<span class="fu">getInt</span>(mKey, -<span class="dv">1</span>);
+        <span class="co">// In case there isn&#39;t one saved before:</span>
+        <span class="kw">if</span> (mIntValue &gt;= <span class="dv">0</span>) {
+            <span class="co">// Find the radio button that should be checked.</span>
+            RadioButton radioBtn = (RadioButton) ((RadioGroup) <span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">radioGender</span>))
+                    .<span class="fu">getChildAt</span>(mIntValue);
+            <span class="co">// Check the button.</span>
+            radioBtn.<span class="fu">setChecked</span>(<span class="kw">true</span>);
+            Toast.<span class="fu">makeText</span>(<span class="fu">getApplicationContext</span>(),
+                    <span class="st">&quot;number of the radioButton is : &quot;</span> + mIntValue,
+                    Toast.<span class="fu">LENGTH_SHORT</span>).<span class="fu">show</span>();
+            Log.<span class="fu">d</span>(TAG, <span class="st">&quot;loadUserData(): number of the radioButton is &quot;</span> + mIntValue);
+        <span class="co">//  Log.d(TAG, Log.getStackTraceString(new Exception()));</span>
+        }
+
+    }</code></pre>
+<h2 id="printing-out-the-full-stack-trace">Printing out the full stack trace</h2>
+<p>When your app crash for example because of a nullPointerException or something the ADT prints it prints out the full stack trace.</p>
+<p>If you want to print out the <a href="http://stackoverflow.com/q/7841232">full stack trace</a>. Inserting the following code into your program will force a checkpoint of the stack to be dumped to the CatLog.</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+Log.<span class="fu">d</span>(TAG, Log.<span class="fu">getStackTraceString</span>(<span class="kw">new</span> Exception()));</code></pre>
+<p>If I uncomment this line in my code above <em>SharedPreferencesActivity.java</em> then I get the following stack dump in the CatLog</p>
+<pre class="sourceCode java"><code class="sourceCode java">
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.137</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>): <span class="fu">loadUserData</span>()
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.147</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>): <span class="fu">loadUserData</span>() email is campbell@cs.<span class="fu">dartmouth</span>.<span class="fu">edu</span>
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>): <span class="fu">loadUserData</span>(): number of the radioButton is <span class="dv">1</span>
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>): java.<span class="fu">lang</span>.<span class="fu">Exception</span>
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at edu.<span class="fu">dartmouth</span>.<span class="fu">cs</span>.<span class="fu">layouts</span>.<span class="fu">SharedPreferencesActivity</span>.<span class="fu">loadUserData</span>(SharedPreferencesActivity.<span class="fu">java</span>:<span class="dv">100</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at edu.<span class="fu">dartmouth</span>.<span class="fu">cs</span>.<span class="fu">layouts</span>.<span class="fu">SharedPreferencesActivity</span>.<span class="fu">onCreate</span>(SharedPreferencesActivity.<span class="fu">java</span>:<span class="dv">28</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">Activity</span>.<span class="fu">performCreate</span>(Activity.<span class="fu">java</span>:<span class="dv">5104</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">Instrumentation</span>.<span class="fu">callActivityOnCreate</span>(Instrumentation.<span class="fu">java</span>:<span class="dv">1080</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">ActivityThread</span>.<span class="fu">performLaunchActivity</span>(ActivityThread.<span class="fu">java</span>:<span class="dv">2144</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">ActivityThread</span>.<span class="fu">handleLaunchActivity</span>(ActivityThread.<span class="fu">java</span>:<span class="dv">2230</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">ActivityThread</span>.<span class="fu">access</span>$<span class="dv">600</span>(ActivityThread.<span class="fu">java</span>:<span class="dv">141</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">ActivityThread</span>$H.<span class="fu">handleMessage</span>(ActivityThread.<span class="fu">java</span>:<span class="dv">1234</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">os</span>.<span class="fu">Handler</span>.<span class="fu">dispatchMessage</span>(Handler.<span class="fu">java</span>:<span class="dv">99</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">os</span>.<span class="fu">Looper</span>.<span class="fu">loop</span>(Looper.<span class="fu">java</span>:<span class="dv">137</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at android.<span class="fu">app</span>.<span class="fu">ActivityThread</span>.<span class="fu">main</span>(ActivityThread.<span class="fu">java</span>:<span class="dv">5041</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at java.<span class="fu">lang</span>.<span class="fu">reflect</span>.<span class="fu">Method</span>.<span class="fu">invokeNative</span>(Native Method)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at java.<span class="fu">lang</span>.<span class="fu">reflect</span>.<span class="fu">Method</span>.<span class="fu">invoke</span>(Method.<span class="fu">java</span>:<span class="dv">511</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at com.<span class="fu">android</span>.<span class="fu">internal</span>.<span class="fu">os</span>.<span class="fu">ZygoteInit</span>$MethodAndArgsCaller.<span class="fu">run</span>(ZygoteInit.<span class="fu">java</span>:<span class="dv">793</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at com.<span class="fu">android</span>.<span class="fu">internal</span>.<span class="fu">os</span>.<span class="fu">ZygoteInit</span>.<span class="fu">main</span>(ZygoteInit.<span class="fu">java</span>:<span class="dv">560</span>)
+<span class="dv">04-05</span> <span class="dv">09</span>:<span class="dv">24</span>:<span class="fl">20.157</span>: D/<span class="fu">CS65</span>(<span class="dv">8434</span>):   at dalvik.<span class="fu">system</span>.<span class="fu">NativeStart</span>.<span class="fu">main</span>(Native Method)</code></pre>
+<h2 id="buggy-code">Buggy code</h2>
+<p>First the app crashes when installed and launched.</p>
+<div class="figure">
+<img src="images\crash.png">
+</div>
+<p>Here is how the bug does down. We use the LogCat on errors. We look through them after the crash.</p>
+<div class="figure">
+<img src="images\debug.png">
+</div>
+<p>Right we see this message:</p>
+<p>In the code below savedInstanceState is a Null; therefore we get an exception. <del>{.java} 03-05 03:07:27.058: E/AndroidRuntime(27955): Caused by: java.lang.NullPointerException 03-05 03:07:27.058: E/AndroidRuntime(27955): at edu.dartmouth.cs.actiontabs.MainActivity.onCreate(MainActivity.java:73)</del>~</p>
+<p>OK we know the exact line of the crash or exception; it's a NullPointerException.</p>
+<pre class="sourceCode java"><code class="sourceCode java">        <span class="co">// restore to navigation</span>
+        <span class="kw">if</span> (savedInstanceState != <span class="kw">null</span>) {
+            actionbar.<span class="fu">setSelectedNavigationItem</span>(savedInstanceState.<span class="fu">getInt</span>(
+                    TAB_KEY_INDEX, <span class="dv">0</span>));
+        }
+        
+        Toast.<span class="fu">makeText</span>(<span class="kw">this</span>,
+                <span class="st">&quot;tab is &quot;</span> + savedInstanceState.<span class="fu">getInt</span>(TAB_KEY_INDEX, <span class="dv">0</span>),
+                Toast.<span class="fu">LENGTH_SHORT</span>).<span class="fu">show</span>();</code></pre>
+<p>Ah, savedInstanceState is Null and trying to call a method on a null object. Bad. The reason savedInstanceState is Null is because the first time the app is run it will always be Null therefore the fix is.</p>
+<pre class="sourceCode java"><code class="sourceCode java">        <span class="co">// restore to navigation</span>
+        <span class="kw">if</span> (savedInstanceState != <span class="kw">null</span>) {
+                Toast.<span class="fu">makeText</span>(<span class="kw">this</span>,
+                <span class="st">&quot;tab is &quot;</span> + savedInstanceState.<span class="fu">getInt</span>(TAB_KEY_INDEX, <span class="dv">0</span>),
+                Toast.<span class="fu">LENGTH_SHORT</span>).<span class="fu">show</span>();
+
+            actionbar.<span class="fu">setSelectedNavigationItem</span>(savedInstanceState.<span class="fu">getInt</span>(
+                    TAB_KEY_INDEX, <span class="dv">0</span>));
+        }       </code></pre>
+<p>OK. Let's build and see what we get.</p>
+<div class="figure">
+<img src="images\eyeclean.png">
+</div>
+<h2 id="setting-breakpoints">Setting Breakpoints</h2>
+<p>Many times you will need to run your code in debug mode in Eclipse set breakpoints and inspect variables to work out exactly what happened before you program crashed; for example in the code below there is an exception because of a NULL reference is accessed. We know the CatLog that the exception happened at line 59 from the output. But we do not know why the exception occurred.</p>
+<p>So we set a breakpoint at line 58 -- the line before the exception and then look at the variables such as searchManager and searchableInfo to see if they are OK. If they are then we single step to the next line 59. We notice, however, that once line 58 is executed that searchView is NULL, which is a bug.</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="dv">50</span>     <span class="co">// Use the Search Manager to find the SearchableInfo related </span>
+<span class="dv">51</span>     <span class="co">// to this Activity.</span>
+<span class="dv">52</span>     SearchManager searchManager =
+<span class="dv">53</span>       (SearchManager)<span class="fu">getSystemService</span>(Context.<span class="fu">SEARCH_SERVICE</span>);
+<span class="dv">53</span>     SearchableInfo searchableInfo = 
+<span class="dv">54</span>       searchManager.<span class="fu">getSearchableInfo</span>(<span class="fu">getComponentName</span>());
+<span class="dv">55</span>   
+<span class="dv">56</span>    <span class="co">// Bind the Activity&#39;s SearchableInfo to the Search View</span>
+<span class="dv">58</span>     SearchView searchView = (SearchView)<span class="fu">findViewById</span>(R.<span class="fu">id</span>.<span class="fu">searchView</span>);
+<span class="dv">59</span>     searchView.<span class="fu">setSearchableInfo</span>(searchableInfo);
+<span class="dv">60</span>      </code></pre>
+<h2 id="read-this-tutorial-on-java-debugging-with-eclipse">Read this tutorial on Java Debugging with Eclipse</h2>
+<p>Read the very good <a href="http://www.vogella.com/articles/EclipseDebugging/article.html">Java Debugging with Eclipse - Tutorial</a> by Lars Voglel.</p>
+<p>I do not have good notes on debugging using ADT and strongly recommend that you read the tutorial so you get some debugging chops.</p>
+<p>Many of you have debugged Java in CS1. For Android you do almost exactly the same. Make sure your phone is plugged in and debug perspective is shown as shown below</p>
+<div class="figure">
+<img src="images\sdebugpres.png">
+</div>
+<h2 id="debugging-steps">Debugging steps</h2>
+<p>Typically you want to do the following when you have a bug in your code and want to get to the bottom of it:</p>
+<ul>
+<li>Find the line number where the exception occurred</li>
+<li>Set a breakpoint the line before the exception happened</li>
+<li>Run your program in debug mode -- the execution will stop at the breakpoint</li>
+<li>Take a look the variables and see if that shines some light on the exception</li>
+<li>Single step (using <strong>F6</strong> -- see below for all the options) to the next line of code and look at variables again</li>
+</ul>
+<div class="figure">
+<img src="images\soptions.png">
+</div>
+<p>Notice, if you place the cursor over a variable the debug mode with show the value -- the example below shows the SearchView reference is NULL. That is a problem for this code!</p>
+<div class="figure">
+<img src="images\svariables.png">
+</div>
+<h2 id="general-debugging-tips">General debugging tips</h2>
+<p>It is good to just set a breakpoint at the start of your code e.g., onCreate() or in a helper function or many methods and functions and just step through the code and look variables in the program. This is good practice and can help you fine problems.</p>
+<p>But there is nothing as good as desk checking your code -- that is, reading closely through your code and &quot;executing it&quot; with a pen and paper.</p>
+</body>
+</html>
